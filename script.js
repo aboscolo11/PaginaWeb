@@ -10,8 +10,8 @@ const WA_NUMBER = "541134843360";
 
 /* ─── BANNER CAROUSEL ────────────────────────────────────── */
 const BANNER_IMAGES = [
-  "./imagenes/banner-1.jpg",
-  "./imagenes/banner-2.jpg",
+  "./imagenes/Banners.png",
+  "./imagenes/Banner2.png",
   "./imagenes/banner-3.jpg",
 ];
 let currentBannerIndex = 0;
@@ -68,7 +68,11 @@ const PRODUCTS = [
     genero: "femenino",
     badge: "hot",
     emoji: "",
-    imagen:"./imagenes/yara pink.png",
+    imagenes: [
+    "./imagenes/yara pink.png",
+    "./imagenes/img/yara1.png",
+    "./imagenes/img/yara2.png",
+    ],
     notas: "Almizcle · Sandalo · Vainilla",
   },
   {
@@ -80,7 +84,11 @@ const PRODUCTS = [
     genero: "femenino",
     badge: "new",
     emoji: "",
-    imagen:"./imagenes/yara candy.png",
+    imagenes:[
+      "./imagenes/yara candy.png",
+      "./imagenes/img/candy1.png",
+      "./imagenes/img/candy2.png",
+    ],
     notas: "Vainilla · Mandarina · Sandalo",
   },
   {
@@ -91,7 +99,7 @@ const PRODUCTS = [
     precio: 48900,
     genero: "femenino",
     badge: null,
-    imagen:"./imagenes/durrat.png",
+    imagenes:"./imagenes/durrat.png",
     emoji: "🌙",
     notas: "Vainilla · Azafran · Cardamomo",
   },
@@ -104,7 +112,11 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "hot",
     emoji: "🖤",
-    imagen:"./imagenes/khamrah.png",
+    imagenes: [
+    "./imagenes/khamrah.png",
+    "./imagenes/img/khamrah1.png",
+    "./imagenes/img/khamrah2.png",
+    ],
     notas: "Canela · Nuez Moscada · Bergamota",
   },
   {
@@ -115,7 +127,11 @@ const PRODUCTS = [
     precio: 60000,
     genero: "masculino",
     badge: null,
-    imagen:"./imagenes/qhawa.png",
+    imagenes:[
+    "./imagenes/qhawa.png",
+    "./imagenes/img/qhawa1.png",
+    "./imagenes/img/qhawa2.png",
+    ],
     emoji: "👑",
     notas: "Bergamota · Cuero · Sándalo",
   },
@@ -128,7 +144,11 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "oferta",
     emoji: "⚓",
-    imagen:"./imagenes/dukhan.png",
+    imagenes: [
+    "./imagenes/dukhan.png",
+    "./imagenes/img/dukhan1.png",
+    "./imagenes/img/dukhan2.png",
+    ],
     notas: "Inicienso · Tabaco · Pachuli",
   },
   {
@@ -140,7 +160,7 @@ const PRODUCTS = [
     genero: "unisex",
     badge: "new",
     emoji: "",
-    imagen:"./imagenes/kingdom.png",
+    imagenes:"./imagenes/kingdom.png",
     notas: "Lavanda · Vainilla · Tabaco",
   },
   {
@@ -152,7 +172,7 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "oferta",
     emoji: "🌿",
-    imagen:"./imagenes/maahir.png",
+    imagenes:"./imagenes/maahir.png",
     notas: "Oud · Rosa · Ambar",
   },
   {
@@ -164,7 +184,11 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "new",
     emoji: "🌃",
-    imagen:"./imagenes/mandarin.png",
+    imagenes:[
+    "./imagenes/mandarin.png",
+    "./imagenes/img/mandarin1.png",
+    "./imagenes/img/mandarin2.png",
+    ],
     notas: "Mandarina · Naranja · Caramelo",
   },
     {
@@ -176,7 +200,11 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "hot",
     emoji: "💎",
-    imagen: "./imagenes/homme.png",
+    imagenes: [
+    "./imagenes/homme.png",
+    "./imagenes/img/homme11.png",
+    "./imagenes/img/homme2.png",
+    ],
     notas: "Vainilla Negra · Cuero · Amaderado",
   },
     {
@@ -188,7 +216,11 @@ const PRODUCTS = [
     genero: "femenino",
     badge: "hot",
     emoji: "💎",
-    imagen: "./imagenes/candee.png",
+    imagenes: [
+    "./imagenes/candee.png",
+    "./imagenes/img/candee1.png",
+    "./imagenes/img/candee2.png",
+    ],
     notas: "Frambuesa · Caramelo  · Ambar",
   },
   {
@@ -200,8 +232,13 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "hot",
     emoji: "🏆",
-    imagen:"./imagenes/9pm.png",
+    imagenes: [
+    "./imagenes/9pm.png",
+    "./imagenes/img/9pm1.png",
+    "./imagenes/img/9pm2.png",
+    ],
     notas: "Manzana · Canela · Lavanda",
+    
   },
   {
     id: 13,
@@ -212,7 +249,7 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "hot",
     emoji: "",
-    imagen:"./imagenes/liquidbrun.png",
+    imagenes:"./imagenes/liquidbrun.png",
     notas: "Canela · Vainilla · Elemi",
   },
   {
@@ -224,7 +261,7 @@ const PRODUCTS = [
     genero: "femenino",
     badge: "new",
     emoji: "💎",
-    imagen: "./imagenes/mayarpink.png",
+    imagenes: "./imagenes/mayarpink.png",
     notas: "Sandalo · Almizcle · Vainilla",
   },
   {
@@ -236,7 +273,7 @@ const PRODUCTS = [
     genero: "femenino",
     badge: "hot",
     emoji: "💎",
-    imagen: "./imagenes/mayarcherry.png",
+    imagenes: "./imagenes/mayarcherry.png",
     notas: "Cherry Jam  · Fresa · Vainilla",
   },
   {
@@ -248,7 +285,11 @@ const PRODUCTS = [
     genero: "masculino", 
     badge: null, 
     emoji: "🌟",
-    imagen: "./imagenes/honor.png",
+    imagenes: [
+    "./imagenes/honor.png",
+    "./imagenes/img/badeblanco1.png",
+    "./imagenes/img/badeblanco2.png",
+    ],
     notas: "Canela · Creme Brulee · Vainilla",
 },
 {
@@ -260,7 +301,11 @@ const PRODUCTS = [
     genero: "unisex", 
     badge: "hot", 
     emoji: "🌟",
-    imagen: "./imagenes/badeevioleta.png",
+    imagenes: [
+    "./imagenes/badeevioleta.png",
+    "./imagenes/img/badevioleta1.png",
+    "./imagenes/img/badevioleta2.png",
+    ],
     notas: "Pimienta Rosa · Jazmin · Bergamota",
 },
 {
@@ -272,7 +317,11 @@ const PRODUCTS = [
     genero: "masculino", 
     badge: "new", 
     emoji: "hot",
-    imagen: "./imagenes/badeenegro.png",
+    imagenes: [
+    "./imagenes/badeenegro.png",
+    "./imagenes/img/badeblack.png",
+    "./imagenes/img/badeblack1.png",
+    ],
     notas: "Azafran · Nuez Moscada · Lavanda",
 },
 {
@@ -284,7 +333,11 @@ const PRODUCTS = [
     genero: "femenino", 
     badge: "new", 
     emoji: "hot",
-    imagen: "./imagenes/badeered.png",
+    imagenes: [
+    "./imagenes/badeered.png",
+    "./imagenes/img/baderojo1.png",
+    "./imagenes/img/baderojo2.png",
+    ],
     notas: "Manzana · Lichi · Rosa",
 },
 {
@@ -296,7 +349,7 @@ const PRODUCTS = [
     genero: "unisex",
     badge: "new",
     emoji: "💎",
-    imagen: "./imagenes/qaed.png",
+    imagenes: "./imagenes/qaed.png",
     notas: "Coco · Almizcle · Vainilla",
   },
   {
@@ -308,7 +361,7 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "new",
     emoji: "💎",
-    imagen: "./imagenes/qaedblack.png",
+    imagenes: "./imagenes/qaedblack.png",
     notas: "Ambar Gris · Almizcle · Vainilla",
   },
   {
@@ -320,7 +373,7 @@ const PRODUCTS = [
     genero: "femenino",
     badge: "hot",
     emoji: "💎",
-    imagen: "./imagenes/ana.png",
+    imagenes: "./imagenes/ana.png",
     notas: "Pera · Caramelo · Ambar",
   },
     {
@@ -332,7 +385,7 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "hot",
     emoji: "💎",
-    imagen: "./imagenes/rave.png",
+    imagenes: "./imagenes/rave.png",
     notas: "Piña · Bergamota · Pachuli",
   },
      {
@@ -344,7 +397,7 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "hot",
     emoji: "💎",
-    imagen: "./imagenes/carat.png",
+    imagenes: "./imagenes/carat.png",
     notas: "Ambar · Canela · Cuero",
   },
   
@@ -399,10 +452,14 @@ function badgeHTML(badge) {
  * Reemplazar el src con la URL real de la imagen del producto.
  * @param {Object} p - Producto
  */
-function productImgSrc(p) {
-  if (p.imagen) {
-    return p.imagen;  // usa la imagen real si existe
+function productImgSrc(p, index = 0) {
+  if (p.imagenes && p.imagenes.length > 0) {
+    return p.imagenes[index];
   }
+  if (p.imagen) {
+    return p.imagen;
+  }
+  return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='220'%3E%3Crect width='200' height='220' fill='%23f5f2ee'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='72'%3E${p.emoji}%3C/text%3E%3C/svg%3E`;
 }
 
 /* ─── RENDERIZADO ────────────────────────────────────────── */
@@ -413,6 +470,9 @@ function productImgSrc(p) {
  */
 function cardHTML(p) {
   const waLink = buildWaLink(p);
+  const hasMultipleImages = p.imagenes && p.imagenes.length > 1;
+  const imageCount = p.imagenes ? p.imagenes.length : 1;
+
   return `
     <div class="product-card"
          data-genero="${p.genero}"
@@ -423,10 +483,27 @@ function cardHTML(p) {
 
       <div class="product-img-wrap">
         <img
-          src="${productImgSrc(p)}"
+          src="${productImgSrc(p, 0)}"
           alt="${p.marca} ${p.nombre}"
           loading="lazy"
+          class="product-main-img"
+          data-product-id="${p.id}"
         />
+        
+        ${hasMultipleImages ? `
+          <button class="img-nav prev" onclick="changeProductImage(event, ${p.id}, -1)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <line x1="15" y1="19" x2="9" y2="12" /><line x1="15" y1="5" x2="9" y2="12" />
+            </svg>
+          </button>
+          <button class="img-nav next" onclick="changeProductImage(event, ${p.id}, 1)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <line x1="9" y1="19" x2="15" y2="12" /><line x1="9" y1="5" x2="15" y2="12" />
+            </svg>
+          </button>
+          <div class="img-counter" data-product-id="${p.id}">1/${imageCount}</div>
+        ` : ''}
+
         <a href="${waLink}" target="_blank" class="quick-wa">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -586,6 +663,147 @@ function updatePrice(val) {
   applyFilters();
 }
 
+/* ─── GALERÍA DE IMÁGENES POR PRODUCTO ───────────────────── */
+const productImageIndex = {};
+
+function changeProductImage(event, productId, direction) {
+  event.stopPropagation();
+  
+  const product = PRODUCTS.find(p => p.id === productId);
+  
+  // Verificar si tiene imagenes (plural) o imagen (singular)
+  const images = product?.imagenes || (product?.imagen ? [product.imagen] : []);
+  
+  if (!product || images.length === 0) return;
+
+  if (!productImageIndex[productId]) {
+    productImageIndex[productId] = 0;
+  }
+
+  productImageIndex[productId] = (productImageIndex[productId] + direction + images.length) % images.length;
+
+  const img = document.querySelector(`.product-main-img[data-product-id="${productId}"]`);
+  if (img) {
+    img.src = images[productImageIndex[productId]];
+  }
+
+  // Actualizar contador
+  const counter = document.querySelector(`.img-counter[data-product-id="${productId}"]`);
+  if (counter) {
+    counter.textContent = `${productImageIndex[productId] + 1}/${images.length}`;
+  }
+}
+/* ─── CHATBOT ────────────────────────────────────────────── */
+
+const CHATBOT_RESPONSES = {
+  default: "¿Buscás algún perfume en particular? 👀\nSi querés decime tu presupuesto o estilo y te recomiendo uno directo.",
+
+  hola: "¡Hola! 👋 Bienvenido a TecnoAdvance.\nTenemos perfumes árabes originales 🔥\n¿Te gusta algo dulce, intenso o elegante?",
+
+  precio: "💸 Tenemos perfumes desde $19.500 hasta $90.000 aprox.\n🔥 Ejemplo: Asad y Khamrah están entre los más vendidos.\nSi querés decime cuánto querés gastar y te digo el mejor.",
+
+  envio: "🚚 Enviamos a todo el país.\n📍 CABA: 24-48hs\n🎁 Envío gratis desde $150.000\nTu compra llega segura.",
+
+  oferta: "🔥 Hay productos en oferta como Asad ahora mismo.\nTambién tenés descuento pagando por transferencia.\n¿Querés que te pase alguno bueno en promo?",
+
+  marca: "💎 Trabajamos con Lattafa, Afnan, Armaf y más.\nSon perfumes árabes conocidos por su alta duración y calidad.",
+
+  pago: "💳 Podés pagar con tarjeta, transferencia o efectivo.\n🔥 Con transferencia tenés mejor precio.",
+
+  whatsapp: "📲 Escribinos directo y te asesoramos rápido:\n👉 https://wa.me/541134843360",
+
+  catalogo: "📦 Tenemos perfumes como:\n- Khamrah (dulce y fuerte)\n- Asad (intenso tipo Sauvage)\n- Badee Al Oud (más elegante)\n¿Querés recomendación según tu gusto?",
+
+  recomendacion: "Te tiro los más seguros 👇\n🔥 Asad → fuerte y masculino\n🍬 Khamrah → dulce y llamativo\n🌙 Badee Al Oud → elegante\nDecime cuál te gusta y te paso más.",
+
+  hombre: "🔥 Para hombre:\n- Asad (potente, tipo Sauvage)\n- Khamrah (dulce y fuerte)\n- Odyssey (más elegante)\n¿Querés algo que dure mucho o más tranqui?",
+
+  mujer: "🌸 Para mujer:\n- Yara (dulce y suave)\n- Fakhar Rose (elegante)\n- Badee (más intenso)\n¿Algo dulce o más fino?",
+
+  original: "✅ Sí, trabajamos solo perfumes originales y sellados.\nPodés comprar tranquilo.",
+
+  duracion: "💥 Son perfumes de alta fijación.\nMuchos duran 8 a 12 horas o más, incluso quedan en la ropa."
+};
+
+function toggleChatbot() {
+  const container = document.querySelector(".chatbot-container");
+  const toggle = document.querySelector(".chatbot-toggle");
+  
+  container.classList.toggle("open");
+  toggle.classList.toggle("hidden");
+  
+  if (container.classList.contains("open")) {
+    document.getElementById("chatbotInput").focus();
+  }
+}
+
+function sendChatMessage() {
+  const input = document.getElementById("chatbotInput");
+  const message = input.value.trim();
+  
+  if (!message) return;
+  
+  // Mostrar mensaje del usuario
+  addChatMessage(message, "user");
+  input.value = "";
+  
+  // Respuesta del bot después de 500ms
+  setTimeout(() => {
+    const response = getBotResponse(message);
+    addChatMessage(response, "bot");
+  }, 500);
+}
+
+function addChatMessage(text, sender) {
+  const messagesDiv = document.getElementById("chatbotMessages");
+  
+  const messageEl = document.createElement("div");
+  messageEl.className = `chatbot-message ${sender}`;
+  messageEl.innerHTML = `<div class="chatbot-bubble">${text}</div>`;
+  
+  messagesDiv.appendChild(messageEl);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function getBotResponse(userMessage) {
+  const msg = userMessage.toLowerCase();
+
+  if (msg.includes("hola") || msg.includes("buenas")) return CHATBOT_RESPONSES.hola;
+
+  if (msg.includes("precio") || msg.includes("cuanto") || msg.includes("sale"))
+    return CHATBOT_RESPONSES.precio;
+
+  if (msg.includes("envio") || msg.includes("envíos") || msg.includes("mandan"))
+    return CHATBOT_RESPONSES.envio;
+
+  if (msg.includes("oferta") || msg.includes("promo") || msg.includes("descuento"))
+    return CHATBOT_RESPONSES.oferta;
+
+  if (msg.includes("marca")) return CHATBOT_RESPONSES.marca;
+
+  if (msg.includes("pago") || msg.includes("tarjeta"))
+    return CHATBOT_RESPONSES.pago;
+
+  if (msg.includes("whatsapp") || msg.includes("contacto"))
+    return CHATBOT_RESPONSES.whatsapp;
+
+  if (msg.includes("catalogo") || msg.includes("ver"))
+    return CHATBOT_RESPONSES.catalogo;
+
+  if (msg.includes("recomendas") || msg.includes("cual"))
+    return CHATBOT_RESPONSES.recomendacion;
+
+  if (msg.includes("hombre")) return CHATBOT_RESPONSES.hombre;
+
+  if (msg.includes("mujer")) return CHATBOT_RESPONSES.mujer;
+
+  if (msg.includes("original")) return CHATBOT_RESPONSES.original;
+
+  if (msg.includes("dura") || msg.includes("duracion"))
+    return CHATBOT_RESPONSES.duracion;
+
+  return CHATBOT_RESPONSES.default;
+}
 /* ─── INIT ───────────────────────────────────────────────── */
 // Renderizar todos los productos al cargar la página
 renderProducts(PRODUCTS);
