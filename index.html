@@ -43,6 +43,27 @@
   Inicio / <span>Fragancias</span>
 </div>
 
+<!-- ═══ BANNER CAROUSEL ════════════════════════════════════ -->
+<div class="banner-carousel">
+  <div class="carousel-container">
+    <img id="bannerImage" src="./imagenes/Banners.png" alt="Banner" />
+  </div>
+  
+  <button class="carousel-btn prev" onclick="prevBanner()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="15" y1="19" x2="9" y2="12" /><line x1="15" y1="5" x2="9" y2="12" />
+    </svg>
+  </button>
+  
+  <button class="carousel-btn next" onclick="nextBanner()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="9" y1="19" x2="15" y2="12" /><line x1="9" y1="5" x2="15" y2="12" />
+    </svg>
+  </button>
+
+  <div class="carousel-dots" id="carouselDots"></div>
+</div>
+
 <!-- ═══ MAIN LAYOUT ═══════════════════════════════════════ -->
 <main class="main-layout">
 
