@@ -8,6 +8,44 @@
    ──────────────────────────────────────────────────────── */
 const WA_NUMBER = "541134843360";
 
+/* ─── BANNER CAROUSEL ────────────────────────────────────── */
+const BANNER_IMAGES = [
+  "./imagenes/banner-1.jpg",
+  "./imagenes/banner-2.jpg",
+  "./imagenes/banner-3.jpg",
+];
+let currentBannerIndex = 0;
+
+function showBanner(index) {
+  if (BANNER_IMAGES.length === 0) return;
+  currentBannerIndex = (index + BANNER_IMAGES.length) % BANNER_IMAGES.length;
+  document.getElementById("bannerImage").src = BANNER_IMAGES[currentBannerIndex];
+  updateBannerDots();
+}
+
+function nextBanner() {
+  showBanner(currentBannerIndex + 1);
+}
+
+function prevBanner() {
+  showBanner(currentBannerIndex - 1);
+}
+
+function updateBannerDots() {
+  const dotsDiv = document.getElementById("carouselDots");
+  dotsDiv.innerHTML = BANNER_IMAGES.map(
+    (_, i) =>
+      `<div class="dot ${i === currentBannerIndex ? "active" : ""}" onclick="showBanner(${i})"></div>`
+  ).join("");
+}
+
+// Inicializar banner
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", updateBannerDots);
+} else {
+  updateBannerDots();
+}
+
 /* ─── BASE DE PRODUCTOS ──────────────────────────────────────
    Para agregar un producto, duplicar un objeto y completar:
      id       → número único
@@ -26,7 +64,7 @@ const PRODUCTS = [
     marca: "Lattafa",
     nombre: "YARA PINK",
     descripcion: " EDP 100ML",
-    precio: 52000,
+    precio: 55000,
     genero: "femenino",
     badge: "hot",
     emoji: "",
@@ -38,7 +76,7 @@ const PRODUCTS = [
     marca: "Lattafa",
     nombre: "YARA CANDY ",
     descripcion: "EDP 100ML",
-    precio: 52000,
+    precio: 55000,
     genero: "femenino",
     badge: "new",
     emoji: "",
@@ -86,7 +124,7 @@ const PRODUCTS = [
     marca: "Lattafa",
     nombre: "KHAMRAH DUKHAN",
     descripcion: "EDP 100ML",
-    precio: 55000,
+    precio: 60000,
     genero: "masculino",
     badge: "oferta",
     emoji: "⚓",
@@ -110,7 +148,7 @@ const PRODUCTS = [
     marca: "Lattafa",
     nombre: "MAAHIR BLACK",
     descripcion: " EDP 100ml",
-    precio: 48000,
+    precio: 49960,
     genero: "masculino",
     badge: "oferta",
     emoji: "🌿",
@@ -158,7 +196,7 @@ const PRODUCTS = [
     marca: "Afnan",
     nombre: "9 PM",
     descripcion: " EDP 100ml",
-    precio: 55000,
+    precio: 57600,
     genero: "masculino",
     badge: "hot",
     emoji: "🏆",
@@ -170,7 +208,7 @@ const PRODUCTS = [
     marca: "French Avenue",
     nombre: "LIQUID BRUN",
     descripcion: "EDP 100ml",
-    precio: 85000,
+    precio: 91990,
     genero: "masculino",
     badge: "hot",
     emoji: "",
@@ -182,7 +220,7 @@ const PRODUCTS = [
     marca: "Lattafa",
     nombre: "MAYAR PINK",
     descripcion: "EDP 100ML",
-    precio: 55000,
+    precio: 55960,
     genero: "femenino",
     badge: "new",
     emoji: "💎",
@@ -206,7 +244,7 @@ const PRODUCTS = [
     marca: "Lattafa",
     nombre: "BADE'E AL OUD HONOR & GLORY",
     descripcion: "EDP 100ML",
-    precio: 55000,
+    precio: 55900,
     genero: "masculino", 
     badge: null, 
     emoji: "🌟",
@@ -218,7 +256,7 @@ const PRODUCTS = [
     marca: "Lattafa",
     nombre: "BADE'E AL OUD AMETHYST",
     descripcion: "EDP 100ML",
-    precio: 55000,
+    precio: 55900,
     genero: "unisex", 
     badge: "hot", 
     emoji: "🌟",
@@ -230,7 +268,7 @@ const PRODUCTS = [
     marca: "Lattafa",
     nombre: "BADE'E AL OUD FOR GLORY",
     descripcion: "EDP 100ML",
-    precio: 55000,
+    precio: 55900,
     genero: "masculino", 
     badge: "new", 
     emoji: "hot",
@@ -239,6 +277,18 @@ const PRODUCTS = [
 },
 {
     id: 19,
+    marca: "Lattafa",
+    nombre: "BADE'E SUBLIME",
+    descripcion: "EDP 100ML",
+    precio: 55900,
+    genero: "femenino", 
+    badge: "new", 
+    emoji: "hot",
+    imagen: "./imagenes/badeered.png",
+    notas: "Manzana · Lichi · Rosa",
+},
+{
+    id: 20,
     marca: "Lattafa",
     nombre: "QAED AL FURSAN UNLIMITED ",
     descripcion: "EDP 90ML",
@@ -250,7 +300,7 @@ const PRODUCTS = [
     notas: "Coco · Almizcle · Vainilla",
   },
   {
-    id: 20,
+    id: 21,
     marca: "Lattafa",
     nombre: "QAED AL FURSAN",
     descripcion: "EDP 90ML",
@@ -262,7 +312,7 @@ const PRODUCTS = [
     notas: "Ambar Gris · Almizcle · Vainilla",
   },
   {
-    id: 21,
+    id: 22,
     marca: "Lattafa",
     nombre: "ANA ABIYEDH ROUGE",
     descripcion: "EDP 60ML",
@@ -273,6 +323,19 @@ const PRODUCTS = [
     imagen: "./imagenes/ana.png",
     notas: "Pera · Caramelo · Ambar",
   },
+    {
+    id: 24,
+    marca: "Lattafa",
+    nombre: "RAVE NOW",
+    descripcion: "EDP 100ML",
+    precio: 49900,
+    genero: "masculino",
+    badge: "hot",
+    emoji: "💎",
+    imagen: "./imagenes/rave.png",
+    notas: "Piña · Bergamota · Pachuli",
+  },
+  
   
 ];
 
@@ -514,33 +577,3 @@ function updatePrice(val) {
 /* ─── INIT ───────────────────────────────────────────────── */
 // Renderizar todos los productos al cargar la página
 renderProducts(PRODUCTS);
-
-document.getElementById("formDevolucion").addEventListener("submit", function(e){
-  e.preventDefault();
-
-  const nombre = document.getElementById("nombre").value;
-  const telefono = document.getElementById("telefono").value;
-  const email = document.getElementById("email").value;
-  const pedido = document.getElementById("pedido").value;
-  const motivo = document.getElementById("motivo").value;
-  const mensaje = document.getElementById("mensaje").value;
-
-  const texto = encodeURIComponent(
-`Solicitud de devolución
-
-Nombre: ${nombre}
-Teléfono: ${telefono}
-Email: ${email}
-Pedido: ${pedido}
-Motivo: ${motivo}
-
-Detalle:
-${mensaje}`
-  );
-
-  const numero = "541134843360"; // tu número directo
-
-  window.open(`https://wa.me/${numero}?text=${texto}`, "_blank");
-
-  this.reset();
-});
