@@ -335,6 +335,18 @@ const PRODUCTS = [
     imagen: "./imagenes/rave.png",
     notas: "Piña · Bergamota · Pachuli",
   },
+     {
+    id: 25,
+    marca: "Lattafa",
+    nombre: "24 CARAT PURE GOLD",
+    descripcion: "EDP 100ML",
+    precio: 45800,
+    genero: "masculino",
+    badge: "hot",
+    emoji: "💎",
+    imagen: "./imagenes/carat.png",
+    notas: "Ambar · Canela · Cuero",
+  },
   
   
 ];
