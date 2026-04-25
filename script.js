@@ -99,7 +99,11 @@ const PRODUCTS = [
     precio: 48900,
     genero: "femenino",
     badge: null,
-    imagenes:"./imagenes/durrat.png",
+    imagenes: [
+    "./imagenes/durrat.png",
+    "./imagenes/img/durrat1.png",
+    "./imagenes/img/durrat2.png",
+    ],
     emoji: "🌙",
     notas: "Vainilla · Azafran · Cardamomo",
   },
@@ -160,7 +164,11 @@ const PRODUCTS = [
     genero: "unisex",
     badge: "new",
     emoji: "",
-    imagenes:"./imagenes/kingdom.png",
+    imagenes:[
+    "./imagenes/kingdom.png",
+    "./imagenes/img/kingdom2.png",
+    "./imagenes/img/kingdom3.png",
+    ],
     notas: "Lavanda · Vainilla · Tabaco",
   },
   {
@@ -172,7 +180,11 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "oferta",
     emoji: "🌿",
-    imagenes:"./imagenes/maahir.png",
+    imagenes:[
+    "./imagenes/maahir.png",
+    "./imagenes/img/maahir1.png",
+    "./imagenes/img/maahir2.png",
+  ],
     notas: "Oud · Rosa · Ambar",
   },
   {
@@ -249,7 +261,11 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "hot",
     emoji: "",
-    imagenes:"./imagenes/liquidbrun.png",
+    imagenes:[
+    "./imagenes/liquidbrun.png",
+    "./imagenes/img/liquid2.png",
+    "./imagenes/liquid3.png",
+  ],
     notas: "Canela · Vainilla · Elemi",
   },
   {
@@ -261,7 +277,11 @@ const PRODUCTS = [
     genero: "femenino",
     badge: "new",
     emoji: "💎",
-    imagenes: "./imagenes/mayarpink.png",
+    imagenes:[
+     "./imagenes/mayarpink.png",
+     "./imagenes/img/mayar1.png",
+     "./imagenes/img/mayar2.png",
+    ],
     notas: "Sandalo · Almizcle · Vainilla",
   },
   {
@@ -273,7 +293,11 @@ const PRODUCTS = [
     genero: "femenino",
     badge: "hot",
     emoji: "💎",
-    imagenes: "./imagenes/mayarcherry.png",
+    imagenes:[
+     "./imagenes/mayarcherry.png",
+      "./imagenes/img/cherry.png",
+      "./imagenes/img/cherry2.png",
+    ],
     notas: "Cherry Jam  · Fresa · Vainilla",
   },
   {
@@ -349,7 +373,11 @@ const PRODUCTS = [
     genero: "unisex",
     badge: "new",
     emoji: "💎",
-    imagenes: "./imagenes/qaed.png",
+    imagenes: [
+    "./imagenes/qaed.png",
+    "./imagenes/img/qaedblanco.png",
+    "./imagenes/img/qaedblanco2.png",
+    ],
     notas: "Coco · Almizcle · Vainilla",
   },
   {
@@ -361,7 +389,11 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "new",
     emoji: "💎",
-    imagenes: "./imagenes/qaedblack.png",
+    imagenes: [
+    "./imagenes/qaedblack.png",
+    "./imagenes/img/qaednegro1.png",
+    "./imagenes/img/qaednegro2.png",
+    ],
     notas: "Ambar Gris · Almizcle · Vainilla",
   },
   {
@@ -373,7 +405,11 @@ const PRODUCTS = [
     genero: "femenino",
     badge: "hot",
     emoji: "💎",
-    imagenes: "./imagenes/ana.png",
+    imagenes: [
+    "./imagenes/ana.png",
+    "./imagenes/img/ana2.png",
+    "./imagenes/img/ana3.png",
+  ],
     notas: "Pera · Caramelo · Ambar",
   },
     {
@@ -385,7 +421,11 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "hot",
     emoji: "💎",
-    imagenes: "./imagenes/rave.png",
+    imagenes:[
+     "./imagenes/rave.png",
+     "./imagenes/img/rave1.png",
+     "./imagenes/img/rave2.png",
+    ],
     notas: "Piña · Bergamota · Pachuli",
   },
      {
@@ -397,7 +437,11 @@ const PRODUCTS = [
     genero: "masculino",
     badge: "hot",
     emoji: "💎",
-    imagenes: "./imagenes/carat.png",
+    imagenes:[ 
+    "./imagenes/carat.png",
+    "./imagenes/img/carat1.png",
+    "./imagenes/img/carat2.png",
+    ],
     notas: "Ambar · Canela · Cuero",
   },
   
