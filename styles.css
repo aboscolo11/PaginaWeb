@@ -1,579 +1,1028 @@
 /* ════════════════════════════════════════════════════════
    TecnoAdvance — Perfumes Árabes
-   script.js
+   styles.css
    ════════════════════════════════════════════════════════ */
 
-/* ─── CONFIGURACIÓN ──────────────────────────────────────────
-   Número de WhatsApp (sin +, con código de país)
-   ──────────────────────────────────────────────────────── */
-const WA_NUMBER = "541134843360";
+/* ─── RESET & VARIABLES ─────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --gold:      #b8962e;
+  --gold-lt:   #d4af54;
+  --black:     #111111;
+  --dark:      #1e1e1e;
+  --mid:       #555555;
+  --soft:      #888888;
+  --border:    #e8e8e8;
+  --bg:        #fafafa;
+  --white:     #ffffff;
+  --wa-green:  #25d366;
+  --radius:    10px;
+  --shadow:    0 2px 16px rgba(0, 0, 0, 0.08);
+  --shadow-h:  0 6px 28px rgba(0, 0, 0, 0.14);
+  --font-disp: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--black);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+}
+
+/* ─── HEADER ─────────────────────────────────────────────── */
+.header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+}
+
+.header-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 0 24px;
+  height: 68px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logo-img {
+  width: 178px;
+  height: auto;
+  max-height: 38px;
+  object-fit: contain;
+}
+
+/* Footer logo variant */
+.footer-logo {
+  color: var(--white);
+  font-family: var(--font-disp);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* ─── NAV ────────────────────────────────────────────────── */
+.nav {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.nav a {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--mid);
+  transition: background 0.18s, color 0.18s;
+}
+
+.nav a:hover,
+.nav a.active {
+  background: var(--bg);
+  color: var(--black);
+}
+
+/* ─── HEADER ACTIONS ─────────────────────────────────────── */
+.header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wa-btn-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--wa-green);
+  color: #fff;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 10px rgba(37, 211, 102, 0.3);
+}
+
+.wa-btn-header:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+}
+
+/* ─── BREADCRUMB ─────────────────────────────────────────── */
+.breadcrumb {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  font-size: 0.82rem;
+  color: var(--soft);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.breadcrumb span {
+  color: var(--black);
+  font-weight: 500;
+}
 
 /* ─── BANNER CAROUSEL ────────────────────────────────────── */
-const BANNER_IMAGES = [
-  "./imagenes/banner-1.jpg",
-  "./imagenes/banner-2.jpg",
-  "./imagenes/banner-3.jpg",
-];
-let currentBannerIndex = 0;
-
-function showBanner(index) {
-  if (BANNER_IMAGES.length === 0) return;
-  currentBannerIndex = (index + BANNER_IMAGES.length) % BANNER_IMAGES.length;
-  document.getElementById("bannerImage").src = BANNER_IMAGES[currentBannerIndex];
-  updateBannerDots();
+.banner-carousel {
+  max-width: 100%;
+  margin: 0 auto 28px;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
-function nextBanner() {
-  showBanner(currentBannerIndex + 1);
+.carousel-container {
+  width: 100%;
+  height: 0;
+  padding-bottom: 33.33%;
+  position: relative;
+  overflow: hidden;
+  background: #f0eee9;
 }
 
-function prevBanner() {
-  showBanner(currentBannerIndex - 1);
+.carousel-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.4s ease;
 }
 
-function updateBannerDots() {
-  const dotsDiv = document.getElementById("carouselDots");
-  dotsDiv.innerHTML = BANNER_IMAGES.map(
-    (_, i) =>
-      `<div class="dot ${i === currentBannerIndex ? "active" : ""}" onclick="showBanner(${i})"></div>`
-  ).join("");
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s;
 }
 
-// Inicializar banner
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", updateBannerDots);
-} else {
-  updateBannerDots();
+.carousel-btn:hover { background: rgba(0,0,0,0.8); }
+.carousel-btn.prev { left: 16px; }
+.carousel-btn.next { right: 16px; }
+
+.carousel-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
 }
 
-/* ─── BASE DE PRODUCTOS ──────────────────────────────────────
-   Para agregar un producto, duplicar un objeto y completar:
-     id       → número único
-     marca    → nombre de la marca (debe coincidir con filtros)
-     nombre   → nombre del perfume
-     descripcion → texto corto con presentación
-     precio   → precio en ARS (número, sin puntos ni $)
-     genero   → "masculino" | "femenino" | "unisex"
-     badge    → "new" | "hot" | "oferta" | null
-     emoji    → emoji usado como imagen placeholder
-     notas    → notas olfativas separadas por ·
-   ──────────────────────────────────────────────────────── */
-const PRODUCTS = [
-  {
-    id: 1,
-    marca: "Lattafa",
-    nombre: "YARA PINK",
-    descripcion: " EDP 100ML",
-    precio: 55000,
-    genero: "femenino",
-    badge: "hot",
-    emoji: "",
-    imagen:"./imagenes/yara pink.png",
-    notas: "Almizcle · Sandalo · Vainilla",
-  },
-  {
-    id: 2,
-    marca: "Lattafa",
-    nombre: "YARA CANDY ",
-    descripcion: "EDP 100ML",
-    precio: 55000,
-    genero: "femenino",
-    badge: "new",
-    emoji: "",
-    imagen:"./imagenes/yara candy.png",
-    notas: "Vainilla · Mandarina · Sandalo",
-  },
-  {
-    id: 3,
-    marca: "Al Wataniah",
-    nombre: "DURRAT AL AROOS",
-    descripcion: "EDP 85ML",
-    precio: 48900,
-    genero: "femenino",
-    badge: null,
-    imagen:"./imagenes/durrat.png",
-    emoji: "🌙",
-    notas: "Vainilla · Azafran · Cardamomo",
-  },
-  {
-    id: 4,
-    marca: "Lattafa",
-    nombre: "KHAMRAH BLACK",
-    descripcion: "EDP 100ML",
-    precio: 60000,
-    genero: "masculino",
-    badge: "hot",
-    emoji: "🖤",
-    imagen:"./imagenes/khamrah.png",
-    notas: "Canela · Nuez Moscada · Bergamota",
-  },
-  {
-    id: 5,
-    marca: "Lattafa",
-    nombre: "KHAMRAH QHAWA",
-    descripcion: "EDP 100ML",
-    precio: 60000,
-    genero: "masculino",
-    badge: null,
-    imagen:"./imagenes/qhawa.png",
-    emoji: "👑",
-    notas: "Bergamota · Cuero · Sándalo",
-  },
-  {
-    id: 6,
-    marca: "Lattafa",
-    nombre: "KHAMRAH DUKHAN",
-    descripcion: "EDP 100ML",
-    precio: 60000,
-    genero: "masculino",
-    badge: "oferta",
-    emoji: "⚓",
-    imagen:"./imagenes/dukhan.png",
-    notas: "Inicienso · Tabaco · Pachuli",
-  },
-  {
-    id: 11,
-    marca: "Lattafa",
-    nombre: "THE KINGDOM ",
-    descripcion: "EDP 100ml",
-    precio: 63000,
-    genero: "unisex",
-    badge: "new",
-    emoji: "",
-    imagen:"./imagenes/kingdom.png",
-    notas: "Lavanda · Vainilla · Tabaco",
-  },
-  {
-    id: 10,
-    marca: "Lattafa",
-    nombre: "MAAHIR BLACK",
-    descripcion: " EDP 100ml",
-    precio: 49960,
-    genero: "masculino",
-    badge: "oferta",
-    emoji: "🌿",
-    imagen:"./imagenes/maahir.png",
-    notas: "Oud · Rosa · Ambar",
-  },
-  {
-    id: 9,
-    marca: "Armaf",
-    nombre: "MANDARIN SKY",
-    descripcion: " EDP 100ML",
-    precio: 68000,
-    genero: "masculino",
-    badge: "new",
-    emoji: "🌃",
-    imagen:"./imagenes/mandarin.png",
-    notas: "Mandarina · Naranja · Caramelo",
-  },
-    {
-    id: 8,
-    marca: "Armaf",
-    nombre: "ODYSSEY HOMME BLACK",
-    descripcion: "EDP 100ML",
-    precio: 65000,
-    genero: "masculino",
-    badge: "hot",
-    emoji: "💎",
-    imagen: "./imagenes/homme.png",
-    notas: "Vainilla Negra · Cuero · Amaderado",
-  },
-    {
-    id: 7,
-    marca: "Armaf",
-    nombre: "ODYSSEY CANDEE WOMAN",
-    descripcion: "EDP 100ML",
-    precio: 65000,
-    genero: "femenino",
-    badge: "hot",
-    emoji: "💎",
-    imagen: "./imagenes/candee.png",
-    notas: "Frambuesa · Caramelo  · Ambar",
-  },
-  {
-    id: 12,
-    marca: "Afnan",
-    nombre: "9 PM",
-    descripcion: " EDP 100ml",
-    precio: 57600,
-    genero: "masculino",
-    badge: "hot",
-    emoji: "🏆",
-    imagen:"./imagenes/9pm.png",
-    notas: "Manzana · Canela · Lavanda",
-  },
-  {
-    id: 13,
-    marca: "French Avenue",
-    nombre: "LIQUID BRUN",
-    descripcion: "EDP 100ml",
-    precio: 91990,
-    genero: "masculino",
-    badge: "hot",
-    emoji: "",
-    imagen:"./imagenes/liquidbrun.png",
-    notas: "Canela · Vainilla · Elemi",
-  },
-  {
-    id: 14,
-    marca: "Lattafa",
-    nombre: "MAYAR PINK",
-    descripcion: "EDP 100ML",
-    precio: 55960,
-    genero: "femenino",
-    badge: "new",
-    emoji: "💎",
-    imagen: "./imagenes/mayarpink.png",
-    notas: "Sandalo · Almizcle · Vainilla",
-  },
-  {
-    id: 15,
-    marca: "Lattafa",
-    nombre: "MAYAR CHERRY INTENSE",
-    descripcion: "EDP 100ML",
-    precio: 59560,
-    genero: "femenino",
-    badge: "hot",
-    emoji: "💎",
-    imagen: "./imagenes/mayarcherry.png",
-    notas: "Cherry Jam  · Fresa · Vainilla",
-  },
-  {
-    id: 16,
-    marca: "Lattafa",
-    nombre: "BADE'E AL OUD HONOR & GLORY",
-    descripcion: "EDP 100ML",
-    precio: 55900,
-    genero: "masculino", 
-    badge: null, 
-    emoji: "🌟",
-    imagen: "./imagenes/honor.png",
-    notas: "Canela · Creme Brulee · Vainilla",
-},
-{
-    id: 17,
-    marca: "Lattafa",
-    nombre: "BADE'E AL OUD AMETHYST",
-    descripcion: "EDP 100ML",
-    precio: 55900,
-    genero: "unisex", 
-    badge: "hot", 
-    emoji: "🌟",
-    imagen: "./imagenes/badeevioleta.png",
-    notas: "Pimienta Rosa · Jazmin · Bergamota",
-},
-{
-    id: 18,
-    marca: "Lattafa",
-    nombre: "BADE'E AL OUD FOR GLORY",
-    descripcion: "EDP 100ML",
-    precio: 55900,
-    genero: "masculino", 
-    badge: "new", 
-    emoji: "hot",
-    imagen: "./imagenes/badeenegro.png",
-    notas: "Azafran · Nuez Moscada · Lavanda",
-},
-{
-    id: 19,
-    marca: "Lattafa",
-    nombre: "BADE'E SUBLIME",
-    descripcion: "EDP 100ML",
-    precio: 55900,
-    genero: "femenino", 
-    badge: "new", 
-    emoji: "hot",
-    imagen: "./imagenes/badeered.png",
-    notas: "Manzana · Lichi · Rosa",
-},
-{
-    id: 20,
-    marca: "Lattafa",
-    nombre: "QAED AL FURSAN UNLIMITED ",
-    descripcion: "EDP 90ML",
-    precio: 48600,
-    genero: "unisex",
-    badge: "new",
-    emoji: "💎",
-    imagen: "./imagenes/qaed.png",
-    notas: "Coco · Almizcle · Vainilla",
-  },
-  {
-    id: 21,
-    marca: "Lattafa",
-    nombre: "QAED AL FURSAN",
-    descripcion: "EDP 90ML",
-    precio: 48600,
-    genero: "masculino",
-    badge: "new",
-    emoji: "💎",
-    imagen: "./imagenes/qaedblack.png",
-    notas: "Ambar Gris · Almizcle · Vainilla",
-  },
-  {
-    id: 22,
-    marca: "Lattafa",
-    nombre: "ANA ABIYEDH ROUGE",
-    descripcion: "EDP 60ML",
-    precio: 48900,
-    genero: "femenino",
-    badge: "hot",
-    emoji: "💎",
-    imagen: "./imagenes/ana.png",
-    notas: "Pera · Caramelo · Ambar",
-  },
-    {
-    id: 24,
-    marca: "Lattafa",
-    nombre: "RAVE NOW",
-    descripcion: "EDP 100ML",
-    precio: 49900,
-    genero: "masculino",
-    badge: "hot",
-    emoji: "💎",
-    imagen: "./imagenes/rave.png",
-    notas: "Piña · Bergamota · Pachuli",
-  },
-  
-  
-];
-
-/* ─── ESTADO ─────────────────────────────────────────────── */
-let filteredProducts = [...PRODUCTS];
-
-/* ─── HELPERS ────────────────────────────────────────────── */
-
-/**
- * Formatea un número como precio ARS.
- * Ej: 28500 → "$28.500"
- */
-function formatPrice(n) {
-  return "$" + n.toLocaleString("es-AR");
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-/**
- * Calcula el precio de una cuota.
- * @param {number} price  - Precio total
- * @param {number} cuotas - Cantidad de cuotas (default 3)
- */
-function installmentPrice(price, cuotas = 3) {
-  return formatPrice(Math.ceil(price / cuotas));
+.dot.active { background: rgba(255,255,255,0.9); }
+
+/* ─── MAIN LAYOUT ────────────────────────────────────────── */
+.main-layout {
+  max-width: 1380px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 28px;
+  padding: 0 24px 60px;
+  align-items: start;
 }
 
-/**
- * Genera el link de WhatsApp con el nombre del producto.
- * @param {Object} producto
- */
-function buildWaLink(producto) {
-  const msg = encodeURIComponent(
-    `Hola quiero comprar ${producto.marca} ${producto.nombre}`
-  );
-  return `https://wa.me/${WA_NUMBER}?text=${msg}`;
+/* ─── SIDEBAR ────────────────────────────────────────────── */
+.sidebar {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  position: sticky;
+  top: 84px;
 }
 
-/**
- * Genera el HTML del badge (Nuevo / Popular / Oferta).
- * @param {string|null} badge
- */
-function badgeHTML(badge) {
-  if (!badge) return "";
-  const labels = { new: "Nuevo", hot: "🔥 Popular", oferta: "Oferta" };
-  return `<div class="product-badge badge-${badge}">${labels[badge]}</div>`;
+.sidebar-title {
+  font-family: var(--font-disp);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
 }
 
-/**
- * Genera el SVG placeholder con emoji como imagen.
- * Reemplazar el src con la URL real de la imagen del producto.
- * @param {Object} p - Producto
- */
-function productImgSrc(p) {
-  if (p.imagen) {
-    return p.imagen;  // usa la imagen real si existe
+.filter-section {
+  margin-bottom: 24px;
+}
+
+.filter-section h4 {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--soft);
+  margin-bottom: 12px;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: color 0.15s;
+}
+
+.filter-option input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--gold);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.filter-option label {
+  font-size: 0.9rem;
+  color: var(--dark);
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-option label .count {
+  color: var(--soft);
+  font-size: 0.8rem;
+}
+
+.filter-option:hover label {
+  color: var(--gold);
+}
+
+/* ─── PRICE FILTER ───────────────────────────────────────── */
+.price-range {
+  margin-top: 4px;
+}
+
+.price-inputs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.price-inputs input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: var(--dark);
+  outline: none;
+}
+
+.price-inputs input:focus {
+  border-color: var(--gold);
+}
+
+.price-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, var(--gold) 0%, var(--gold) 60%, var(--border) 60%);
+  border-radius: 4px;
+  outline: none;
+}
+
+.price-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--gold);
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid var(--white);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ─── CLEAR FILTERS ──────────────────────────────────────── */
+.clear-filters {
+  width: 100%;
+  padding: 9px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  font-size: 0.84rem;
+  color: var(--mid);
+  font-weight: 500;
+  transition: all 0.15s;
+  margin-top: 8px;
+}
+
+.clear-filters:hover {
+  border-color: var(--black);
+  color: var(--black);
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0;
+}
+
+/* ─── CATALOG AREA ───────────────────────────────────────── */
+.catalog {
+  min-width: 0;
+}
+
+.catalog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.catalog-meta {
+  font-size: 0.88rem;
+  color: var(--soft);
+}
+
+.catalog-meta strong {
+  color: var(--black);
+  font-weight: 600;
+}
+
+.catalog-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.sort-select {
+  padding: 8px 32px 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: var(--dark);
+  background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.sort-select:focus {
+  border-color: var(--gold);
+}
+
+.view-toggle {
+  display: flex;
+  gap: 2px;
+}
+
+.view-btn {
+  width: 34px;
+  height: 34px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  transition: all 0.15s;
+}
+
+.view-btn.active {
+  background: var(--black);
+  border-color: var(--black);
+}
+
+.view-btn.active svg {
+  stroke: #fff;
+}
+
+.view-btn:not(.active):hover {
+  border-color: var(--black);
+}
+
+/* ─── PRODUCT GRID ───────────────────────────────────────── */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ─── PRODUCT CARD ───────────────────────────────────────── */
+.product-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: box-shadow 0.22s, transform 0.22s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  box-shadow: var(--shadow-h);
+  transform: translateY(-3px);
+}
+
+/* ─── BADGE ──────────────────────────────────────────────── */
+.product-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.badge-new    { background: var(--black); color: var(--white); }
+.badge-hot    { background: #e74c3c;      color: var(--white); }
+.badge-oferta { background: var(--gold);  color: var(--white); }
+
+/* ─── PRODUCT IMAGE ──────────────────────────────────────── */
+.product-img-wrap {
+  position: relative;
+  overflow: hidden;
+  background: #f5f2ee;
+  aspect-ratio: 1 / 1.1;
+}
+
+.product-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 20px;
+  transition: transform 0.35s ease;
+}
+
+.product-card:hover .product-img-wrap img {
+  transform: scale(1.06);
+}
+
+/* Quick WhatsApp on hover */
+.quick-wa {
+  position: absolute;
+  bottom: -48px;
+  left: 0;
+  right: 0;
+  background: rgba(37, 211, 102, 0.92);
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: bottom 0.22s ease;
+  cursor: pointer;
+}
+
+.product-card:hover .quick-wa {
+  bottom: 0;
+}
+
+/* ─── PRODUCT INFO ───────────────────────────────────────── */
+.product-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.product-brand {
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold);
+}
+
+.product-name {
+  font-family: var(--font-disp);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--black);
+}
+
+.product-size {
+  font-size: 0.8rem;
+  color: var(--soft);
+}
+
+.product-pricing {
+  margin-top: 4px;
+}
+
+.product-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.product-installment {
+  font-size: 0.83rem;
+  color: #1a7a4a;
+  font-weight: 600;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.product-installment::before {
+  content: '💳';
+  font-size: 0.75rem;
+}
+
+/* ─── PRODUCT ACTIONS ────────────────────────────────────── */
+.product-actions {
+  padding: 12px 16px 16px;
+  margin-top: auto;
+}
+
+.btn-wa {
+  width: 100%;
+  padding: 12px;
+  background: var(--black);
+  color: var(--white);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.18s, transform 0.15s;
+  letter-spacing: 0.2px;
+}
+
+.btn-wa:hover {
+  background: var(--gold);
+  transform: translateY(-1px);
+}
+
+/* ─── CATEGORY BANNER ────────────────────────────────────── */
+.category-banner {
+  background: linear-gradient(135deg, var(--black) 0%, #2a2318 100%);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+}
+
+.category-banner::after {
+  content: '🕌';
+  position: absolute;
+  right: 120px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 3.5rem;
+  opacity: 0.08;
+}
+
+.banner-text h2 {
+  font-family: var(--font-disp);
+  font-size: 1.5rem;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.banner-text p {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.banner-badge {
+  background: var(--gold);
+  color: var(--white);
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── FLOATING WHATSAPP ──────────────────────────────────── */
+.wa-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.wa-float-bubble {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+  animation: bob 2.5s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+.wa-float-btn {
+  width: 58px;
+  height: 58px;
+  background: var(--wa-green);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+  transition: transform 0.2s;
+}
+
+.wa-float-btn:hover {
+  transform: scale(1.1);
+}
+
+/* ─── ACTIVE FILTERS ─────────────────────────────────────── */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.filter-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--black);
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.filter-tag button {
+  background: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 2px;
+  transition: color 0.15s;
+}
+
+.filter-tag button:hover {
+  color: #fff;
+}
+
+/* ─── NO RESULTS ─────────────────────────────────────────── */
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--soft);
+}
+
+.no-results h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: var(--mid);
+}
+
+/* ─── PAGINATION ─────────────────────────────────────────── */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 40px;
+}
+
+.page-btn {
+  width: 38px;
+  height: 38px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.page-btn.active {
+  background: var(--black);
+  color: #fff;
+  border-color: var(--black);
+}
+
+.page-btn:hover:not(.active) {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ─── MOBILE FILTER TOGGLE ───────────────────────────────── */
+.mobile-filter-toggle {
+  display: none;
+  width: 100%;
+  padding: 12px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* ─── FOOTER ─────────────────────────────────────────────── */
+.footer {
+  background: var(--black);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 48px 24px 28px;
+}
+
+.footer-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-brand p {
+  font-size: 0.87rem;
+  line-height: 1.7;
+  max-width: 280px;
+}
+
+.import-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(184, 150, 46, 0.15);
+  border: 1px solid rgba(184, 150, 46, 0.3);
+  color: var(--gold-lt);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-top: 14px;
+}
+
+.footer h5 {
+  color: var(--white);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.footer ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer ul li a {
+  font-size: 0.88rem;
+  transition: color 0.15s;
+}
+
+.footer ul li a:hover {
+  color: var(--gold-lt);
+}
+
+.socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.social-icon {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  transition: all 0.15s;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.social-icon:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.footer-bottom {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.footer-bottom a:hover {
+  color: var(--gold-lt);
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* ─── RENDERIZADO ────────────────────────────────────────── */
-
-/**
- * Genera el HTML completo de una tarjeta de producto.
- * @param {Object} p - Producto
- */
-function cardHTML(p) {
-  const waLink = buildWaLink(p);
-  return `
-    <div class="product-card"
-         data-genero="${p.genero}"
-         data-marca="${p.marca}"
-         data-precio="${p.precio}">
-
-      ${badgeHTML(p.badge)}
-
-      <div class="product-img-wrap">
-        <img
-          src="${productImgSrc(p)}"
-          alt="${p.marca} ${p.nombre}"
-          loading="lazy"
-        />
-        <a href="${waLink}" target="_blank" class="quick-wa">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
-          Comprar por WhatsApp
-        </a>
-      </div>
-
-      <div class="product-info">
-        <div class="product-brand">${p.marca}</div>
-        <div class="product-name">${p.nombre}</div>
-        <div class="product-size">${p.descripcion} · ${p.notas}</div>
-        <div class="product-pricing">
-          <div class="product-price">${formatPrice(p.precio)}</div>
-          <div class="product-installment">
-            3 cuotas sin interés de ${installmentPrice(p.precio)}
-          </div>
-        </div>
-      </div>
-
-      <div class="product-actions">
-        <a href="${waLink}" target="_blank" class="btn-wa">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
-          Comprar por WhatsApp
-        </a>
-      </div>
-    </div>`;
-}
-
-/**
- * Renderiza la lista de productos en el grid.
- * @param {Array} list - Array de productos a mostrar
- */
-function renderProducts(list) {
-  const grid  = document.getElementById("productGrid");
-  const count = document.getElementById("productCount");
-
-  if (list.length === 0) {
-    grid.innerHTML = `
-      <div class="no-results">
-        <h3>No se encontraron productos</h3>
-        <p>Probá con otros filtros o
-           <a href="https://wa.me/${WA_NUMBER}?text=Hola%20quiero%20consultar%20por%20perfumes"
-              target="_blank" style="color:var(--gold)">
-             consultanos por WhatsApp
-           </a>
-        </p>
-      </div>`;
-  } else {
-    grid.innerHTML = list.map(cardHTML).join("");
+@media (max-width: 900px) {
+  .main-layout {
+    grid-template-columns: 1fr;
   }
 
-  const n = list.length;
-  count.innerHTML = `<strong>${n}</strong> producto${n !== 1 ? "s" : ""} encontrado${n !== 1 ? "s" : ""}`;
+  .sidebar {
+    position: static;
+    display: none;
+  }
+
+  .sidebar.open {
+    display: block;
+  }
+
+  .mobile-filter-toggle {
+    display: flex;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-/* ─── FILTROS ────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
 
-/**
- * Lee los checkboxes activos y filtra el array de productos.
- * Llamada desde los onchange de los checkboxes del HTML.
- */
-function applyFilters() {
-  const checkedGeneros = [
-    ...document.querySelectorAll('[data-filter="genero"]:checked'),
-  ].map((el) => el.value);
+  .header-inner {
+    gap: 16px;
+  }
 
-  const checkedMarcas = [
-    ...document.querySelectorAll('[data-filter="marca"]:checked'),
-  ].map((el) => el.value);
+  .nav {
+    display: none;
+  }
 
-  const maxPrice = parseInt(document.getElementById("priceMax").value) || 999999;
+  .wa-btn-header span {
+    display: none;
+  }
 
-  filteredProducts = PRODUCTS.filter((p) => {
-    const generoOk = checkedGeneros.length === 0 || checkedGeneros.includes(p.genero);
-    const marcaOk  = checkedMarcas.length  === 0 || checkedMarcas.includes(p.marca);
-    const precioOk = p.precio <= maxPrice;
-    return generoOk && marcaOk && precioOk;
-  });
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
 
-  renderProducts(filteredProducts);
-  renderActiveTags(checkedGeneros, checkedMarcas);
+  .category-banner {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+  .policy-box {
+  border-top: 1px solid var(--border);
+  padding: 25px 0;
 }
 
-/**
- * Muestra los tags de filtros activos encima del grid.
- */
-function renderActiveTags(generos, marcas) {
-  const container = document.getElementById("activeFilters");
-  const tags = [
-    ...generos.map((g) => ({ label: g, type: "genero" })),
-    ...marcas.map((m)  => ({ label: m, type: "marca"  })),
-  ];
-  container.innerHTML = tags
-    .map(
-      (t) =>
-        `<div class="filter-tag">
-           ${t.label}
-           <button onclick="removeFilter('${t.type}','${t.label}')">×</button>
-         </div>`
-    )
-    .join("");
+.policy-box h2 {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  font-weight: 600;
 }
 
-/**
- * Quita un filtro individual al hacer clic en el tag.
- * @param {string} type - "genero" | "marca"
- * @param {string} val  - valor del checkbox
- */
-function removeFilter(type, val) {
-  const input = document.querySelector(`[data-filter="${type}"][value="${val}"]`);
-  if (input) input.checked = false;
-  applyFilters();
+.policy-box ol {
+  padding-left: 18px;
 }
 
-/**
- * Limpia todos los filtros y restaura el catálogo completo.
- */
-function clearFilters() {
-  document.querySelectorAll("[data-filter]").forEach((el) => (el.checked = false));
-  document.getElementById("priceMax").value    = 80000;
-  document.getElementById("priceSlider").value = 80000;
-  filteredProducts = [...PRODUCTS];
-  renderProducts(filteredProducts);
-  document.getElementById("activeFilters").innerHTML = "";
+.policy-box li {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: var(--mid);
 }
 
-/* ─── ORDENAMIENTO ───────────────────────────────────────── */
-
-/**
- * Ordena los productos actualmente filtrados.
- * @param {string} val - valor del select de ordenamiento
- */
-function sortProducts(val) {
-  const arr = [...filteredProducts];
-
-  if (val === "price-asc")  arr.sort((a, b) => a.precio - b.precio);
-  if (val === "price-desc") arr.sort((a, b) => b.precio - a.precio);
-  if (val === "name")       arr.sort((a, b) => a.nombre.localeCompare(b.nombre));
-  if (val === "popular")    arr.sort((a, b) =>
-    (b.badge === "hot" ? 1 : 0) - (a.badge === "hot" ? 1 : 0)
-  );
-
-  renderProducts(arr);
+.faq-item {
+  margin-bottom: 15px;
 }
 
-/* ─── SLIDER DE PRECIO ───────────────────────────────────── */
-
-/**
- * Actualiza el campo de precio máximo al mover el slider.
- * @param {string|number} val - valor del range input
- */
-function updatePrice(val) {
-  document.getElementById("priceMax").value = parseInt(val).toLocaleString("es-AR");
-  applyFilters();
+.faq-item h3 {
+  font-size: 0.95rem;
+  cursor: pointer;
+  position: relative;
 }
 
-/* ─── INIT ───────────────────────────────────────────────── */
-// Renderizar todos los productos al cargar la página
-renderProducts(PRODUCTS);
+.faq-item h3::after {
+  content: "+";
+  position: absolute;
+  right: 0;
+}
+
+.faq-item.active h3::after {
+  content: "-";
+}
+
+.faq-item p {
+  display: none;
+  font-size: 0.85rem;
+  color: var(--soft);
+}
+
+.faq-item.active p {
+  display: block;
+  margin-top: 6px;
+}
+}
