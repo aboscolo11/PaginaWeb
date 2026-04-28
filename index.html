@@ -106,11 +106,11 @@
         <label>Armaf <span class="count">3</span></label>
       </label>
       <label class="filter-option">
-        <input type="checkbox" data-filter="marca" value="Bharara" onchange="applyFilters()">
+        <input type="checkbox" data-filter="marca" value="French Avenue" onchange="applyFilters()">
         <label>French Avenue <span class="count">2</span></label>
       </label>
       <label class="filter-option">
-        <input type="checkbox" data-filter="marca" value="Rasasi" onchange="applyFilters()">
+        <input type="checkbox" data-filter="marca" value="Al Wataniah" onchange="applyFilters()">
         <label>Al Wataniah <span class="count">2</span></label>
       </label>
     </div>
@@ -125,31 +125,8 @@
           <input type="number" id="priceMin" placeholder="Mín" value="0">
           <input type="number" id="priceMax" placeholder="Máx" value="60000">
         </div>
-        <input type="range" class="price-slider" id="priceSlider" min="0" max="80000" value="60000" oninput="updatePrice(this.value)">
+        <input type="range" class="price-slider" id="priceSlider" min="0" max="150000" value="60000" oninput="updatePrice(this.value)">
       </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- Notas -->
-    <div class="filter-section">
-      <h4>Familia Olfativa</h4>
-      <label class="filter-option">
-        <input type="checkbox" data-filter="nota" value="Oriental">
-        <label>Oriental / Amaderado</label>
-      </label>
-      <label class="filter-option">
-        <input type="checkbox" data-filter="nota" value="Oud">
-        <label>Oud</label>
-      </label>
-      <label class="filter-option">
-        <input type="checkbox" data-filter="nota" value="Fresco">
-        <label>Fresco / Acuático</label>
-      </label>
-      <label class="filter-option">
-        <input type="checkbox" data-filter="nota" value="Floral">
-        <label>Floral</label>
-      </label>
     </div>
 
     <button class="clear-filters" onclick="clearFilters()">✕ Limpiar filtros</button>
@@ -161,9 +138,7 @@
     <!-- Mobile toggle -->
     <button class="mobile-filter-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="4" y1="6" x2="20" y2="6"/>
-        <line x1="8" y1="12" x2="20" y2="12"/>
-        <line x1="12" y1="18" x2="20" y2="18"/>
+        <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/>
       </svg>
       Filtrar productos
     </button>
@@ -182,7 +157,7 @@
 
     <!-- Controls -->
     <div class="catalog-header">
-      <p class="catalog-meta" id="productCount"><strong>12</strong> productos encontrados</p>
+      <p class="catalog-meta" id="productCount"><strong>25</strong> productos encontrados</p>
       <div class="catalog-controls">
         <select class="sort-select" onchange="sortProducts(this.value)">
           <option value="default">Ordenar por</option>
@@ -191,16 +166,6 @@
           <option value="popular">Más Vendidos</option>
           <option value="name">Nombre A-Z</option>
         </select>
-        <div class="view-toggle">
-          <button class="view-btn active" title="Grilla">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="7" height="7"/>
-              <rect x="14" y="3" width="7" height="7"/>
-              <rect x="3" y="14" width="7" height="7"/>
-              <rect x="14" y="14" width="7" height="7"/>
-            </svg>
-          </button>
-        </div>
       </div>
     </div>
 
@@ -208,16 +173,10 @@
     <div class="product-grid" id="productGrid"></div>
 
     <!-- Pagination -->
-    <div class="pagination">
-      <button class="page-btn active">1</button>
-      <button class="page-btn">2</button>
-      <button class="page-btn">3</button>
-      <button class="page-btn">›</button>
-    </div>
+    <div class="pagination" id="pagination"></div>
   </section>
 </main>
 
-<!-- ═══ FLOATING WHATSAPP ════════════════════════════════ -->
 <!-- ═══ CHATBOT WIDGET ════════════════════════════════════ -->
 <div class="chatbot-container">
   <div class="chatbot-header">
@@ -249,6 +208,7 @@
     <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
   </svg>
 </button>
+
 <!-- ═══ FOOTER ════════════════════════════════════════════ -->
 <footer class="footer" id="contacto">
   <div class="footer-inner">
@@ -259,12 +219,10 @@
       <div class="socials">
         <a href="#" class="social-icon" aria-label="Instagram">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
           </svg>
         </a>
-        <a href="https://wa.me/+541134843360" target="_blank" class="social-icon" aria-label="WhatsApp">
+        <a href="https://wa.me/541134843360" target="_blank" class="social-icon" aria-label="WhatsApp">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
           </svg>
@@ -300,7 +258,7 @@
       <ul>
         <li><a href="#">📦 Todo el país</a></li>
         <li><a href="#">⚡ CABA 24-48hs</a></li>
-        <li><a href="#">🆓 Gratis +$25.000</a></li>
+        <li><a href="#">🆓 Gratis +$150.000</a></li>
       </ul>
     </div>
   </div>
