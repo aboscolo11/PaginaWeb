@@ -3,7 +3,7 @@ const WA_NUMBER = "541134843360";
 const BANNER_IMAGES = [
   "./imagenes/Banners.png",
   "./imagenes/Banner2.png",
-  "./imagenes/banner-3.jpg",
+  
 ];
 let currentBannerIndex = 0;
 
