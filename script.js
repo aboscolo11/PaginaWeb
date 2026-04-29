@@ -1,8 +1,8 @@
 const WA_NUMBER = "541134843360";
 
 const BANNER_IMAGES = [
-  "./imagenes/Banners.png",
   "./imagenes/Banner2.png",
+  "./imagenes/Banners.png",
   
 ];
 let currentBannerIndex = 0;
