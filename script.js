@@ -432,11 +432,11 @@ const PRODUCTS = [
     precio: 63879, 
     descuentoEfectivo: 10,
     genero: "masculino", 
-    badge: "oferta", 
+    badge: "new", 
     imagenes: [
       "./imagenes/img/philospura.png" 
     ], 
-    notas: "Inicienso · Tabaco · Pachuli" },
+    notas: "Naranja · Frutas · Ambar" },
   
   { id: 27, 
     marca: "Lattafa", 
@@ -445,12 +445,12 @@ const PRODUCTS = [
     precio: 61776, 
     descuentoEfectivo: 10,
     genero: "masculino", 
-    badge: "oferta", 
+    badge: "new", 
     imagenes: [
       "./imagenes/img/eclaire.png", 
       "./imagenes/img/eclaire2.png" 
     ], 
-    notas: "Inicienso · Tabaco · Pachuli" },
+    notas: "Caramelo · Miel/Flores Blancas · Vainilla" },
 ];
 
 let filteredProducts = [...PRODUCTS];
