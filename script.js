@@ -434,7 +434,7 @@ const PRODUCTS = [
     genero: "masculino", 
     badge: "oferta", 
     imagenes: [
-      "./imagenes/img/philospura.png", 
+      "./imagenes/img/philospura.png" 
     ], 
     notas: "Inicienso · Tabaco · Pachuli" },
   
@@ -448,11 +448,9 @@ const PRODUCTS = [
     badge: "oferta", 
     imagenes: [
       "./imagenes/img/eclaire.png", 
-      "./imagenes/img/eclaire2.png", 
+      "./imagenes/img/eclaire2.png" 
     ], 
     notas: "Inicienso · Tabaco · Pachuli" },
-
-
 ];
 
 let filteredProducts = [...PRODUCTS];
