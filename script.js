@@ -601,6 +601,8 @@ function cardHTML(p) {
   const waLink = buildWaLink(p);
   const hasMultipleImages = p.imagenes && p.imagenes.length > 1;
   const imageCount = p.imagenes ? p.imagenes.length : 1;
+  const volumen = (p.descripcion.match(/\d+\s?ML/i) || [""])[0];
+  const precioFinal = p.precio * (1 - p.descuentoEfectivo / 100);
 
   return `
     <div class="product-card" data-genero="${p.genero}" data-marca="${p.marca}" data-precio="${p.precio}">
@@ -615,17 +617,19 @@ function cardHTML(p) {
         <a href="${waLink}" target="_blank" class="quick-wa">Comprar por WhatsApp</a>
       </div>
       <div class="product-info">
+        ${volumen ? `<div class="product-volume">${volumen}</div>` : ''}
         <div class="product-brand">${p.marca}</div>
         <div class="product-name">${p.nombre}</div>
         <p class="product-notes">${p.notas}</p>
         <div class="product-pricing">
-          <div class="product-price">${formatPrice(p.precio)}</div>
-          <div class="product-installment">3 cuotas ${installmentPrice(p.precio)}</div>
-          <div class="payment-methods">
-            <span>💳 ${formatPrice(p.precio)}</span>
-            <span>💵 -${p.descuentoEfectivo}% ${formatPrice(Math.floor(p.precio * (1 - p.descuentoEfectivo / 100)))}</span>
+          <div class="price-row">
+            <span class="price-original">${formatPrice(p.precio)}</span>
+            <span class="price-final">${formatPrice(precioFinal)}</span>
+            <span class="price-off-badge">${p.descuentoEfectivo}% OFF</span>
           </div>
+          <div class="product-installment">3 cuotas de ${installmentPrice(precioFinal)} sin interés</div>
         </div>
+        <div class="product-shipping">🚚 Envío gratis en 24-48hs</div>
       </div>
       <div class="product-actions">
         <button type="button" class="btn-cart" onclick="addToCart(${p.id})">Agregar al carrito</button>
@@ -678,12 +682,14 @@ function applyFilters() {
   const checkedMarcas = [...document.querySelectorAll('[data-filter="marca"]:checked')].map((el) => el.value);
   const minPrice = parseInt(document.getElementById("priceMin").value) || 0;
   const maxPrice = parseInt(document.getElementById("priceMax").value) || 999999;
+  const searchTerm = (document.getElementById("searchInput")?.value || "").trim().toLowerCase();
 
   filteredProducts = PRODUCTS.filter((p) => {
     const generoOk = checkedGeneros.length === 0 || checkedGeneros.includes(p.genero);
     const marcaOk = checkedMarcas.length === 0 || checkedMarcas.includes(p.marca);
     const precioOk = p.precio <= maxPrice && p.precio >= minPrice;
-    return generoOk && marcaOk && precioOk;
+    const searchOk = searchTerm === "" || p.nombre.toLowerCase().includes(searchTerm);
+    return generoOk && marcaOk && precioOk && searchOk;
   });
 
   currentPage = 1;
@@ -705,6 +711,7 @@ function removeFilter(type, val) {
 
 function clearFilters() {
   document.querySelectorAll("[data-filter]").forEach((el) => (el.checked = false));
+  document.getElementById("searchInput").value = "";
   document.getElementById("priceMin").value = 0;
   document.getElementById("priceMax").value = 80000;
   document.getElementById("priceSlider").value = 80000;
