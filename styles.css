@@ -22,9 +22,10 @@
   --font-body: 'DM Sans', sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
+  overflow-x: hidden;
   font-family: var(--font-body);
   background: var(--bg);
   color: var(--black);
@@ -465,6 +466,21 @@ button { cursor: pointer; font-family: inherit; border: none; }
 }
 
 .search-input:focus { border-color: var(--gold); }
+
+@media (max-width: 600px) {
+  .catalog-controls {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .search-input {
+    min-width: 0;
+    max-width: none;
+    flex: 1 1 100%;
+  }
+  .sort-select {
+    flex: 1 1 100%;
+  }
+}
 
 /* ─── PRODUCT GRID ───────────────────────────────────── */
 .product-grid {
@@ -2087,7 +2103,7 @@ body {
 /*==========================================
   TOP PROMO BAR
 ==========================================*/
-.top-promo{
+.top-promo, .promo-bar {
 
     position:relative;
 
@@ -2126,7 +2142,7 @@ body {
     Bandera ondeando
 ==========================*/
 
-.top-promo::before{
+.top-promo::before, .promo-bar::before{
 
     content:"";
 
@@ -2165,7 +2181,7 @@ body {
     Brillo animado
 ==========================*/
 
-.top-promo::after{
+.top-promo::after, .promo-bar::after{
 
     content:"";
 
@@ -2262,7 +2278,7 @@ body {
     Hover
 ==========================*/
 
-.top-promo:hover .top-promo__track{
+.top-promo:hover .top-promo__track, .promo-bar:hover .top-promo__track{
 
     animation-play-state:paused;
 
