@@ -425,6 +425,37 @@ const PRODUCTS = [
       "./imagenes/img/carat2.png"
     ], 
     notas: "Ambar · Canela · Cuero" },
+  { id: 26, 
+    marca: "Maison Alhambra", 
+    nombre: "PHILOS PURA", 
+    descripcion: "EDP 100ML", 
+    precio: 63879, 
+    descuentoEfectivo: 10,
+    genero: "masculino", 
+    badge: "oferta", 
+    imagenes: [
+      "./imagenes/dukhan.png", 
+      "./imagenes/img/dukhan1.png", 
+      "./imagenes/img/dukhan2.png"
+    ], 
+    notas: "Inicienso · Tabaco · Pachuli" },
+  
+  { id: 27, 
+    marca: "Lattafa", 
+    nombre: "ECLAIRE WOMAN ", 
+    descripcion: "EDP 100ML", 
+    precio: 61776, 
+    descuentoEfectivo: 10,
+    genero: "masculino", 
+    badge: "oferta", 
+    imagenes: [
+      "./imagenes/dukhan.png", 
+      "./imagenes/img/dukhan1.png", 
+      "./imagenes/img/dukhan2.png"
+    ], 
+    notas: "Inicienso · Tabaco · Pachuli" },
+
+
 ];
 
 let filteredProducts = [...PRODUCTS];
