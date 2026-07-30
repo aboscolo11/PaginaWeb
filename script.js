@@ -449,9 +449,8 @@ const PRODUCTS = [
     genero: "masculino", 
     badge: "oferta", 
     imagenes: [
-      "./imagenes/dukhan.png", 
-      "./imagenes/img/dukhan1.png", 
-      "./imagenes/img/dukhan2.png"
+      "./imagenes/img/eclaire.png", 
+      "./imagenes/img/eclaire2.png", 
     ], 
     notas: "Inicienso · Tabaco · Pachuli" },
 
