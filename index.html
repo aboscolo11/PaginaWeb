@@ -269,6 +269,7 @@
     <div class="catalog-header">
       <p class="catalog-meta" id="productCount"><strong>25</strong> productos encontrados</p>
       <div class="catalog-controls">
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar perfume por nombre..." oninput="applyFilters()">
         <select class="sort-select" onchange="sortProducts(this.value)">
           <option value="default">Ordenar por</option>
           <option value="price-asc">Precio: Menor a Mayor</option>
