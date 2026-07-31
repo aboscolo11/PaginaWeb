@@ -108,7 +108,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/durrat.png", 
       "./imagenes/img/durrat1.png", 
-      "./imagenes/img/durrat2.png"
+      "./imagenes/img/durrat2.png",
     ], 
     notas: "Vainilla · Azafran · Cardamomo" 
   },
@@ -124,7 +124,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/khamrah.png", 
       "./imagenes/img/khamrah1.png", 
-      "./imagenes/img/khamrah2.png"
+      "./imagenes/img/khamrah2.png",
     ], 
     notas: "Canela · Nuez Moscada · Bergamota" },
 
@@ -139,7 +139,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/qhawa.png", 
       "./imagenes/img/qhawa1.png", 
-      "./imagenes/img/qhawa2.png"
+      "./imagenes/img/qhawa2.png",
     ], 
     notas: "Bergamota · Cuero · Sándalo" },
 
@@ -154,7 +154,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/dukhan.png", 
       "./imagenes/img/dukhan1.png", 
-      "./imagenes/img/dukhan2.png"
+      "./imagenes/img/dukhan2.png",
     ], 
     notas: "Inicienso · Tabaco · Pachuli" },
 
@@ -169,7 +169,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/kingdom.png", 
       "./imagenes/img/kingdom2.png", 
-      "./imagenes/img/kingdom3.png"
+      "./imagenes/img/kingdom3.png",
     ], 
     notas: "Lavanda · Vainilla · Tabaco" },
 
@@ -184,7 +184,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/maahir.png", 
       "./imagenes/img/maahir1.png", 
-      "./imagenes/img/maahir2.png"
+      "./imagenes/img/maahir2.png",
     ], 
     notas: "Oud · Rosa · Ambar" },
 
@@ -199,7 +199,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/mandarin.png", 
       "./imagenes/img/mandarin1.png", 
-      "./imagenes/img/mandarin2.png"
+      "./imagenes/img/mandarin2.png",
     ], 
     notas: "Mandarina · Naranja · Caramelo" },
 
@@ -213,7 +213,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/homme.png", 
       "./imagenes/img/homme11.png", 
-      "./imagenes/img/homme2.png"
+      "./imagenes/img/homme2.png",
     ], 
     notas: "Vainilla Negra · Cuero · Amaderado" },
 
@@ -227,7 +227,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/candee.png", 
       "./imagenes/img/candee1.png", 
-      "./imagenes/img/candee2.png"
+      "./imagenes/img/candee2.png",
     ], 
     notas: "Frambuesa · Caramelo · Ambar" },
 
@@ -242,7 +242,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/9pm.png",
        "./imagenes/img/9pm1.png", 
-       "./imagenes/img/9pm2.png"
+       "./imagenes/img/9pm2.png",
       ], 
       notas: "Manzana · Canela · Lavanda" },
 
@@ -257,7 +257,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/liquidbrun.png", 
       "./imagenes/img/liquid2.png", 
-      "./imagenes/liquid3.png"
+      "./imagenes/liquid3.png",
     ], 
     notas: "Canela · Vainilla · Elemi" },
 
@@ -272,7 +272,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/mayarpink.png", 
       "./imagenes/img/mayar1.png", 
-      "./imagenes/img/mayar2.png"
+      "./imagenes/img/mayar2.png",
     ], 
     notas: "Sandalo · Almizcle · Vainilla" },
 
@@ -287,7 +287,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/mayarcherry.png", 
       "./imagenes/img/cherry.png", 
-      "./imagenes/img/cherry2.png"
+      "./imagenes/img/cherry2.png",
     ], 
     notas: "Cherry Jam · Fresa · Vainilla" },
 
@@ -298,11 +298,11 @@ const PRODUCTS = [
     precio: 70800, 
     descuentoEfectivo: 20,
     genero: "masculino", 
-    badge: null, 
+    badge: "new", 
     imagenes: [
       "./imagenes/honor.png", 
       "./imagenes/img/badeblanco1.png", 
-      "./imagenes/img/badeblanco2.png"
+      "./imagenes/img/badeblanco2.png",
     ], 
     notas: "Canela · Creme Brulee · Vainilla" },
 
@@ -317,7 +317,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/badeevioleta.png", 
       "./imagenes/img/badevioleta1.png", 
-      "./imagenes/img/badevioleta2.png"
+      "./imagenes/img/badevioleta2.png",
     ], 
     notas: "Pimienta Rosa · Jazmin · Bergamota" },
 
@@ -332,7 +332,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/badeenegro.png", 
       "./imagenes/img/badeblack.png", 
-      "./imagenes/img/badeblack1.png"
+      "./imagenes/img/badeblack1.png",
     ], 
     notas: "Azafran · Nuez Moscada · Lavanda" },
 
@@ -347,7 +347,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/badeered.png", 
       "./imagenes/img/baderojo1.png", 
-      "./imagenes/img/baderojo2.png"
+      "./imagenes/img/baderojo2.png",
     ], 
     notas: "Manzana · Lichi · Rosa" },
 
@@ -362,7 +362,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/qaed.png", 
       "./imagenes/img/qaedblanco.png", 
-      "./imagenes/img/qaedblanco2.png"
+      "./imagenes/img/qaedblanco2.png",
     ], 
     notas: "Coco · Almizcle · Vainilla" },
 
@@ -377,7 +377,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/qaedblack.png", 
       "./imagenes/img/qaednegro1.png", 
-      "./imagenes/img/qaednegro2.png"
+      "./imagenes/img/qaednegro2.png",
     ], 
     notas: "Ambar Gris · Almizcle · Vainilla" },
 
@@ -392,7 +392,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/ana.png", 
       "./imagenes/img/ana2.png", 
-      "./imagenes/img/ana3.png"
+      "./imagenes/img/ana3.png",
     ], 
     notas: "Pera · Caramelo · Ambar" },
 
@@ -407,7 +407,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/rave.png", 
       "./imagenes/img/rave1.png", 
-      "./imagenes/img/rave2.png"
+      "./imagenes/img/rave2.png",
     ], 
     notas: "Piña · Bergamota · Pachuli" },
 
@@ -422,7 +422,7 @@ const PRODUCTS = [
     imagenes: [
       "./imagenes/carat.png", 
       "./imagenes/img/carat1.png", 
-      "./imagenes/img/carat2.png"
+      "./imagenes/img/carat2.png",
     ], 
     notas: "Ambar · Canela · Cuero" },
   { id: 26, 
@@ -434,7 +434,7 @@ const PRODUCTS = [
     genero: "masculino", 
     badge: "new", 
     imagenes: [
-      "./imagenes/img/philospura.png" 
+      "./imagenes/img/philospura.png" ,
     ], 
     notas: "Naranja · Frutas · Ambar" },
   
@@ -448,7 +448,7 @@ const PRODUCTS = [
     badge: "new", 
     imagenes: [
       "./imagenes/img/eclaire.png", 
-      "./imagenes/img/eclaire2.png" 
+      "./imagenes/img/eclaire2.png",
     ], 
     notas: "Caramelo · Miel/Flores Blancas · Vainilla" },
 ];
