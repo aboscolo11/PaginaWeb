@@ -104,7 +104,7 @@ const PRODUCTS = [
     precio: 53097, 
     descuentoEfectivo: 10,
     genero: "femenino", 
-    badge: null, 
+    badge: "New", 
     imagenes: [
       "./imagenes/durrat.png", 
       "./imagenes/img/durrat1.png", 
@@ -135,7 +135,7 @@ const PRODUCTS = [
     precio: 60621, 
     descuentoEfectivo: 10,
     genero: "masculino", 
-    badge: null, 
+    badge: "Oferta", 
     imagenes: [
       "./imagenes/qhawa.png", 
       "./imagenes/img/qhawa1.png", 
