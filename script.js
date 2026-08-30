@@ -67,12 +67,11 @@ if (document.readyState === "loading") {
 }
 
 // ════════════════════════════════════════════════════════
-// CONFIGURACIÓN SUPABASE
+// CONFIGURACIÓN SUPABASE (usando fetch - sin librería externa)
 // ════════════════════════════════════════════════════════
 
 const SUPABASE_URL = 'https://lwkvcnusihajdyouexip.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_qKePI3pCPxCJcGsJWSAfOg_zTm39iOP';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let PRODUCTS = [];
 let isLoadingProducts = false;
@@ -81,17 +80,22 @@ async function cargarProductosDesdeSupabase() {
   isLoadingProducts = true;
   
   try {
-    const { data, error } = await supabase
-      .from('Productos')  // Asegurate que este sea el nombre exacto de tu tabla
-      .select('*')
-      .order('id', { ascending: true });
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/Productos?select=*&order=id.asc`, {
+      method: 'GET',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
     
-    if (error) {
-      console.error('Error cargando productos:', error);
-      return;
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
     }
     
-    // Adaptar los datos de Supabase al formato que usa tu script
+    const data = await response.json();
+    console.log('Productos cargados:', data);
+    
     PRODUCTS = data.map(p => ({
       id: p.id,
       marca: p.marca,
@@ -108,7 +112,6 @@ async function cargarProductosDesdeSupabase() {
     
     filteredProducts = [...PRODUCTS];
     
-    // Renderizar los productos
     const grid = document.getElementById("productGrid");
     if (grid) renderProducts(PRODUCTS);
     
@@ -504,16 +507,8 @@ loadCartState();
 renderCart();
 renderOrderPage();
 
-// Cargar productos desde Supabase al iniciar
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", cargarProductosDesdeSupabase);
-} else {
-  cargarProductosDesdeSupabase();
-}
-
-// También cargar si ya hay un grid visible
-const grid = document.getElementById("productGrid");
-if (grid) cargarProductosDesdeSupabase();
+// Cargar productos desde Supabase
+cargarProductosDesdeSupabase();
 // ════════════════════════════════════════════════════════
 // MODAL DE PRODUCTO
 // ════════════════════════════════════════════════════════
