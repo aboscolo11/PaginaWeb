@@ -66,392 +66,58 @@ if (document.readyState === "loading") {
   initBanner();
 }
 
-const PRODUCTS = [
-  { id: 1, marca: "Lattafa", 
-    nombre: "YARA PINK", 
-    descripcion: "EDP 100ML", 
-    precio: 57200, 
-    descuentoEfectivo: 10,
-    genero: "femenino", 
-    badge: "hot", 
-    imagenes: [
-      "./imagenes/yara pink.png", 
-      "./imagenes/img/yara1.png", 
-      "./imagenes/img/yara2.png"], 
-      notas: "Almizcle · Sandalo · Vainilla"
-     },
+// ════════════════════════════════════════════════════════
+// CONFIGURACIÓN SUPABASE
+// ════════════════════════════════════════════════════════
 
-  { id: 2, 
-    marca: "Lattafa", 
-    nombre: "YARA CANDY", 
-    descripcion: "EDP 100ML", 
-    precio: 58300, 
-    descuentoEfectivo: 10,
-    genero: "femenino", 
-    badge: "new", 
-    imagenes: [
-      "./imagenes/yara candy.png", 
-      "./imagenes/img/candy1.png", 
-      "./imagenes/img/candy2.png"
-    ], 
-    notas: "Vainilla · Mandarina · Sandalo" 
-  },
+const SUPABASE_URL = 'https://lwkvcnusihajdyouexip.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_qKePI3pCPxCJcGsJWSAfOg_zTm39iOP';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  { id: 3, 
-    marca: "Al Wataniah", 
-    nombre: "DURRAT AL AROOS", 
-    descripcion: "EDP 85ML", 
-    precio: 53097, 
-    descuentoEfectivo: 10,
-    genero: "femenino", 
-    badge: "New", 
-    imagenes: [
-      "./imagenes/durrat.png", 
-      "./imagenes/img/durrat1.png", 
-      "./imagenes/img/durrat2.png",
-    ], 
-    notas: "Vainilla · Azafran · Cardamomo" 
-  },
+let PRODUCTS = [];
+let isLoadingProducts = false;
 
-  { id: 4, 
-    marca: "Lattafa", 
-    nombre: "KHAMRAH BLACK", 
-    descripcion: "EDP 100ML", 
-    precio: 57924, 
-    descuentoEfectivo: 10,
-    genero: "masculino", 
-    badge: "hot", 
-    imagenes: [
-      "./imagenes/khamrah.png", 
-      "./imagenes/img/khamrah1.png", 
-      "./imagenes/img/khamrah2.png",
-    ], 
-    notas: "Canela · Nuez Moscada · Bergamota" },
-
-  { id: 5, 
-    marca: "Lattafa", 
-    nombre: "KHAMRAH QHAWA", 
-    descripcion: "EDP 100ML", 
-    precio: 60621, 
-    descuentoEfectivo: 10,
-    genero: "masculino", 
-    badge: "Oferta", 
-    imagenes: [
-      "./imagenes/qhawa.png", 
-      "./imagenes/img/qhawa1.png", 
-      "./imagenes/img/qhawa2.png",
-    ], 
-    notas: "Bergamota · Cuero · Sándalo" },
-
-  { id: 6, 
-    marca: "Lattafa", 
-    nombre: "KHAMRAH DUKHAN", 
-    descripcion: "EDP 100ML", 
-    precio: 57500, 
-    descuentoEfectivo: 10,
-    genero: "masculino", 
-    badge: "oferta", 
-    imagenes: [
-      "./imagenes/dukhan.png", 
-      "./imagenes/img/dukhan1.png", 
-      "./imagenes/img/dukhan2.png",
-    ], 
-    notas: "Inicienso · Tabaco · Pachuli" },
-
-  { id: 11, 
-    marca: "Lattafa", 
-    nombre: "THE KINGDOM", 
-    descripcion: "EDP 100ML", 
-    precio: 80960, 
-    descuentoEfectivo: 10,
-    genero: "unisex", 
-    badge: "new", 
-    imagenes: [
-      "./imagenes/kingdom.png", 
-      "./imagenes/img/kingdom2.png", 
-      "./imagenes/img/kingdom3.png",
-    ], 
-    notas: "Lavanda · Vainilla · Tabaco" },
-
-  { id: 10, 
-    marca: "Lattafa", 
-    nombre: "MAAHIR BLACK", 
-    descripcion: "EDP 100ML", 
-    precio: 65358, 
-    descuentoEfectivo: 10,
-    genero: "masculino", 
-    badge: "oferta", 
-    imagenes: [
-      "./imagenes/maahir.png", 
-      "./imagenes/img/maahir1.png", 
-      "./imagenes/img/maahir2.png",
-    ], 
-    notas: "Oud · Rosa · Ambar" },
-
-  { id: 9, 
-    marca: "Armaf", 
-    nombre: "MANDARIN SKY", 
-    descripcion: "EDP 100ML", 
-    precio: 71894, 
-    descuentoEfectivo: 10,
-    genero: "masculino", 
-    badge: "new", 
-    imagenes: [
-      "./imagenes/mandarin.png", 
-      "./imagenes/img/mandarin1.png", 
-      "./imagenes/img/mandarin2.png",
-    ], 
-    notas: "Mandarina · Naranja · Caramelo" },
-
-  { id: 8, marca: "Armaf", 
-    nombre: "ODYSSEY HOMME BLACK", 
-    descripcion: "EDP 100ML", 
-    precio: 53920, 
-    descuentoEfectivo: 10,
-    genero: "masculino", 
-    badge: "hot", 
-    imagenes: [
-      "./imagenes/homme.png", 
-      "./imagenes/img/homme11.png", 
-      "./imagenes/img/homme2.png",
-    ], 
-    notas: "Vainilla Negra · Cuero · Amaderado" },
-
-  { id: 7, marca: "Armaf", 
-    nombre: "ODYSSEY CANDEE WOMAN",
-    descripcion: "EDP 100ML", 
-    precio: 51959, 
-    descuentoEfectivo: 10,
-    genero: "femenino", 
-    badge: "hot", 
-    imagenes: [
-      "./imagenes/candee.png", 
-      "./imagenes/img/candee1.png", 
-      "./imagenes/img/candee2.png",
-    ], 
-    notas: "Frambuesa · Caramelo · Ambar" },
-
-  { id: 12, 
-    marca: "Afnan", 
-    nombre: "9 PM", 
-    descripcion: "EDP 100ML", 
-    precio: 65359, 
-    descuentoEfectivo: 10,
-    genero: "masculino", 
-    badge: "hot", 
-    imagenes: [
-      "./imagenes/9pm.png",
-       "./imagenes/img/9pm1.png", 
-       "./imagenes/img/9pm2.png",
-      ], 
-      notas: "Manzana · Canela · Lavanda" },
-
-  { id: 13, 
-    marca: "French Avenue", 
-    nombre: "LIQUID BRUN", 
-    descripcion: "EDP 100ML", 
-    precio: 107693, 
-    descuentoEfectivo: 10,
-    genero: "masculino", 
-    badge: "hot", 
-    imagenes: [
-      "./imagenes/liquidbrun.png", 
-      "./imagenes/img/liquid2.png", 
-      "./imagenes/liquid3.png",
-    ], 
-    notas: "Canela · Vainilla · Elemi" },
-
-  { id: 14, 
-    marca: "Lattafa", 
-    nombre: "MAYAR PINK", 
-    descripcion: "EDP 100ML", 
-    precio: 56194, 
-    descuentoEfectivo: 10,
-    genero: "femenino", 
-    badge: "new", 
-    imagenes: [
-      "./imagenes/mayarpink.png", 
-      "./imagenes/img/mayar1.png", 
-      "./imagenes/img/mayar2.png",
-    ], 
-    notas: "Sandalo · Almizcle · Vainilla" },
-
-  { id: 15, 
-    marca: "Lattafa", 
-    nombre: "MAYAR CHERRY INTENSE", 
-    descripcion: "EDP 100ML", 
-    precio: 60176, 
-    descuentoEfectivo: 20,
-    genero: "femenino", 
-    badge: "hot", 
-    imagenes: [
-      "./imagenes/mayarcherry.png", 
-      "./imagenes/img/cherry.png", 
-      "./imagenes/img/cherry2.png",
-    ], 
-    notas: "Cherry Jam · Fresa · Vainilla" },
-
-  { id: 16, 
-    marca: "Lattafa", 
-    nombre: "BADE'E AL OUD HONOR & GLORY", 
-    descripcion: "EDP 100ML", 
-    precio: 70800, 
-    descuentoEfectivo: 20,
-    genero: "masculino", 
-    badge: "new", 
-    imagenes: [
-      "./imagenes/honor.png", 
-      "./imagenes/img/badeblanco1.png", 
-      "./imagenes/img/badeblanco2.png",
-    ], 
-    notas: "Canela · Creme Brulee · Vainilla" },
-
-  { id: 17, 
-    marca: "Lattafa", 
-    nombre: "BADE'E AL OUD AMETHYST", 
-    descripcion: "EDP 100ML", 
-    precio: 67300, 
-    descuentoEfectivo: 20,
-    genero: "unisex", 
-    badge: "hot", 
-    imagenes: [
-      "./imagenes/badeevioleta.png", 
-      "./imagenes/img/badevioleta1.png", 
-      "./imagenes/img/badevioleta2.png",
-    ], 
-    notas: "Pimienta Rosa · Jazmin · Bergamota" },
-
-  { id: 18, 
-    marca: "Lattafa", 
-    nombre: "BADE'E AL OUD FOR GLORY", 
-    descripcion: "EDP 100ML", 
-    precio: 71521.46, 
-    descuentoEfectivo: 20,
-    genero: "masculino", 
-    badge: "new", 
-    imagenes: [
-      "./imagenes/badeenegro.png", 
-      "./imagenes/img/badeblack.png", 
-      "./imagenes/img/badeblack1.png",
-    ], 
-    notas: "Azafran · Nuez Moscada · Lavanda" },
-
-  { id: 19, 
-    marca: "Lattafa", 
-    nombre: "BADE'E SUBLIME", 
-    descripcion: "EDP 100ML", 
-    precio: 70800, 
-    descuentoEfectivo: 10,
-    genero: "femenino", 
-    badge: "new", 
-    imagenes: [
-      "./imagenes/badeered.png", 
-      "./imagenes/img/baderojo1.png", 
-      "./imagenes/img/baderojo2.png",
-    ], 
-    notas: "Manzana · Lichi · Rosa" },
-
-  { id: 20, 
-    marca: "Lattafa",
-    nombre: "QAED AL FURSAN UNLIMITED", 
-    descripcion: "EDP 90ML", 
-    precio: 58517.56, 
-    descuentoEfectivo: 15,
-    genero: "unisex", 
-    badge: "new", 
-    imagenes: [
-      "./imagenes/qaed.png", 
-      "./imagenes/img/qaedblanco.png", 
-      "./imagenes/img/qaedblanco2.png",
-    ], 
-    notas: "Coco · Almizcle · Vainilla" },
-
-  { id: 21, 
-    marca: "Lattafa", 
-    nombre: "QAED AL FURSAN", 
-    descripcion: "EDP 90ML", 
-    precio: 58517.56, 
-    descuentoEfectivo: 15,
-    genero: "masculino", 
-    badge: "new", 
-    imagenes: [
-      "./imagenes/qaedblack.png", 
-      "./imagenes/img/qaednegro1.png", 
-      "./imagenes/img/qaednegro2.png",
-    ], 
-    notas: "Ambar Gris · Almizcle · Vainilla" },
-
-  { id: 22, 
-    marca: "Lattafa", 
-    nombre: "ANA ABIYEDH ROUGE", 
-    descripcion: "EDP 60ML", 
-    precio: 45513.65, 
-    descuentoEfectivo: 10, 
-    genero: "femenino", 
-    badge: "hot", 
-    imagenes: [
-      "./imagenes/ana.png", 
-      "./imagenes/img/ana2.png", 
-      "./imagenes/img/ana3.png",
-    ], 
-    notas: "Pera · Caramelo · Ambar" },
-
-  { id: 24, 
-    marca: "Lattafa", 
-    nombre: "RAVE NOW", 
-    descripcion: "EDP 100ML", 
-    precio: 64889.47, 
-    descuentoEfectivo: 15,
-    genero: "masculino", 
-    badge: "hot", 
-    imagenes: [
-      "./imagenes/rave.png", 
-      "./imagenes/img/rave1.png", 
-      "./imagenes/img/rave2.png",
-    ], 
-    notas: "Piña · Bergamota · Pachuli" },
-
-  { id: 25, 
-    marca: "Lattafa", 
-    nombre: "24 CARAT PURE GOLD", 
-    descripcion: "EDP 100ML", 
-    precio: 59557.87, 
-    descuentoEfectivo: 15,
-    genero: "masculino", 
-    badge: "hot", 
-    imagenes: [
-      "./imagenes/carat.png", 
-      "./imagenes/img/carat1.png", 
-      "./imagenes/img/carat2.png",
-    ], 
-    notas: "Ambar · Canela · Cuero" },
-  { id: 26, 
-    marca: "Maison Alhambra", 
-    nombre: "PHILOS PURA", 
-    descripcion: "EDP 100ML", 
-    precio: 63879, 
-    descuentoEfectivo: 10,
-    genero: "masculino", 
-    badge: "new", 
-    imagenes: [
-      "./imagenes/img/philospura.png" ,
-    ], 
-    notas: "Naranja · Frutas · Ambar" },
+async function cargarProductosDesdeSupabase() {
+  isLoadingProducts = true;
   
-  { id: 27, 
-    marca: "Lattafa", 
-    nombre: "ECLAIRE WOMAN ", 
-    descripcion: "EDP 100ML", 
-    precio: 61776, 
-    descuentoEfectivo: 10,
-    genero: "masculino", 
-    badge: "new", 
-    imagenes: [
-      "./imagenes/img/eclaire.png", 
-      "./imagenes/img/eclaire2.png",
-    ], 
-    notas: "Caramelo · Miel/Flores Blancas · Vainilla" },
-];
+  try {
+    const { data, error } = await supabase
+      .from('productos')  // Asegurate que este sea el nombre exacto de tu tabla
+      .select('*')
+      .order('id', { ascending: true });
+    
+    if (error) {
+      console.error('Error cargando productos:', error);
+      return;
+    }
+    
+    // Adaptar los datos de Supabase al formato que usa tu script
+    PRODUCTS = data.map(p => ({
+      id: p.id,
+      marca: p.marca,
+      nombre: p.nombre,
+      descripcion: p.descripcion,
+      precio: Number(p.precio),
+      precio_usd: Number(p.precio_usd || 0),
+      descuentoEfectivo: Number(p.descuento_efectivo || 0),
+      genero: p.genero,
+      badge: p.badge,
+      notas: p.notas,
+      imagenes: p.imagenes ? JSON.parse(p.imagenes) : []
+    }));
+    
+    filteredProducts = [...PRODUCTS];
+    
+    // Renderizar los productos
+    const grid = document.getElementById("productGrid");
+    if (grid) renderProducts(PRODUCTS);
+    
+  } catch (err) {
+    console.error('Error al cargar productos:', err);
+  } finally {
+    isLoadingProducts = false;
+  }
+}
 
 let filteredProducts = [...PRODUCTS];
 let currentPage = 1;
@@ -835,10 +501,19 @@ function getBotResponse(userMessage) {
 }
 
 loadCartState();
-const grid = document.getElementById("productGrid");
-if (grid) renderProducts(PRODUCTS);
 renderCart();
 renderOrderPage();
+
+// Cargar productos desde Supabase al iniciar
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", cargarProductosDesdeSupabase);
+} else {
+  cargarProductosDesdeSupabase();
+}
+
+// También cargar si ya hay un grid visible
+const grid = document.getElementById("productGrid");
+if (grid) cargarProductosDesdeSupabase();
 // ════════════════════════════════════════════════════════
 // MODAL DE PRODUCTO
 // ════════════════════════════════════════════════════════
