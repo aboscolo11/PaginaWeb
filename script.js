@@ -96,19 +96,19 @@ async function cargarProductosDesdeSupabase() {
     const data = await response.json();
     console.log('Productos cargados:', data);
     
-    PRODUCTS = data.map(p => ({
-      id: p.id,
-      marca: p.marca,
-      nombre: p.nombre,
-      descripcion: p.descripcion,
-      precio: Number(p.precio),
-      precio_usd: Number(p.precio_usd || 0),
-      descuentoEfectivo: Number(p.descuento_efectivo || 0),
-      genero: p.genero,
-      badge: p.badge,
-      notas: p.notas,
-      imagenes: p.imagenes ? JSON.parse(p.imagenes) : []
-    }));
+PRODUCTS = data.map(p => ({
+  id: p.id,
+  marca: p.marca,
+  nombre: p.nombre,
+  descripcion: p.descripcion,
+  precio: Number(p.precio),
+  precio_usd: Number(p.precio_usd || 0),
+  descuentoEfectivo: Number(p.descuento_efectivo || 0),
+  genero: p.genero,
+  badge: p.badge,
+  notas: p.notas,
+  imagen: p.imagenes || "./imagenes/sin-imagen.png"
+}));
     
     filteredProducts = [...PRODUCTS];
     
@@ -286,10 +286,8 @@ function badgeHTML(badge) {
   return `<div class="product-badge badge-${badge}">${labels[badge]}</div>`;
 }
 
-function productImgSrc(p, index = 0) {
-  if (p.imagenes && p.imagenes.length > 0) return p.imagenes[index];
-  if (p.imagen) return p.imagen;
-  return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='220'%3E%3Crect width='200' height='220' fill='%23f5f2ee'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='72'%3E${p.emoji}%3C/text%3E%3C/svg%3E`;
+function productImgSrc(p) {
+  return p.imagen || "./imagenes/sin-imagen.png";
 }
 
 function cardHTML(p) {
