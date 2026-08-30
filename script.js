@@ -82,7 +82,7 @@ async function cargarProductosDesdeSupabase() {
   
   try {
     const { data, error } = await supabase
-      .from('productos')  // Asegurate que este sea el nombre exacto de tu tabla
+      .from('Productos')  // Asegurate que este sea el nombre exacto de tu tabla
       .select('*')
       .order('id', { ascending: true });
     
