@@ -76,15 +76,18 @@ const SUPABASE_KEY = 'sb_publishable_qKePI3pCPxCJcGsJWSAfOg_zTm39iOP';
 let PRODUCTS = [];
 let isLoadingProducts = false;
 
+// ════════════════════════════════════════════════════════
+// FUNCIÓN CORREGIDA PARA CARGAR PRODUCTOS
+// ════════════════════════════════════════════════════════
 async function cargarProductosDesdeSupabase() {
   isLoadingProducts = true;
   
-  // ✅ Mostrar mensaje de carga
+  // Mostrar mensaje de carga
   const grid = document.getElementById("productGrid");
   if (grid) grid.innerHTML = '<div class="loading-message">⏳ Cargando productos...</div>';
   
   try {
-    console.log('🔄 Iniciando carga de productos desde Supabase...');  // ← Debug
+    console.log('🔄 Iniciando carga de productos desde Supabase...');
     
     const response = await fetch(`${SUPABASE_URL}/rest/v1/Productos?select=*&order=id.asc`, {
       method: 'GET',
@@ -95,27 +98,29 @@ async function cargarProductosDesdeSupabase() {
       }
     });
     
-    console.log('📡 Respuesta recibida:', response.status, response.statusText);  // ← Debug
+    console.log('📡 Respuesta recibida:', response.status, response.statusText);
     
     if (!response.ok) {
       throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
     }
     
     const data = await response.json();
-    console.log('✅ Datos recibidos de Supabase:', data);  // ← Debug
-    console.log('📊 Total de productos:', data.length);  // ← Debug
+    console.log('✅ Datos recibidos de Supabase:', data);
+    console.log('📊 Total de productos:', data.length);
     
-    // ✅ Validar que hay datos
     if (!data || data.length === 0) {
-      console.warn('⚠️ La tabla de Supabase está vacía');
+      console.warn('⚠️ La tabla de Supabase está vacía o no devuelve datos');
       if (grid) grid.innerHTML = '<div class="no-results"><h3>No hay productos disponibles en la base de datos</h3></div>';
+      filteredProducts = [];
       isLoadingProducts = false;
       return;
     }
     
-    // ✅ MAPEO CORRECTO
+    // ════════════════════════════════════════════════════════
+    // MAPEAR CORRECTAMENTE LOS DATOS
+    // ════════════════════════════════════════════════════════
     PRODUCTS = data.map((p, index) => {
-      // ✅ Convertir string de imágenes a array
+      // Convertir string de imágenes a array
       let imagenesArray = ['./imagenes/sin-imagen.png'];
       if (p.imagenes && p.imagenes.trim().length > 0) {
         imagenesArray = p.imagenes.split('|').map(img => img.trim()).filter(img => img.length > 0);
@@ -132,13 +137,13 @@ async function cargarProductosDesdeSupabase() {
         genero: p.genero || 'unisex',
         badge: p.badge || '',
         notas: p.notas || '',
-        imagenes: imagenesArray,  // ← ARRAY, no string
+        imagenes: imagenesArray,
         imagen: imagenesArray[0],
         stock: Number(p.stock || 0)
       };
     });
     
-    console.log('✨ Productos procesados correctamente:', PRODUCTS);  // ← Debug
+    console.log('✨ Productos procesados correctamente:', PRODUCTS);
     
     filteredProducts = [...PRODUCTS];
     
@@ -146,7 +151,6 @@ async function cargarProductosDesdeSupabase() {
     updateCartCount();
     
   } catch (err) {
-    // ✅ Manejo de errores con detalles
     console.error('❌ Error al cargar productos:', err);
     if (grid) {
       grid.innerHTML = `
@@ -341,7 +345,7 @@ function cardHTML(p) {
     <div class="product-card" data-genero="${p.genero}" data-marca="${p.marca}" data-precio="${p.precio}">
       ${badgeHTML(p.badge)}
       <div class="product-img-wrap">
-        <img src="${productImgSrc(p, 0)}" alt="${p.marca} ${p.nombre}" loading="lazy" class="product-main-img" data-product-id="${p.id}" onclick="openProductModal(${p.id})" />
+        <img src="${productImgSrc(p)}" alt="${p.marca} ${p.nombre}" loading="lazy" class="product-main-img" data-product-id="${p.id}" onclick="openProductModal(${p.id})" />
         ${hasMultipleImages ? `
           <button class="img-nav prev" onclick="changeProductImage(event, ${p.id}, -1)">◀</button>
           <button class="img-nav next" onclick="changeProductImage(event, ${p.id}, 1)">▶</button>
@@ -545,8 +549,12 @@ loadCartState();
 renderCart();
 renderOrderPage();
 
-// Cargar productos desde Supabase
+// ════════════════════════════════════════════════════════
+// CARGAR PRODUCTOS DESDE SUPABASE AL INICIAR
+// ════════════════════════════════════════════════════════
+console.log('🚀 Iniciando aplicación...');
 cargarProductosDesdeSupabase();
+
 // ════════════════════════════════════════════════════════
 // MODAL DE PRODUCTO
 // ════════════════════════════════════════════════════════
@@ -554,6 +562,11 @@ cargarProductosDesdeSupabase();
 let currentProductModal = null;
 let currentModalImageIndex = 0;
 let modalQuantity = 1;
+
+function getPriceByType(product) {
+  if (!product) return 0;
+  return product.precio || 0;
+}
 
 function openProductModal(productId) {
   const product = PRODUCTS.find(p => p.id === productId);
