@@ -79,7 +79,13 @@ let isLoadingProducts = false;
 async function cargarProductosDesdeSupabase() {
   isLoadingProducts = true;
   
+  // ✅ Mostrar mensaje de carga
+  const grid = document.getElementById("productGrid");
+  if (grid) grid.innerHTML = '<div class="loading-message">⏳ Cargando productos...</div>';
+  
   try {
+    console.log('🔄 Iniciando carga de productos desde Supabase...');  // ← Debug
+    
     const response = await fetch(`${SUPABASE_URL}/rest/v1/Productos?select=*&order=id.asc`, {
       method: 'GET',
       headers: {
@@ -89,34 +95,68 @@ async function cargarProductosDesdeSupabase() {
       }
     });
     
+    console.log('📡 Respuesta recibida:', response.status, response.statusText);  // ← Debug
+    
     if (!response.ok) {
-      throw new Error(`Error HTTP: ${response.status}`);
+      throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
     }
     
     const data = await response.json();
-    console.log('Productos cargados:', data);
+    console.log('✅ Datos recibidos de Supabase:', data);  // ← Debug
+    console.log('📊 Total de productos:', data.length);  // ← Debug
     
-PRODUCTS = data.map(p => ({
-  id: p.id,
-  marca: p.marca,
-  nombre: p.nombre,
-  descripcion: p.descripcion,
-  precio: Number(p.precio),
-  precio_usd: Number(p.precio_usd || 0),
-  descuentoEfectivo: Number(p.descuento_efectivo || 0),
-  genero: p.genero,
-  badge: p.badge,
-  notas: p.notas,
-  imagen: p.imagenes || "./imagenes/sin-imagen.png"
-}));
+    // ✅ Validar que hay datos
+    if (!data || data.length === 0) {
+      console.warn('⚠️ La tabla de Supabase está vacía');
+      if (grid) grid.innerHTML = '<div class="no-results"><h3>No hay productos disponibles en la base de datos</h3></div>';
+      isLoadingProducts = false;
+      return;
+    }
+    
+    // ✅ MAPEO CORRECTO
+    PRODUCTS = data.map((p, index) => {
+      // ✅ Convertir string de imágenes a array
+      let imagenesArray = ['./imagenes/sin-imagen.png'];
+      if (p.imagenes && p.imagenes.trim().length > 0) {
+        imagenesArray = p.imagenes.split('|').map(img => img.trim()).filter(img => img.length > 0);
+      }
+      
+      return {
+        id: p.id || index + 1,
+        marca: p.marca || '',
+        nombre: p.nombre || '',
+        descripcion: p.descripcion || '',
+        precio: Number(p.precio) || 0,
+        precio_usd: Number(p.precio_usd || 0),
+        descuentoEfectivo: Number(p.descuento_efectivo || 0),
+        genero: p.genero || 'unisex',
+        badge: p.badge || '',
+        notas: p.notas || '',
+        imagenes: imagenesArray,  // ← ARRAY, no string
+        imagen: imagenesArray[0],
+        stock: Number(p.stock || 0)
+      };
+    });
+    
+    console.log('✨ Productos procesados correctamente:', PRODUCTS);  // ← Debug
     
     filteredProducts = [...PRODUCTS];
     
-    const grid = document.getElementById("productGrid");
     if (grid) renderProducts(PRODUCTS);
+    updateCartCount();
     
   } catch (err) {
-    console.error('Error al cargar productos:', err);
+    // ✅ Manejo de errores con detalles
+    console.error('❌ Error al cargar productos:', err);
+    if (grid) {
+      grid.innerHTML = `
+        <div class="no-results">
+          <h3>Error al cargar productos</h3>
+          <p>${err.message}</p>
+          <small>Verifica la consola para más detalles</small>
+        </div>
+      `;
+    }
   } finally {
     isLoadingProducts = false;
   }
