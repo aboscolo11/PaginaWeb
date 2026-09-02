@@ -1,0 +1,70 @@
+/* ════════════════════════════════════════════════════════
+   ESTILOS PARA MENSAJES DE ESTADO (Cargando, Error, etc)
+   ════════════════════════════════════════════════════════ */
+
+.loading-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--mid);
+  font-size: 1.1rem;
+  font-weight: 600;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.error-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  color: #b64533;
+  background: #fee5e0;
+  border: 1px solid #e8ccc7;
+  border-radius: var(--radius);
+}
+
+.error-message h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #8b2f23;
+}
+
+.error-message p {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.error-message small {
+  display: block;
+  color: #a64230;
+  font-size: 0.82rem;
+  margin-top: 8px;
+}
+.product-card.sin-stock {
+  opacity: 0.6;
+  filter: grayscale(80%);
+  pointer-events: none; /* Desactiva todos los clics dentro de la tarjeta */
+}
+
+.out-of-stock-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff4444;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.btn-disabled {
+  background: #cccccc !important;
+  cursor: not-allowed;
+}
