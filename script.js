@@ -340,12 +340,17 @@ function cardHTML(p) {
   const imageCount = p.imagenes ? p.imagenes.length : 1;
   const volumen = (p.descripcion.match(/\d+\s?ML/i) || [""])[0];
   const precioFinal = p.precio * (1 - p.descuentoEfectivo / 100);
+  const sinStock = p.stock === 0; // ← Nuevo
 
   return `
-    <div class="product-card" data-genero="${p.genero}" data-marca="${p.marca}" data-precio="${p.precio}">
+    <div class="product-card ${sinStock ? 'sin-stock' : ''}" 
+         data-genero="${p.genero}" data-marca="${p.marca}" data-precio="${p.precio}">
       ${badgeHTML(p.badge)}
+      ${sinStock ? '<div class="out-of-stock-badge">Sin stock</div>' : ''}  <!-- Badge nuevo -->
       <div class="product-img-wrap">
-        <img src="${productImgSrc(p)}" alt="${p.marca} ${p.nombre}" loading="lazy" class="product-main-img" data-product-id="${p.id}" onclick="openProductModal(${p.id})" />
+        <img src="${productImgSrc(p)}" alt="${p.marca} ${p.nombre}" loading="lazy" 
+             class="product-main-img" data-product-id="${p.id}" 
+             ${sinStock ? '' : `onclick="openProductModal(${p.id})"`} />  <!-- Deshabilitar clic si sin stock -->
         ${hasMultipleImages ? `
           <button class="img-nav prev" onclick="changeProductImage(event, ${p.id}, -1)">◀</button>
           <button class="img-nav next" onclick="changeProductImage(event, ${p.id}, 1)">▶</button>
@@ -369,7 +374,9 @@ function cardHTML(p) {
         <div class="product-shipping">🚚 Envío gratis en 24-48hs</div>
       </div>
       <div class="product-actions">
-        <button type="button" class="btn-cart" onclick="addToCart(${p.id})">Agregar al carrito</button>
+        ${sinStock 
+          ? '<button type="button" class="btn-cart btn-disabled" disabled>Sin stock</button>' 
+          : `<button type="button" class="btn-cart" onclick="addToCart(${p.id})">Agregar al carrito</button>`}
       </div>
     </div>`;
 }
