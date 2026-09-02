@@ -142,3 +142,26 @@
 .main-layout {
   padding: 0 24px 64px;
 }
+.sidebar {
+  border-color: rgba(232, 224, 204, 0.7);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-title {
+  color: var(--black);
+}
+
+.filter-option {
+  gap: 12px;
+}
+
+.filter-option span {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+  color: var(--dark);
+}
+
+.price-slider {
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold) 45%, #e8e8e8 45%, #e8e8e8 100%);
+}
