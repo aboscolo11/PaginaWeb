@@ -138,3 +138,7 @@
 }
 
 .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+.main-layout {
+  padding: 0 24px 64px;
+}
