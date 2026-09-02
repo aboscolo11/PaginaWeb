@@ -1,14 +1,15 @@
 /* ─── MAIN LAYOUT ────────────────────────────────────── */
 .main-layout {
-  max-width: 1380px;
+  max-width: 1400px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 260px 1fr;
   gap: 28px;
-  padding: 0 24px 60px;
+  padding: 40px 24px 60px;
   align-items: start;
+  width: 100%;
+  box-sizing: border-box;
 }
-
 /* ─── SIDEBAR ────────────────────────────────────────── */
 .sidebar {
   background: var(--white);
