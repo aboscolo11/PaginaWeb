@@ -1,0 +1,220 @@
+/*==========================================
+  TOP PROMO BAR
+==========================================*/
+.top-promo, .promo-bar {
+
+    position:relative;
+
+    width:100%;
+    height:46px;
+
+    overflow:hidden;
+
+    display:flex;
+    align-items:center;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6EC6FF 0%,
+            #9EDCFF 20%,
+            #FFFFFF 50%,
+            #9EDCFF 80%,
+            #6EC6FF 100%
+        );
+
+    border-top:1px solid rgba(255,255,255,.25);
+
+    border-bottom:1px solid rgba(0,0,0,.08);
+
+    box-shadow:
+        0 4px 18px rgba(0,0,0,.08),
+        inset 0 1px rgba(255,255,255,.4);
+
+}
+
+
+/*==========================
+    Bandera ondeando
+==========================*/
+
+.top-promo::before, .promo-bar::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        radial-gradient(circle at 20% 50%,rgba(255,255,255,.45),transparent 30%),
+
+        radial-gradient(circle at 80% 50%,rgba(255,255,255,.30),transparent 30%),
+
+        repeating-linear-gradient(
+
+            -18deg,
+
+            rgba(255,255,255,.10) 0px,
+
+            rgba(255,255,255,.10) 18px,
+
+            transparent 18px,
+
+            transparent 36px
+
+        );
+
+    opacity:.45;
+
+    pointer-events:none;
+
+}
+
+
+/*==========================
+    Brillo animado
+==========================*/
+
+.top-promo::after, .promo-bar::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-40%;
+
+    width:35%;
+    height:100%;
+
+    background:
+
+        linear-gradient(
+
+            90deg,
+
+            transparent,
+
+            rgba(255,255,255,.65),
+
+            transparent
+
+        );
+
+    transform:skewX(-25deg);
+
+    animation:shine 6s linear infinite;
+
+}
+
+
+/*==========================
+    Texto
+==========================*/
+
+.top-promo__track{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:35px;
+
+    width:max-content;
+
+    white-space:nowrap;
+
+    animation:promoMove 30s linear infinite;
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+.top-promo__track span{
+
+    flex-shrink:0;
+
+    color:#0A2A66;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
+    text-shadow:
+
+        0 1px 0 rgba(255,255,255,.5);
+
+}
+
+
+/*==========================
+    Separadores
+==========================*/
+
+.top-promo__track span.separator{
+
+    color:#D4AF37;
+
+    font-size:18px;
+
+    font-weight:900;
+
+}
+
+
+/*==========================
+    Hover
+==========================*/
+
+.top-promo:hover .top-promo__track, .promo-bar:hover .top-promo__track{
+
+    animation-play-state:paused;
+
+}
+
+
+/*==========================
+    Animaciones
+==========================*/
+
+@keyframes promoMove{
+
+    from{
+
+        transform:translateX(0);
+
+    }
+
+    to{
+
+        transform:translateX(-50%);
+
+    }
+
+}
+
+@keyframes shine{
+
+    0%{
+
+        left:-40%;
+
+    }
+
+    100%{
+
+        left:120%;
+
+    }
+
+}
