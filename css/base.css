@@ -1,0 +1,44 @@
+/* ════════════════════════════════════════════════════════
+   TecnoAdvance — Perfumes Árabes | styles.css
+   ════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #b8962e;
+  --gold-lt: #d4af54;
+  --black: #111111;
+  --dark: #1e1e1e;
+  --mid: #555555;
+  --soft: #888888;
+  --border: #e8e8e8;
+  --bg: #fafafa;
+  --white: #ffffff;
+  --wa-green: #25d366;
+  --radius: 10px;
+  --shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  --shadow-h: 0 6px 28px rgba(0, 0, 0, 0.14);
+  --font-disp: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--black);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { cursor: pointer; font-family: inherit; border: none; }
+
+/* Reglas adicionales que estaban al final (body con gradiente) */
+body {
+  background: radial-gradient(circle at top center, rgba(184, 150, 46, 0.12), transparent 32%), linear-gradient(180deg, #fbfaf6 0%, #f2efea 100%);
+}
