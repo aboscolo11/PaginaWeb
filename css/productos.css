@@ -626,3 +626,6 @@
   gap: 8px;
   margin-bottom: 16px;
 }
+.product-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
