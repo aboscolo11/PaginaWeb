@@ -641,3 +641,6 @@
 .product-actions {
   padding: 16px 14px 18px;
 }
+ .mobile-filter-toggle {
+    display: flex;
+  }
