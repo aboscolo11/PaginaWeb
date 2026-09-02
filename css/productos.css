@@ -629,3 +629,15 @@
 .product-grid {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
+
+.product-card {
+  cursor: default;
+}
+
+.product-main-img {
+  cursor: pointer;
+}
+
+.product-actions {
+  padding: 16px 14px 18px;
+}
