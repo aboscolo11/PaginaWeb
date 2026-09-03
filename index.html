@@ -168,7 +168,72 @@
 
   <div class="carousel-dots" id="carouselDots"></div>
 </div>
+<!-- Banner -->
+    <div class="category-banner">
+      <div class="banner-details">
+        <div class="banner-eyebrow">Catálogo Premium</div>
+        <div class="banner-text">
+          <h2>Perfumes Árabes Originales</h2>
+          <p>Importados con garantía de autenticidad y envío rápido a todo el país.</p>
+        </div>
+        <div class="banner-tags">
+          <span>✈️ Envío seguro</span>
+          <span>💎 Marcas top</span>
+          <span>⚡ Stock inmediato</span>
+        </div>
+      </div>
+      <div class="banner-card">
+        <div class="banner-card-title">Stock disponible</div>
+        <p>Comprá directo por WhatsApp y recibí tu pedido en menos de 48hs.</p>
+        <a href="https://wa.me/541134843360?text=Hola%20quiero%20comprar%20perfumes" target="_blank" class="banner-cta">Contactar por WhatsApp</a>
+      </div>
+    </div>
+    <div class="trust-strip">
+      <div class="trust-item">
+        <div class="trust-icon">✔️</div>
+        <div>
+          <strong>Original garantizado</strong>
+          <p>100% perfumes auténticos.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🚚</div>
+        <div>
+          <strong>Envío rápido</strong>
+          <p>24-48hs a CABA, todo el país.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">💳</div>
+        <div>
+          <strong>Pago seguro</strong>
+          <p>Transferencia, tarjeta o efectivo.</p>
+        </div>
+      </div>
+    </div>
 
+        <!-- Active filters -->
+    <div class="active-filters" id="activeFilters"></div>
+
+    <!-- Controls -->
+    <div class="catalog-header">
+      <p class="catalog-meta" id="productCount"><strong>25</strong> productos encontrados</p>
+      <div class="catalog-controls">
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar perfume por nombre..." oninput="applyFilters()">
+        <select class="sort-select" onchange="sortProducts(this.value)">
+          <option value="default">Ordenar por</option>
+          <option value="price-asc">Precio: Menor a Mayor</option>
+          <option value="price-desc">Precio: Mayor a Menor</option>
+          <option value="popular">Más Vendidos</option>
+          <option value="name">Nombre A-Z</option>
+        </select>
+      </div>
+    </div>
+        <!-- GRID — renderizado por JS -->
+    <div class="product-grid" id="productGrid"></div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination"></div>
 <!-- ═══ MAIN LAYOUT ═══════════════════════════════════════ -->
 <main class="main-layout">
 
@@ -253,74 +318,6 @@
       Filtrar productos
     </button>
 
-    <!-- Banner -->
-    <div class="category-banner">
-      <div class="banner-details">
-        <div class="banner-eyebrow">Catálogo Premium</div>
-        <div class="banner-text">
-          <h2>Perfumes Árabes Originales</h2>
-          <p>Importados con garantía de autenticidad y envío rápido a todo el país.</p>
-        </div>
-        <div class="banner-tags">
-          <span>✈️ Envío seguro</span>
-          <span>💎 Marcas top</span>
-          <span>⚡ Stock inmediato</span>
-        </div>
-      </div>
-      <div class="banner-card">
-        <div class="banner-card-title">Stock disponible</div>
-        <p>Comprá directo por WhatsApp y recibí tu pedido en menos de 48hs.</p>
-        <a href="https://wa.me/541134843360?text=Hola%20quiero%20comprar%20perfumes" target="_blank" class="banner-cta">Contactar por WhatsApp</a>
-      </div>
-    </div>
-
-    <div class="trust-strip">
-      <div class="trust-item">
-        <div class="trust-icon">✔️</div>
-        <div>
-          <strong>Original garantizado</strong>
-          <p>100% perfumes auténticos.</p>
-        </div>
-      </div>
-      <div class="trust-item">
-        <div class="trust-icon">🚚</div>
-        <div>
-          <strong>Envío rápido</strong>
-          <p>24-48hs a CABA, todo el país.</p>
-        </div>
-      </div>
-      <div class="trust-item">
-        <div class="trust-icon">💳</div>
-        <div>
-          <strong>Pago seguro</strong>
-          <p>Transferencia, tarjeta o efectivo.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Active filters -->
-    <div class="active-filters" id="activeFilters"></div>
-
-    <!-- Controls -->
-    <div class="catalog-header">
-      <p class="catalog-meta" id="productCount"><strong>25</strong> productos encontrados</p>
-      <div class="catalog-controls">
-        <input type="text" id="searchInput" class="search-input" placeholder="Buscar perfume por nombre..." oninput="applyFilters()">
-        <select class="sort-select" onchange="sortProducts(this.value)">
-          <option value="default">Ordenar por</option>
-          <option value="price-asc">Precio: Menor a Mayor</option>
-          <option value="price-desc">Precio: Mayor a Menor</option>
-          <option value="popular">Más Vendidos</option>
-          <option value="name">Nombre A-Z</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- GRID — renderizado por JS -->
-    <div class="product-grid" id="productGrid"></div>
-
-    <!-- Pagination -->
-    <div class="pagination" id="pagination"></div>
   </section>
 </main>
 
@@ -417,9 +414,20 @@
   </div>
 
   <div class="footer-bottom">
-    <span>© 2025 TecnoAdvance – Todos los derechos reservados</span>
-    <span>Hecho con ❤️ en Argentina</span>
+    <div class="footer-bottom-left">
+      <span>&copy; 2025 TecnoAdvance. Todos los derechos reservados.</span>
+    </div>
+    <div class="footer-bottom-center">
+      <a href="#">Inicio</a>
+      <a href="#">Acerca de</a>
+      <a href="politicas.html">Contacto</a>
+      <a href="#">Redes Sociales</a>
+    </div>
+    <div class="footer-bottom-right">
+      <span>Métodos de pago: Transferencia • Tarjeta • Efectivo</span>
+    </div>
   </div>
+  
 </footer>
 
 <script>window.API_ENDPOINT = 'https://www.tecnoadvance.shop/api/products';</script>
