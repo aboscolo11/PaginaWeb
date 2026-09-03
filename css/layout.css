@@ -19,6 +19,28 @@
   position: sticky;
   top: 84px;
 }
+.sidebar-mobile-header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-close {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--dark);
+  padding: 4px 8px;
+  font-weight: 600;
+}
+
+.sidebar-close:hover {
+  color: var(--gold);
+}
 
 .sidebar-title {
   font-family: var(--font-disp);
@@ -92,10 +114,12 @@
   padding: 8px 10px;
   border: 1px solid var(--border);
   border-radius: 6px;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-family: inherit;
   color: var(--dark);
   outline: none;
+  min-width: 0;
+  width: 100%;
 }
 
 .price-inputs input:focus { border-color: var(--gold); }
