@@ -347,15 +347,10 @@ function cardHTML(p) {
          data-genero="${p.genero}" data-marca="${p.marca}" data-precio="${p.precio}">
       ${badgeHTML(p.badge)}
       ${sinStock ? '<div class="out-of-stock-badge">Sin stock</div>' : ''}  <!-- Badge nuevo -->
-      <div class="product-img-wrap">
+         <div class="product-img-wrap">
         <img src="${productImgSrc(p)}" alt="${p.marca} ${p.nombre}" loading="lazy" 
-             class="product-main-img" data-product-id="${p.id}" 
-             ${sinStock ? '' : `onclick="openProductModal(${p.id})"`} />  <!-- Deshabilitar clic si sin stock -->
-        ${hasMultipleImages ? `
-          <button class="img-nav prev" onclick="changeProductImage(event, ${p.id}, -1)">◀</button>
-          <button class="img-nav next" onclick="changeProductImage(event, ${p.id}, 1)">▶</button>
-          <div class="img-counter" data-product-id="${p.id}">1/${imageCount}</div>
-        ` : ''}
+             class="product-main-img" data-product-id="${p.id}"  
+        ${sinStock ? '' : `onclick="openProductModal(${p.id})"`} />  <!-- Deshabilitar clic si sin stock -->
         <a href="${waLink}" target="_blank" class="quick-wa">Comprar por WhatsApp</a>
       </div>
       <div class="product-info">
@@ -495,6 +490,23 @@ function changeProductImage(event, productId, direction) {
   const counter = document.querySelector(`.img-counter[data-product-id="${productId}"]`);
   if (counter) counter.textContent = `${productImageIndex[productId] + 1}/${images.length}`;
 }
+// ─── ROTACIÓN AUTOMÁTICA DE FOTOS (cada 4s, en bucle) ───
+const AUTO_SLIDE_MS = 4000;
+
+function autoRotateProductImages() {
+  if (document.hidden) return;
+  document.querySelectorAll(".product-main-img").forEach((img) => {
+    const id = Number(img.dataset.productId);
+    const product = PRODUCTS.find((p) => p.id === id);
+    if (!product || !product.imagenes || product.imagenes.length < 2) return;
+    const current = Number(img.dataset.idx || 0);
+    const next = (current + 1) % product.imagenes.length; // última → vuelve a la 1
+    img.dataset.idx = next;
+    img.src = product.imagenes[next];
+  });
+}
+
+setInterval(autoRotateProductImages, AUTO_SLIDE_MS);
 
 const CHATBOT_RESPONSES = {
   default: "¿Buscás algún perfume en particular? 👀",
