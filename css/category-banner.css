@@ -120,22 +120,22 @@
 }
 
 /* Trust strip */
-.trust-strip {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin: 22px 0 16px;
+.trust-item strong {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+  color: #151515;
 }
 
 .trust-item {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(232, 232, 232, 0.8);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 16px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-card);
 }
 
 .trust-icon {
@@ -156,10 +156,11 @@
 }
 
 .trust-item p {
-  color: var(--mid);
+  color: #555555;
   font-size: 0.88rem;
   line-height: 1.5;
-}  
+  margin: 0;
+}
 .category-banner {
   min-height: 140px;
 }
