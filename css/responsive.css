@@ -166,4 +166,76 @@
     right: 14px;
     bottom: 80px;
   }
+  /* ─── GRILLA DE PRODUCTOS MOBILE (2 columnas uniformes) ─── */
+@media (max-width: 560px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .product-card {
+    flex-direction: column;
+    aspect-ratio: auto;
+  }
+
+  .product-img-wrap {
+    width: 100%;
+    min-width: 0;
+    aspect-ratio: 1 / 1;
+    flex-shrink: 1;
+  }
+
+  .product-img-wrap img {
+    padding: 8px;
+  }
+
+  .product-info {
+    padding: 10px;
+    gap: 6px;
+  }
+
+  .product-brand {
+    font-size: 0.65rem;
+    letter-spacing: 0.8px;
+    margin-bottom: 0;
+  }
+
+  .product-name {
+    font-size: 0.92rem;
+    min-height: 2.6em; /* 2 líneas fijas: alinea todas las cards */
+  }
+
+  .product-notes {
+    font-size: 0.75rem;
+    min-height: 3em;   /* 2 líneas fijas */
+  }
+
+  .price-original { font-size: 0.7rem; }
+  .price-final    { font-size: 1.05rem; }
+  .price-off-badge { font-size: 0.62rem; padding: 2px 6px; }
+
+  .product-installment,
+  .product-shipping {
+    font-size: 0.68rem;
+  }
+
+  .product-actions {
+    padding: 10px;
+    margin-top: auto; /* botón siempre abajo, alineado entre cards */
+  }
+
+  .btn-cart {
+    padding: 10px 6px;
+    font-size: 0.72rem;
+    min-height: 40px; /* área táctil cómoda */
+  }
+
+  .product-badge,
+  .out-of-stock-badge {
+    top: 8px;
+    left: 8px;
+    padding: 5px 8px;
+    font-size: 0.62rem;
+  }
+}
 }
