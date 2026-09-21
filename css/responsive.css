@@ -352,4 +352,11 @@
   font-weight: 600;
 }
   .product-main-img { transition: opacity 0.3s ease; }
+  /* ─── FILTROS OCULTOS (desktop y mobile) ─── */
+.main-layout,
+.sidebar,
+.sidebar-backdrop,
+.mobile-filter-toggle {
+  display: none !important;
+}
 }
