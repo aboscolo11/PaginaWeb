@@ -409,27 +409,40 @@ function updatePagination(totalPages) {
   if (currentPage < totalPages) html += `<button class="page-btn" onclick="goToPage(${currentPage + 1})">›</button>`;
   paginationDiv.innerHTML = html;
 }
-
+// FUNCION PARA PASAR DE PAGINA //
 function goToPage(page) {
   currentPage = page;
+
+  const root = document.documentElement;
+  const grid = document.getElementById("productGrid");
+
+  // Desactiva temporalmente el scroll suave global y el scroll anchoring,
+  // que son los que arrastran la vista hacia el footer al reemplazar el grid
+  root.style.scrollBehavior = "auto";
+  root.style.overflowAnchor = "none";
+
   renderProducts(filteredProducts);
 
-  const grid = document.getElementById("productGrid");
-  if (!grid) return;
-
-  // Espera al repintado para medir la posición ya con los productos nuevos
-  requestAnimationFrame(() => {
-    // Alto real de lo que queda fijo arriba: header + promo-bar + breadcrumb
-    let offset = 0;
+  if (grid) {
+    // Alto real de lo que queda fijo arriba: header (+ promo-bar) y breadcrumb
     const header = document.querySelector(".header");
     const breadcrumb = document.querySelector(".breadcrumb");
-    if (header) offset += header.getBoundingClientRect().height;
-    if (breadcrumb) offset += breadcrumb.getBoundingClientRect().height;
+    const fixedH =
+      (header ? header.getBoundingClientRect().height : 0) +
+      (breadcrumb ? breadcrumb.getBoundingClientRect().height : 0);
 
-    const top = grid.getBoundingClientRect().top + window.pageYOffset - offset - 12;
-    window.scrollTo({ top: Math.max(top, 0), behavior: "smooth" });
+    // El destino es el propio #productGrid; scroll-margin lo deja debajo de las barras fijas
+    grid.style.scrollMarginTop = fixedH + 12 + "px";
+    grid.scrollIntoView({ block: "start", behavior: "auto" });
+  }
+
+  // Restaura el comportamiento original una vez terminado
+  requestAnimationFrame(() => {
+    root.style.scrollBehavior = "";
+    root.style.overflowAnchor = "";
   });
 }
+
 
 function applyFilters() {
   const checkedGeneros = [...document.querySelectorAll('[data-filter="genero"]:checked')].map((el) => el.value);
