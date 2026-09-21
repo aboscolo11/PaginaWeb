@@ -351,4 +351,5 @@
   font-size: 0.65rem;
   font-weight: 600;
 }
+  .product-main-img { transition: opacity 0.3s ease; }
 }
