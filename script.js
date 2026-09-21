@@ -415,32 +415,61 @@ function goToPage(page) {
 
   const root = document.documentElement;
   const grid = document.getElementById("productGrid");
+  const isMobile = window.matchMedia("(max-width: 560px)").matches;
 
-  // Desactiva temporalmente el scroll suave global y el scroll anchoring,
-  // que son los que arrastran la vista hacia el footer al reemplazar el grid
+  // Desactiva scroll suave global y scroll anchoring durante el cambio
   root.style.scrollBehavior = "auto";
   root.style.overflowAnchor = "none";
 
   renderProducts(filteredProducts);
 
-  if (grid) {
-    // Alto real de lo que queda fijo arriba: header (+ promo-bar) y breadcrumb
+  // Alinea el inicio de #productGrid justo debajo de header + promo-bar + breadcrumb
+  const align = () => {
+    if (!grid) return;
     const header = document.querySelector(".header");
     const breadcrumb = document.querySelector(".breadcrumb");
     const fixedH =
       (header ? header.getBoundingClientRect().height : 0) +
       (breadcrumb ? breadcrumb.getBoundingClientRect().height : 0);
-
-    // El destino es el propio #productGrid; scroll-margin lo deja debajo de las barras fijas
     grid.style.scrollMarginTop = fixedH + 12 + "px";
     grid.scrollIntoView({ block: "start", behavior: "auto" });
-  }
+  };
 
-  // Restaura el comportamiento original una vez terminado
-  requestAnimationFrame(() => {
+  const restore = () => {
     root.style.scrollBehavior = "";
     root.style.overflowAnchor = "";
+  };
+
+  align();
+
+  // Desktop y tablet: comportamiento original, sin cambios
+  if (!isMobile) {
+    requestAnimationFrame(restore);
+    return;
+  }
+
+  // Mobile: re-alinea mientras el layout se termina de asentar
+  let active = true;
+  const cancel = () => { active = false; };
+  window.addEventListener("touchstart", cancel, { once: true, passive: true });
+
+  const realign = () => { if (active) align(); };
+
+  // Imágenes que terminan de cargar y mueven el layout
+  grid.querySelectorAll("img").forEach((img) => {
+    if (!img.complete) img.addEventListener("load", realign, { once: true });
   });
+
+  requestAnimationFrame(() => requestAnimationFrame(realign));
+  setTimeout(realign, 120);
+  setTimeout(realign, 350);
+
+  // Recién al final se devuelve el comportamiento original
+  setTimeout(() => {
+    active = false;
+    window.removeEventListener("touchstart", cancel);
+    restore();
+  }, 700);
 }
 
 
