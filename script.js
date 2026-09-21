@@ -145,10 +145,12 @@ async function cargarProductosDesdeSupabase() {
     
     console.log('✨ Productos procesados correctamente:', PRODUCTS);
     
-    filteredProducts = [...PRODUCTS];
+      filteredProducts = [...PRODUCTS];
     
     if (grid) renderProducts(PRODUCTS);
     updateCartCount();
+    renderCart();
+    renderOrderPage();
     
   } catch (err) {
     console.error('❌ Error al cargar productos:', err);
@@ -278,7 +280,10 @@ function renderOrderPage() {
       </div>`;
     return;
   }
-
+if (PRODUCTS.length === 0) {
+    orderContent.innerHTML = `<div class="order-empty"><p>Cargando pedido…</p></div>`;
+    return;
+  }
   const itemsHtml = entries.map(([id, qty]) => {
     const product = PRODUCTS.find((p) => p.id === Number(id));
     if (!product) return "";
