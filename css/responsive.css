@@ -237,5 +237,65 @@
     padding: 5px 8px;
     font-size: 0.62rem;
   }
+/* ─── CARDS MÁS COMPACTAS ─── */
+
+/* Desktop / tablet: imagen cuadrada en vez de vertical */
+.product-img-wrap {
+  aspect-ratio: 1 / 1;
+}
+
+@media (max-width: 560px) {
+  .product-info {
+    padding: 8px 10px;
+    gap: 4px;
+  }
+
+  .product-volume {
+    font-size: 0.62rem;
+    padding: 2px 8px;
+    margin-top: 0;
+  }
+
+  .product-name {
+    font-size: 0.88rem;
+    line-height: 1.25;
+    min-height: 2.5em;
+  }
+
+  /* Notas a 1 línea (el texto completo sigue en el modal) */
+  .product-notes {
+    -webkit-line-clamp: 1;
+    min-height: 0;
+    line-height: 1.35;
+  }
+
+  .product-pricing {
+    margin-top: 4px;
+    padding-top: 6px;
+  }
+
+  .price-row {
+    gap: 4px;
+    margin-bottom: 2px;
+  }
+
+  .product-installment {
+    margin-bottom: 0;
+    line-height: 1.3;
+  }
+
+  .product-shipping {
+    font-size: 0.65rem;
+    line-height: 1.3;
+  }
+
+  .product-actions {
+    padding: 8px 10px 10px;
+  }
+
+  .btn-cart {
+    min-height: 38px;
+    padding: 8px 6px;
+  }
 }
 }
