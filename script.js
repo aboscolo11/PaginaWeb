@@ -413,7 +413,22 @@ function updatePagination(totalPages) {
 function goToPage(page) {
   currentPage = page;
   renderProducts(filteredProducts);
-  document.querySelector(".catalog").scrollIntoView({ behavior: "smooth" });
+
+  const grid = document.getElementById("productGrid");
+  if (!grid) return;
+
+  // Espera al repintado para medir la posición ya con los productos nuevos
+  requestAnimationFrame(() => {
+    // Alto real de lo que queda fijo arriba: header + promo-bar + breadcrumb
+    let offset = 0;
+    const header = document.querySelector(".header");
+    const breadcrumb = document.querySelector(".breadcrumb");
+    if (header) offset += header.getBoundingClientRect().height;
+    if (breadcrumb) offset += breadcrumb.getBoundingClientRect().height;
+
+    const top = grid.getBoundingClientRect().top + window.pageYOffset - offset - 12;
+    window.scrollTo({ top: Math.max(top, 0), behavior: "smooth" });
+  });
 }
 
 function applyFilters() {
