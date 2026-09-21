@@ -359,4 +359,36 @@
 .mobile-filter-toggle {
   display: none !important;
 }
+  /* ─── STICKY: header + promo-bar + breadcrumb ─── */
+
+/* Alto real del header (header-inner + promo-bar + borde) */
+:root { --header-h: 117px; }
+@media (max-width: 1000px) {
+  :root { --header-h: 111px; }
+}
+
+/* Evita el scroll horizontal SIN crear un contenedor de scroll (habilita el sticky) */
+body { overflow-x: clip; }
+
+/* Breadcrumb pegado justo debajo del header */
+.breadcrumb {
+  position: sticky;
+  top: calc(var(--header-h) - 1px); /* -1px evita una línea de separación por subpíxeles */
+  z-index: 99; /* debajo del header (100), encima del contenido */
+  /* Mismo tono que hoy (blanco 2% sobre negro), pero opaco para que no se vea la grilla detrás */
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)),
+    var(--black);
+}
+
+/* Pantallas > 1380px: el fondo ocupa todo el ancho (como el header) y el texto queda alineado igual */
+@media (min-width: 1381px) {
+  .breadcrumb {
+    max-width: none;
+    padding-inline: calc((100% - 1380px) / 2 + 24px);
+  }
+}
+
+/* Los enlaces internos (#contacto) y el scroll de la paginación no quedan tapados por la barra fija */
+html { scroll-padding-top: 176px; }
 }
