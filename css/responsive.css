@@ -102,47 +102,6 @@
   .welcome-box {
     padding: 28px 20px;
   }
-
-  .header-inner {
-    justify-content: space-between;
-    padding: 0 18px;
-  }
-
-  .banner-text h2 {
-    font-size: 1.4rem;
-  }
-
-  .banner-text p {
-    font-size: 0.92rem;
-  }
-
-  .chatbot-container {
-    width: calc(100% - 28px);
-    right: 14px;
-    bottom: 80px;
-  }
-}
-
-@media (max-width: 768px) {
-  .modal-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 16px;
-  }
-  
-  .modal-name {
-    font-size: 1.4rem;
-  }
-  
-  .modal-images {
-    aspect-ratio: auto;
-    height: 300px;
-  }
-}
-@media (max-width: 700px) {
-  .welcome-box {
-    padding: 28px 20px;
-  }
   .catalog-header {
     justify-content: space-between;
     gap: 14px;
@@ -166,7 +125,9 @@
     right: 14px;
     bottom: 80px;
   }
-  /* ─── GRILLA DE PRODUCTOS MOBILE (2 columnas uniformes) ─── */
+}
+
+/* ─── GRILLA DE PRODUCTOS MOBILE (2 columnas uniformes) ─── */
 @media (max-width: 560px) {
   .product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -202,12 +163,12 @@
 
   .product-name {
     font-size: 0.92rem;
-    min-height: 2.6em; /* 2 líneas fijas: alinea todas las cards */
+    min-height: 2.6em;
   }
 
   .product-notes {
     font-size: 0.75rem;
-    min-height: 3em;   /* 2 líneas fijas */
+    min-height: 3em;
   }
 
   .price-original { font-size: 0.7rem; }
@@ -221,13 +182,13 @@
 
   .product-actions {
     padding: 10px;
-    margin-top: auto; /* botón siempre abajo, alineado entre cards */
+    margin-top: auto;
   }
 
   .btn-cart {
     padding: 10px 6px;
     font-size: 0.72rem;
-    min-height: 40px; /* área táctil cómoda */
+    min-height: 40px;
   }
 
   .product-badge,
@@ -237,6 +198,8 @@
     padding: 5px 8px;
     font-size: 0.62rem;
   }
+}
+
 /* ─── CARDS MÁS COMPACTAS ─── */
 
 /* Desktop / tablet: imagen cuadrada en vez de vertical */
@@ -262,7 +225,6 @@
     min-height: 2.5em;
   }
 
-  /* Notas a 1 línea (el texto completo sigue en el modal) */
   .product-notes {
     -webkit-line-clamp: 1;
     min-height: 0;
@@ -297,91 +259,89 @@
     min-height: 38px;
     padding: 8px 6px;
   }
-/* ─── IMAGEN DE PRODUCTO CENTRADA ─── */
-.product-img-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.product-img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center center;
-  margin: 0 auto;
-}
+  /* ─── IMAGEN DE PRODUCTO CENTRADA ─── */
+  .product-img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-/* Flechas y contador: superpuestos, fuera del flujo */
-.product-img-wrap .img-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.55);
-  color: #fff;
-  font-size: 0.7rem;
-  display: grid;
-  place-items: center;
-  z-index: 3;
-  transition: background 0.2s ease, color 0.2s ease;
-}
+  .product-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    margin: 0 auto;
+  }
 
-.product-img-wrap .img-nav.prev { left: 6px; }
-.product-img-wrap .img-nav.next { right: 6px; }
+  .product-img-wrap .img-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 0.7rem;
+    display: grid;
+    place-items: center;
+    z-index: 3;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
 
-.product-img-wrap .img-nav:hover {
-  transform: translateY(-50%); /* evita el salto de button:hover global */
-  background: var(--gold);
-  color: var(--black);
-}
+  .product-img-wrap .img-nav.prev { left: 6px; }
+  .product-img-wrap .img-nav.next { right: 6px; }
 
-.product-img-wrap .img-counter {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  z-index: 3;
-  padding: 2px 8px;
-  border-radius: 20px;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  font-size: 0.65rem;
-  font-weight: 600;
-}
+  .product-img-wrap .img-nav:hover {
+    transform: translateY(-50%);
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  .product-img-wrap .img-counter {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    z-index: 3;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 600;
+  }
+
   .product-main-img { transition: opacity 0.3s ease; }
-  /* ─── FILTROS OCULTOS (desktop y mobile) ─── */
+}
+
+/* ─── FILTROS OCULTOS (desktop y mobile) ─── */
 main.main-layout:not(.order-page),
 .sidebar,
 .sidebar-backdrop,
 .mobile-filter-toggle {
   display: none !important;
 }
-  /* ─── STICKY: header + promo-bar + breadcrumb ─── */
 
-/* Alto real del header (header-inner + promo-bar + borde) */
+/* ─── STICKY: header + promo-bar + breadcrumb ─── */
 :root { --header-h: 117px; }
 @media (max-width: 1000px) {
   :root { --header-h: 111px; }
 }
 
-/* Evita el scroll horizontal SIN crear un contenedor de scroll (habilita el sticky) */
 body { overflow-x: clip; }
 
-/* Breadcrumb pegado justo debajo del header */
 .breadcrumb {
   position: sticky;
-  top: calc(var(--header-h) - 1px); /* -1px evita una línea de separación por subpíxeles */
-  z-index: 99; /* debajo del header (100), encima del contenido */
-  /* Mismo tono que hoy (blanco 2% sobre negro), pero opaco para que no se vea la grilla detrás */
+  top: calc(var(--header-h) - 1px);
+  z-index: 99;
   background:
     linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)),
     var(--black);
 }
 
-/* Pantallas > 1380px: el fondo ocupa todo el ancho (como el header) y el texto queda alineado igual */
 @media (min-width: 1381px) {
   .breadcrumb {
     max-width: none;
@@ -389,9 +349,9 @@ body { overflow-x: clip; }
   }
 }
 
-/* Los enlaces internos (#contacto) y el scroll de la paginación no quedan tapados por la barra fija */
 html { scroll-padding-top: 176px; }
-  /* [INICIO_CAMBIOS_NAV_DROPDOWN] */
+
+/* [INICIO_CAMBIOS_NAV_DROPDOWN] */
 .nav-dropdown { position: relative; }
 
 .nav-dropdown-toggle {
@@ -476,8 +436,8 @@ html { scroll-padding-top: 176px; }
 .nav-dropdown-toggle:focus-visible,
 .nav-dropdown-menu a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 /* [FIN_CAMBIOS_NAV_DROPDOWN] */
-}
-  /* [INICIO_CAMBIOS_MOBILE_NAV] */
+
+/* [INICIO_CAMBIOS_MOBILE_NAV] */
 .mobile-nav-toggle {
   display: none;
   align-items: center;
