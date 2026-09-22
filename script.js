@@ -723,3 +723,45 @@ function updateModalPrice() {
   document.getElementById("modalPrice").textContent = formatPrice(totalPrice);
   document.getElementById("modalBuyBtn").textContent = `Comprar por WhatsApp — ${formatPrice(totalPrice)}`;
 }
+// [INICIO_CAMBIOS_NAV_DROPDOWN]
+(function () {
+  const dropdown = document.getElementById("navCatalogoDropdown");
+  const toggleBtn = document.getElementById("navCatalogoBtn");
+  const menu = document.getElementById("navCatalogoMenu");
+  if (!dropdown || !toggleBtn || !menu) return;
+
+  function openDropdown() {
+    dropdown.classList.add("open");
+    toggleBtn.setAttribute("aria-expanded", "true");
+  }
+
+  function closeDropdown() {
+    dropdown.classList.remove("open");
+    toggleBtn.setAttribute("aria-expanded", "false");
+  }
+
+  function isOpen() {
+    return dropdown.classList.contains("open");
+  }
+
+  toggleBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    isOpen() ? closeDropdown() : openDropdown();
+  });
+
+  menu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeDropdown);
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!dropdown.contains(e.target)) closeDropdown();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isOpen()) {
+      closeDropdown();
+      toggleBtn.focus();
+    }
+  });
+})();
+// [FIN_CAMBIOS_NAV_DROPDOWN]
