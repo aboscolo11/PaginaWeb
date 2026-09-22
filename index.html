@@ -80,12 +80,28 @@
       </div>
     </a>
 
-    <nav class="nav">
-      <a href="#">Inicio</a>
-      <a href="#" class="active">Catálogo</a>
-      <a href="#contacto">Contacto</a>
-      <a href="politicas.html">Políticas</a>
-    </nav>
+<nav class="nav">
+  <a href="#">Inicio</a>
+  <!-- [INICIO_CAMBIOS_NAV_DROPDOWN] -->
+  <div class="nav-dropdown" id="navCatalogoDropdown">
+    <button type="button" class="nav-dropdown-toggle active" id="navCatalogoBtn"
+      aria-haspopup="true" aria-expanded="false" aria-controls="navCatalogoMenu">
+      Catálogo
+      <svg class="nav-dropdown-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </button>
+    <div class="nav-dropdown-menu" id="navCatalogoMenu" role="menu" aria-label="Categorías de catálogo">
+      <a href="#" role="menuitem">Perfumes</a>
+      <a href="#" role="menuitem">Gadgets</a>
+      <a href="#" role="menuitem">Electrónica</a>
+      <a href="#" role="menuitem">Juguetes</a>
+    </div>
+  </div>
+  <!-- [FIN_CAMBIOS_NAV_DROPDOWN] -->
+  <a href="#contacto">Contacto</a>
+  <a href="politicas.html">Políticas</a>
+</nav>
 
     <div class="header-actions">
       <a href="pedido.html" class="cart-toggle">
