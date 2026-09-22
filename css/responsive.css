@@ -587,3 +587,11 @@ html { scroll-padding-top: 176px; }
   .mobile-nav-overlay { display: none !important; }
 }
 /* [FIN_CAMBIOS_MOBILE_NAV] */
+/* [FIX_DESKTOP_MOBILE_NAV_HIDE] */
+@media (min-width: 1001px) {
+  .mobile-nav-overlay,
+  .mobile-nav-overlay .mobile-nav-panel,
+  .mobile-nav-overlay .mobile-nav-list {
+    display: none !important;
+  }
+}
