@@ -765,3 +765,55 @@ function updateModalPrice() {
   });
 })();
 // [FIN_CAMBIOS_NAV_DROPDOWN]
+// [INICIO_CAMBIOS_MOBILE_NAV]
+(function () {
+  const toggleBtn = document.getElementById("mobileNavToggle");
+  const overlay = document.getElementById("mobileNavOverlay");
+  const closeBtn = document.getElementById("mobileNavClose");
+  const catalogoBtn = document.getElementById("mobileCatalogoBtn");
+  const catalogoAccordion = catalogoBtn ? catalogoBtn.closest(".mobile-nav-accordion") : null;
+
+  if (!toggleBtn || !overlay) return;
+
+  function openMenu() {
+    overlay.classList.add("open");
+    toggleBtn.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMenu() {
+    overlay.classList.remove("open");
+    toggleBtn.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  }
+
+  toggleBtn.addEventListener("click", openMenu);
+  if (closeBtn) closeBtn.addEventListener("click", closeMenu);
+
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeMenu();
+  });
+
+  overlay.querySelectorAll(".mobile-nav-link, .mobile-nav-sublink").forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  if (catalogoBtn && catalogoAccordion) {
+    catalogoBtn.addEventListener("click", () => {
+      const isOpen = catalogoAccordion.classList.toggle("open");
+      catalogoBtn.setAttribute("aria-expanded", String(isOpen));
+    });
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && overlay.classList.contains("open")) {
+      closeMenu();
+      toggleBtn.focus();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 1000 && overlay.classList.contains("open")) closeMenu();
+  });
+})();
+// [FIN_CAMBIOS_MOBILE_NAV]
