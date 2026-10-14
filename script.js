@@ -33,14 +33,12 @@ const BANNER_IMAGES = [
   "./imagenes/IMG_7573.png",
 ];
 let currentBannerIndex = 0;
-let bannerTimer = null;
 
 function showBanner(index) {
   if (BANNER_IMAGES.length === 0) return;
   currentBannerIndex = (index + BANNER_IMAGES.length) % BANNER_IMAGES.length;
   document.getElementById("bannerImage").src = BANNER_IMAGES[currentBannerIndex];
   updateBannerDots();
-  restarBannerTimer(),
 }
 
 function nextBanner() { showBanner(currentBannerIndex + 1); }
@@ -52,10 +50,7 @@ function updateBannerDots() {
     (_, i) => `<div class="dot ${i === currentBannerIndex ? "active" : ""}" onclick="showBanner(${i})"></div>`
   ).join("");
 }
-function restarBannerTimer(){
-  clearInterval(bannerTimer);
-  bannerTimer = setInterval(netBanner, 5000); // cambia cada 5 segundos 
-}
+
 
 function initBanner() {
   if (BANNER_IMAGES.length === 0) return;
