@@ -64,11 +64,7 @@ if (document.readyState === "loading") {
   checkWelcomeModal();
   initBanner();
 }
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initBanner);
-} else {
-  initBanner();
-}
+
 
 // ════════════════════════════════════════════════════════
 // CONFIGURACIÓN SUPABASE (usando fetch - sin librería externa)
