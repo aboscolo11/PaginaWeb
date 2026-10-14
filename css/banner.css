@@ -67,4 +67,9 @@
   transition: background 0.3s;
 }
 
-.dot.active { background: rgba(255, 255, 255, 0.9); }
+.dot.active { background: rgba(255, 255, 255, 0.9); 
+            @media (max-width: 600px) {
+  .carousel-container {
+    padding-bottom: 60%;
+  }
+}
