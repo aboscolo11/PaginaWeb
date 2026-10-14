@@ -40,7 +40,6 @@ function showBanner(index) {
   document.getElementById("bannerImage").src = BANNER_IMAGES[currentBannerIndex];
   updateBannerDots();
 }
-
 function nextBanner() { showBanner(currentBannerIndex + 1); }
 function prevBanner() { showBanner(currentBannerIndex - 1); }
 
@@ -56,7 +55,6 @@ function initBanner() {
   if (BANNER_IMAGES.length === 0) return;
   showBanner(0);
 }
-
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
     checkWelcomeModal();
@@ -64,6 +62,11 @@ if (document.readyState === "loading") {
   });
 } else {
   checkWelcomeModal();
+  initBanner();
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initBanner);
+} else {
   initBanner();
 }
 
