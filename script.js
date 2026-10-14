@@ -28,9 +28,8 @@ if (document.readyState === "loading") {
 const WA_NUMBER = "541134843360";
 
 const BANNER_IMAGES = [
-  "./imagenes/Banner2.png",
-  "./imagenes/Banners.png",
   "./imagenes/IMG_7573.png",
+  "./imagenes/Banner2.png",
 ];
 let currentBannerIndex = 0;
 
