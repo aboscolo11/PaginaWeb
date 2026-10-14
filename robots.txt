@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /pedido.html
+
+Sitemap: https://tecnoadvance.shop/sitemap.xml
