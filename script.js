@@ -180,7 +180,7 @@ function getDiscountPct(p) {
   const d = Number(p && p.descuentoEfectivo);
   return d > 0 && d < 100 ? d : 0;
 }
-function getCashPrice(p) { return Math.round(getListPrice(p) * (1 - getDiscountPct(p) / 100)); }
+function getSalePrice(p) { return Math.round(getListPrice(p) * (1 - getDiscountPct(p) / 100)); }
 
 function saveCartState() {
   localStorage.setItem("tecnoadvanceCart", JSON.stringify(cartItems));
@@ -213,7 +213,7 @@ function addToCart(productId) {
 function getCartTotal() {
   return Object.entries(cartItems).reduce((total, [id, qty]) => {
     const product = PRODUCTS.find((p) => p.id === Number(id));
-    return total + (product ? getListPrice(product) * qty : 0);
+    return total + (product ? getSalePrice(product) * qty : 0);
   }, 0);
 }
 
@@ -222,7 +222,7 @@ function buildCartWaLink() {
   const lines = entries.map(([id, qty]) => {
     const product = PRODUCTS.find((p) => p.id === Number(id));
     if (!product) return "";
-    return `${qty} x ${product.marca} ${product.nombre} - ${formatPrice(getListPrice(product))}`;
+    return `${qty} x ${product.marca} ${product.nombre} - ${formatPrice(getSalePrice(product))}`;
   }).filter(Boolean);
   const total = formatPrice(getCartTotal());
   const msg = encodeURIComponent(`Hola, quiero hacer un pedido:\n${lines.join("\n")}\nTotal: ${total}`);
@@ -251,10 +251,10 @@ function renderCart() {
       <div class="cart-item">
         <div class="cart-item-details">
           <span>${qty}x ${product.marca} ${product.nombre}</span>
-          <small>${formatPrice(getListPrice(product))} c/u</small>
+          <small>${formatPrice(getSalePrice(product))} c/u</small>
         </div>
         <div class="cart-item-actions">
-          <span>${formatPrice(getListPrice(product) * qty)}</span>
+          <span>${formatPrice(getSalePrice(product) * qty)}</span>
           <button type="button" class="cart-item-remove" onclick="removeCartItem(${id})">Quitar</button>
         </div>
       </div>`;
@@ -297,10 +297,10 @@ if (PRODUCTS.length === 0) {
       <div class="order-row">
         <div class="order-item-info">
           <div>${qty}x ${product.marca} ${product.nombre}</div>
-          <small>${formatPrice(getListPrice(product))} c/u</small>
+          <small>${formatPrice(getSalePrice(product))} c/u</small>
         </div>
         <div class="order-item-actions">
-          <span>${formatPrice(getListPrice(product) * qty)}</span>
+          <span>${formatPrice(getSalePrice(product) * qty)}</span>
           <button type="button" class="cart-item-remove" onclick="removeCartItem(${id})">Quitar</button>
         </div>
       </div>`;
@@ -354,6 +354,10 @@ function cardHTML(p) {
   return `
     <div class="product-card ${sinStock ? 'sin-stock' : ''}"
          data-genero="${p.genero}" data-marca="${p.marca}" data-precio="${p.precio}">
+      <div class="card-badges">
+        ${getDiscountPct(p) > 0 ? `<span class="card-badge card-badge-discount">-${getDiscountPct(p)}%</span>` : ''}
+        <span class="card-badge card-badge-exclusive">Exclusivo TecnoAdvance</span>
+      </div>
       ${badgeHTML(p.badge)}
       ${sinStock ? '<div class="out-of-stock-badge">Sin stock</div>' : ''}  <!-- Badge nuevo -->
          <div class="product-img-wrap">
@@ -369,10 +373,9 @@ function cardHTML(p) {
         <p class="product-notes">${p.notas}</p>
         <div class="product-pricing">
           <div class="price-row">
-            <span class="price-label">Precio del producto:</span>
-            <span class="price-final">${formatPrice(getListPrice(p))}</span>
+            <span class="price-final">${formatPrice(getSalePrice(p))}</span>
+            ${getDiscountPct(p) > 0 ? `<span class="price-original">${formatPrice(getListPrice(p))}</span>` : ''}
           </div>
-          ${getDiscountPct(p) > 0 ? `<div class="product-cash">🏦 ${formatPrice(getCashPrice(p))} - Transferencia</div>` : ''}
         </div>
         <div class="product-shipping">🚚 Envío gratis en 24-48hs</div>
       </div>
@@ -649,7 +652,7 @@ let modalQuantity = 1;
 
 function getPriceByType(product) {
   if (!product) return 0;
-  return getListPrice(product);
+  return getSalePrice(product);
 }
 
 function openProductModal(productId) {
@@ -670,8 +673,8 @@ function openProductModal(productId) {
   document.getElementById("modalInstallment").textContent = "";
 
   const paymentHTML = getDiscountPct(product) > 0
-    ? `<span>Precio del producto: ${formatPrice(precio)}</span><span>🏦 ${formatPrice(getCashPrice(product))} - Transferencia</span>`
-    : `<span>Precio del producto: ${formatPrice(precio)}</span>`;
+    ? `<span class="price-original">${formatPrice(getListPrice(product))}</span><span>-${getDiscountPct(product)}% · Exclusivo TecnoAdvance</span>`
+    : `<span>Exclusivo TecnoAdvance</span>`;
   document.getElementById("modalPayment").innerHTML = paymentHTML;
   document.getElementById("modalStock").textContent = "● Disponible — Stock en inventario";
 
