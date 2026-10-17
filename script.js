@@ -181,7 +181,6 @@ function getDiscountPct(p) {
   return d > 0 && d < 100 ? d : 0;
 }
 function getCashPrice(p) { return Math.round(getListPrice(p) * (1 - getDiscountPct(p) / 100)); }
-function getInstallment(p, cuotas = 3) { return Math.ceil(getListPrice(p) / cuotas); }
 
 function saveCartState() {
   localStorage.setItem("tecnoadvanceCart", JSON.stringify(cartItems));
@@ -370,10 +369,10 @@ function cardHTML(p) {
         <p class="product-notes">${p.notas}</p>
         <div class="product-pricing">
           <div class="price-row">
+            <span class="price-label">Precio del producto:</span>
             <span class="price-final">${formatPrice(getListPrice(p))}</span>
           </div>
-          <div class="product-installment">3 cuotas de ${formatPrice(getInstallment(p))} sin interés</div>
-          ${getDiscountPct(p) > 0 ? `<div class="product-cash">💵 ${formatPrice(getCashPrice(p))} pagando en efectivo (${getDiscountPct(p)}% OFF)</div>` : ''}
+          ${getDiscountPct(p) > 0 ? `<div class="product-cash">🏦 ${formatPrice(getCashPrice(p))} - Transferencia</div>` : ''}
         </div>
         <div class="product-shipping">🚚 Envío gratis en 24-48hs</div>
       </div>
@@ -668,11 +667,11 @@ function openProductModal(productId) {
   document.getElementById("modalName").textContent = product.nombre;
   document.getElementById("modalDesc").textContent = product.notas;
   document.getElementById("modalPrice").textContent = formatPrice(precio);
-  document.getElementById("modalInstallment").textContent = `3 cuotas de ${formatPrice(getInstallment(product))} sin interés`;
+  document.getElementById("modalInstallment").textContent = "";
 
   const paymentHTML = getDiscountPct(product) > 0
-    ? `<span>💳 ${formatPrice(precio)}</span><span>💵 ${formatPrice(getCashPrice(product))} en efectivo (-${getDiscountPct(product)}%)</span>`
-    : `<span>💳 ${formatPrice(precio)}</span>`;
+    ? `<span>Precio del producto: ${formatPrice(precio)}</span><span>🏦 ${formatPrice(getCashPrice(product))} - Transferencia</span>`
+    : `<span>Precio del producto: ${formatPrice(precio)}</span>`;
   document.getElementById("modalPayment").innerHTML = paymentHTML;
   document.getElementById("modalStock").textContent = "● Disponible — Stock en inventario";
 
