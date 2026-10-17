@@ -80,14 +80,14 @@ let isLoadingProducts = false;
 // ════════════════════════════════════════════════════════
 async function cargarProductosDesdeSupabase() {
   isLoadingProducts = true;
-  
+
   // Mostrar mensaje de carga
   const grid = document.getElementById("productGrid");
   if (grid) grid.innerHTML = '<div class="loading-message">⏳ Cargando productos...</div>';
-  
+
   try {
     console.log('🔄 Iniciando carga de productos desde Supabase...');
-    
+
     const response = await fetch(`${SUPABASE_URL}/rest/v1/Productos?select=*&order=id.asc`, {
       method: 'GET',
       headers: {
@@ -96,17 +96,17 @@ async function cargarProductosDesdeSupabase() {
         'Content-Type': 'application/json'
       }
     });
-    
+
     console.log('📡 Respuesta recibida:', response.status, response.statusText);
-    
+
     if (!response.ok) {
       throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
     }
-    
+
     const data = await response.json();
     console.log('✅ Datos recibidos de Supabase:', data);
     console.log('📊 Total de productos:', data.length);
-    
+
     if (!data || data.length === 0) {
       console.warn('⚠️ La tabla de Supabase está vacía o no devuelve datos');
       if (grid) grid.innerHTML = '<div class="no-results"><h3>No hay productos disponibles en la base de datos</h3></div>';
@@ -114,7 +114,7 @@ async function cargarProductosDesdeSupabase() {
       isLoadingProducts = false;
       return;
     }
-    
+
     // ════════════════════════════════════════════════════════
     // MAPEAR CORRECTAMENTE LOS DATOS
     // ════════════════════════════════════════════════════════
@@ -124,7 +124,7 @@ async function cargarProductosDesdeSupabase() {
       if (p.imagenes && p.imagenes.trim().length > 0) {
         imagenesArray = p.imagenes.split('|').map(img => img.trim()).filter(img => img.length > 0);
       }
-      
+
       return {
         id: p.id || index + 1,
         marca: p.marca || '',
@@ -141,16 +141,16 @@ async function cargarProductosDesdeSupabase() {
         stock: Number(p.stock || 0)
       };
     });
-    
+
     console.log('✨ Productos procesados correctamente:', PRODUCTS);
-    
+
       filteredProducts = [...PRODUCTS];
-    
+
     if (grid) renderProducts(PRODUCTS);
     updateCartCount();
     renderCart();
     renderOrderPage();
-    
+
   } catch (err) {
     console.error('❌ Error al cargar productos:', err);
     if (grid) {
@@ -172,8 +172,16 @@ let currentPage = 1;
 const PRODUCTS_PER_PAGE = 12;
 let cartItems = {};
 
-function formatPrice(n) { return "$" + n.toLocaleString("es-AR"); }
-function installmentPrice(price, cuotas = 3) { return formatPrice(Math.ceil(price / cuotas)); }
+function formatPrice(n) { return "$" + Math.round(Number(n) || 0).toLocaleString("es-AR"); }
+
+// ── PRECIOS: única fuente de verdad ──
+function getListPrice(p) { return Math.round(Number(p && p.precio) || 0); }
+function getDiscountPct(p) {
+  const d = Number(p && p.descuentoEfectivo);
+  return d > 0 && d < 100 ? d : 0;
+}
+function getCashPrice(p) { return Math.round(getListPrice(p) * (1 - getDiscountPct(p) / 100)); }
+function getInstallment(p, cuotas = 3) { return Math.ceil(getListPrice(p) / cuotas); }
 
 function saveCartState() {
   localStorage.setItem("tecnoadvanceCart", JSON.stringify(cartItems));
@@ -206,7 +214,7 @@ function addToCart(productId) {
 function getCartTotal() {
   return Object.entries(cartItems).reduce((total, [id, qty]) => {
     const product = PRODUCTS.find((p) => p.id === Number(id));
-    return total + (product ? product.precio * qty : 0);
+    return total + (product ? getListPrice(product) * qty : 0);
   }, 0);
 }
 
@@ -215,7 +223,7 @@ function buildCartWaLink() {
   const lines = entries.map(([id, qty]) => {
     const product = PRODUCTS.find((p) => p.id === Number(id));
     if (!product) return "";
-    return `${qty} x ${product.marca} ${product.nombre} - ${formatPrice(product.precio)}`;
+    return `${qty} x ${product.marca} ${product.nombre} - ${formatPrice(getListPrice(product))}`;
   }).filter(Boolean);
   const total = formatPrice(getCartTotal());
   const msg = encodeURIComponent(`Hola, quiero hacer un pedido:\n${lines.join("\n")}\nTotal: ${total}`);
@@ -244,10 +252,10 @@ function renderCart() {
       <div class="cart-item">
         <div class="cart-item-details">
           <span>${qty}x ${product.marca} ${product.nombre}</span>
-          <small>${formatPrice(product.precio)} c/u</small>
+          <small>${formatPrice(getListPrice(product))} c/u</small>
         </div>
         <div class="cart-item-actions">
-          <span>${formatPrice(product.precio * qty)}</span>
+          <span>${formatPrice(getListPrice(product) * qty)}</span>
           <button type="button" class="cart-item-remove" onclick="removeCartItem(${id})">Quitar</button>
         </div>
       </div>`;
@@ -290,10 +298,10 @@ if (PRODUCTS.length === 0) {
       <div class="order-row">
         <div class="order-item-info">
           <div>${qty}x ${product.marca} ${product.nombre}</div>
-          <small>${formatPrice(product.precio)} c/u</small>
+          <small>${formatPrice(getListPrice(product))} c/u</small>
         </div>
         <div class="order-item-actions">
-          <span>${formatPrice(product.precio * qty)}</span>
+          <span>${formatPrice(getListPrice(product) * qty)}</span>
           <button type="button" class="cart-item-remove" onclick="removeCartItem(${id})">Quitar</button>
         </div>
       </div>`;
@@ -343,17 +351,15 @@ function cardHTML(p) {
   const hasMultipleImages = p.imagenes && p.imagenes.length > 1;
   const imageCount = p.imagenes ? p.imagenes.length : 1;
   const volumen = (p.descripcion.match(/\d+\s?ML/i) || [""])[0];
-  const precioFinal = p.precio * (1 - p.descuentoEfectivo / 100);
   const sinStock = p.stock === 0; // ← Nuevo
-
   return `
-    <div class="product-card ${sinStock ? 'sin-stock' : ''}" 
+    <div class="product-card ${sinStock ? 'sin-stock' : ''}"
          data-genero="${p.genero}" data-marca="${p.marca}" data-precio="${p.precio}">
       ${badgeHTML(p.badge)}
       ${sinStock ? '<div class="out-of-stock-badge">Sin stock</div>' : ''}  <!-- Badge nuevo -->
          <div class="product-img-wrap">
-        <img src="${productImgSrc(p)}" alt="${p.marca} ${p.nombre}" loading="lazy" 
-             class="product-main-img" data-product-id="${p.id}"  
+        <img src="${productImgSrc(p)}" alt="${p.marca} ${p.nombre}" loading="lazy"
+             class="product-main-img" data-product-id="${p.id}"
         ${sinStock ? '' : `onclick="openProductModal(${p.id})"`} />  <!-- Deshabilitar clic si sin stock -->
         <a href="${waLink}" target="_blank" class="quick-wa">Comprar por WhatsApp</a>
       </div>
@@ -364,17 +370,16 @@ function cardHTML(p) {
         <p class="product-notes">${p.notas}</p>
         <div class="product-pricing">
           <div class="price-row">
-            <span class="price-original">${formatPrice(p.precio)}</span>
-            <span class="price-final">${formatPrice(precioFinal)}</span>
-            <span class="price-off-badge">${p.descuentoEfectivo}% OFF</span>
+            <span class="price-final">${formatPrice(getListPrice(p))}</span>
           </div>
-          <div class="product-installment">3 cuotas de ${installmentPrice(precioFinal)} sin interés</div>
+          <div class="product-installment">3 cuotas de ${formatPrice(getInstallment(p))} sin interés</div>
+          ${getDiscountPct(p) > 0 ? `<div class="product-cash">💵 ${formatPrice(getCashPrice(p))} pagando en efectivo (${getDiscountPct(p)}% OFF)</div>` : ''}
         </div>
         <div class="product-shipping">🚚 Envío gratis en 24-48hs</div>
       </div>
       <div class="product-actions">
-        ${sinStock 
-          ? '<button type="button" class="btn-cart btn-disabled" disabled>Sin stock</button>' 
+        ${sinStock
+          ? '<button type="button" class="btn-cart btn-disabled" disabled>Sin stock</button>'
           : `<button type="button" class="btn-cart" onclick="addToCart(${p.id})">Agregar al carrito</button>`}
       </div>
     </div>`;
@@ -403,7 +408,7 @@ function updatePagination(totalPages) {
   const paginationDiv = document.getElementById("pagination");
   if (totalPages <= 1) { paginationDiv.style.display = "none"; return; }
   paginationDiv.style.display = "flex";
-  
+
   let html = "";
   if (currentPage > 1) html += `<button class="page-btn" onclick="goToPage(${currentPage - 1})">‹</button>`;
   for (let i = 1; i <= totalPages; i++) {
@@ -645,7 +650,7 @@ let modalQuantity = 1;
 
 function getPriceByType(product) {
   if (!product) return 0;
-  return product.precio || 0;
+  return getListPrice(product);
 }
 
 function openProductModal(productId) {
@@ -663,12 +668,11 @@ function openProductModal(productId) {
   document.getElementById("modalName").textContent = product.nombre;
   document.getElementById("modalDesc").textContent = product.notas;
   document.getElementById("modalPrice").textContent = formatPrice(precio);
-  document.getElementById("modalInstallment").textContent = `3 cuotas ${installmentPrice(precio)}`;
-  
-  const paymentHTML = `
-    <span>💳 ${formatPrice(precio)}</span>
-    <span>💵 -${product.descuentoEfectivo}% ${formatPrice(Math.floor(precio * (1 - product.descuentoEfectivo / 100)))}</span>
-  `;
+  document.getElementById("modalInstallment").textContent = `3 cuotas de ${formatPrice(getInstallment(product))} sin interés`;
+
+  const paymentHTML = getDiscountPct(product) > 0
+    ? `<span>💳 ${formatPrice(precio)}</span><span>💵 ${formatPrice(getCashPrice(product))} en efectivo (-${getDiscountPct(product)}%)</span>`
+    : `<span>💳 ${formatPrice(precio)}</span>`;
   document.getElementById("modalPayment").innerHTML = paymentHTML;
   document.getElementById("modalStock").textContent = "● Disponible — Stock en inventario";
 
