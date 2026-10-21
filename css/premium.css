@@ -38,8 +38,27 @@ a:hover { color: #ead7aa; }
 .header { background: rgba(17, 18, 22, .92); border-bottom: 1px solid rgba(255, 255, 255, .09); box-shadow: 0 2px 16px rgba(0, 0, 0, .2); backdrop-filter: saturate(160%) blur(18px); }
 .header-inner { min-height: 74px; }
 .header::after { background: linear-gradient(90deg, transparent, rgba(216, 189, 130, .3), transparent); }
-.logo-shape { border-radius: 12px; background: #29251d; border: 1px solid #554a34; box-shadow: none; }
-.logo-name { color: #f5f2eb; }
+/* Logo horizontal: tamaño discreto, sin marco que lo comprima ni nombre duplicado. */
+.logo { gap: 0; }
+.logo-shape {
+  width: 136px;
+  height: 58px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: screen;
+}
+.logo-copy { display: none; }
+@media (max-width: 600px) {
+  .logo-shape { width: 118px; height: 50px; }
+}
 .nav a, .nav-dropdown-toggle { color: #e1ded7; font-size: .78rem; letter-spacing: .055em; text-transform: uppercase; }
 .nav a:hover, .nav a.active { color: #ead7aa; background: rgba(216, 189, 130, .1); }
 .nav a::after { background: #d8bd82; }
