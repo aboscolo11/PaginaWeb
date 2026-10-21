@@ -226,10 +226,7 @@ async function cargarProductosDesdeSupabase() {
     syncPriceFilterBounds();
 
     if (grid) renderProducts(filteredProducts);
-    if (PAGE_MODE === "home") {
-      renderHomeCategoryImages();
-      renderHomeCarousels();
-    }
+    if (PAGE_MODE === "home") renderHomeCarousels();
     updateCartCount();
     renderCart();
     renderOrderPage();
@@ -538,21 +535,6 @@ function renderProducts(list) {
   count.innerHTML = isHomeFeatured
     ? `<strong>${n}</strong> productos destacados`
     : `<strong>${n}</strong> producto${n !== 1 ? "s" : ""} encontrado${n !== 1 ? "s" : ""}`;
-}
-
-function renderHomeCategoryImages() {
-  if (PAGE_MODE !== "home") return;
-  document.querySelectorAll("[data-category-image]").forEach((image) => {
-    const category = image.dataset.categoryImage;
-    const product = PRODUCTS.find((item) =>
-      getProductCategory(item) === category &&
-      item.imagen &&
-      !String(item.imagen).includes("sin-imagen")
-    );
-    if (!product) return;
-    image.src = product.imagen;
-    image.addEventListener("error", () => image.classList.add("is-error"), { once: true });
-  });
 }
 
 function renderHomeCarousels() {
