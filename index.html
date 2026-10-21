@@ -14,6 +14,67 @@
     .category-intro p{color:var(--mid-text);margin:0}
     [data-category] .banner-carousel,[data-category] .category-banner{display:none!important}
     @media(max-width:600px){.category-intro{margin-top:12px;padding:18px 16px}}
+    .home-hero{max-width:1380px;margin:18px auto 0;padding:0 24px}
+    .home-hero-panel{position:relative;display:flex;align-items:end;min-height:clamp(280px,38vw,510px);overflow:hidden;padding:clamp(24px,5vw,58px);border:1px solid var(--border);border-radius:18px;background:#171717 url('./imagenes/Banners.png') center/cover no-repeat;box-shadow:var(--shadow)}
+    .home-hero-panel:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.76),rgba(0,0,0,.08) 90%),linear-gradient(0deg,rgba(0,0,0,.44),transparent 55%)}
+    .home-hero-copy{position:relative;z-index:1;max-width:600px}
+    .home-eyebrow{color:var(--gold-lt);font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+    .home-hero h1{max-width:600px;margin:10px 0 14px;font-family:var(--font-disp);font-size:clamp(2rem,5vw,3.5rem);line-height:1.12;color:var(--white)}
+    .home-hero p{max-width:520px;color:#f0f0f0;font-size:1.05rem}
+    .home-hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+    .home-cta{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:9px;background:linear-gradient(135deg,var(--gold),var(--gold-lt));color:#17130a;font-weight:700}
+    .home-cta.secondary{border:1px solid rgba(255,255,255,.55);background:rgba(0,0,0,.2);color:var(--white)}
+    .home-section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:18px}
+    .home-section-head h2{font-family:var(--font-disp);font-size:clamp(1.45rem,3vw,2rem);color:var(--white)}
+    .home-section-head p{margin-top:4px;color:var(--soft-text)}
+    .home-text-link{color:var(--gold-lt);font-weight:700;white-space:nowrap}
+    .home-category-grid,.home-product-carousel{display:grid;grid-auto-columns:minmax(220px,1fr);grid-auto-flow:column;gap:14px;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scrollbar-width:thin;padding:2px 2px 14px}
+    .home-category-card{display:flex;min-height:142px;flex-direction:column;justify-content:space-between;padding:20px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(145deg,#1b1b1b,#111);transition:transform .2s,border-color .2s,background .2s;scroll-snap-align:start}
+    .home-category-card:hover{transform:translateY(-3px);border-color:var(--gold);background:var(--bg-hover)}
+    .home-category-icon{font-size:1.5rem}
+    .home-category-card h3{margin-top:10px;color:var(--white);font-size:1.06rem}
+    .home-category-card span:last-child{color:var(--gold-lt);font-size:.88rem}
+    .home-product-section{max-width:1380px;margin:30px auto;padding:0 24px}
+    .home-carousel-controls{display:flex;gap:8px}
+    .home-carousel-controls button{width:38px;height:38px;border:1px solid var(--border-light);border-radius:50%;background:var(--card-bg);color:var(--white);font-size:1.2rem}
+    .home-product-carousel{grid-auto-columns:minmax(290px,320px)}
+    .home-product-carousel .product-card{width:100%;min-width:0;scroll-snap-align:start}
+    .home-product-carousel .product-img-wrap{aspect-ratio:1.42 / 1}
+    .home-product-carousel .product-info{padding:10px 14px 8px}
+    .home-product-carousel .product-card .product-brand{font-size:.72rem}
+    .home-product-carousel .product-card .product-name{min-height:0;font-size:.88rem;line-height:1.25}
+    .home-product-carousel .product-card .product-notes{min-height:0;margin-top:3px;-webkit-line-clamp:1;font-size:.76rem}
+    .home-product-carousel .product-card .product-pricing{margin-top:4px}
+    .home-product-carousel .product-card .product-shipping{padding:5px 8px;font-size:.72rem}
+    .home-product-carousel .product-card .product-actions{padding:0 14px 12px}
+    .home-product-carousel .product-card .btn-cart{padding:10px;font-size:.88rem}
+    .home-empty{color:var(--soft-text);padding:20px 0}
+    body[data-page="home"] .sort-select,body[data-page="home"] .main-layout,body[data-page="home"] .catalog-header,body[data-page="home"] .active-filters,body[data-page="home"] #pagination,body[data-page="home"] .trust-strip{display:none!important}
+    body[data-page="home"] .breadcrumb{display:none!important}
+    .google-reviews{max-width:1380px;margin:40px auto 48px;padding:0 24px}
+    .google-review-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .google-review-card{min-height:200px;padding:20px;border:1px solid var(--border);border-radius:12px;background:var(--card-bg);box-shadow:var(--shadow-card)}
+    .google-review-card-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .google-review-stars{color:var(--gold);letter-spacing:.12em}
+    .google-review-source{color:var(--mid-text);font-size:.82rem;white-space:nowrap}
+    .google-review-text{margin:18px 0;color:var(--light-text);line-height:1.6}
+    .google-review-author{color:var(--white);font-weight:700}
+    .google-review-meta{margin-top:4px;color:var(--soft-text);font-size:.8rem}
+    .google-review-placeholder{border-style:dashed}
+    .google-review-placeholder .google-review-text{color:var(--soft-text);font-style:italic}
+    .footer{margin-top:56px;border-top:1px solid var(--border);background:linear-gradient(180deg,#171717,#0b0b0b)}
+    .footer-inner{max-width:1380px;padding:48px 24px 36px;gap:48px}
+    .footer-links{grid-column:2 / -1;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,44px);min-width:0}
+    .footer-column{min-width:0}
+    .footer-description{max-width:390px;line-height:1.7;color:var(--mid-text)}
+    .footer-column h5{color:var(--gold-lt);font-size:.9rem;letter-spacing:.08em;text-transform:uppercase}
+    .footer-column a{color:var(--mid-text);transition:color .2s;overflow-wrap:anywhere}
+    .footer-column li span{color:var(--mid-text)}
+    .footer-column a:hover{color:var(--gold-lt)}
+    .footer-badge{border:1px solid rgba(212,175,84,.28);background:rgba(212,175,84,.08);color:var(--gold-lt)}
+    .footer-bottom{max-width:1380px;margin:auto;padding:18px 24px;border-top:1px solid var(--border);color:var(--soft-text)}
+    @media(max-width:900px){.footer-links{grid-column:1 / -1}}
+    @media(max-width:560px){.home-hero,.home-section,.home-product-section,.google-reviews{padding:0 16px}.home-hero{margin-top:14px}.home-hero-panel{min-height:320px;padding:24px 20px}.home-category-grid{grid-auto-columns:minmax(72%,1fr)}.home-product-carousel{grid-auto-columns:minmax(78vw,82vw)}.home-category-card{min-height:118px}.home-section-head{align-items:flex-start;flex-direction:column}.home-text-link{white-space:normal}.home-carousel-controls{align-self:flex-end}.google-review-grid{grid-template-columns:1fr}.footer-inner{padding:36px 18px 26px;gap:28px}.footer-links{grid-template-columns:1fr;gap:24px}.footer-bottom{padding:16px 18px;gap:12px;flex-direction:column}}
   </style>
   <link rel="stylesheet" href="css/base.css">
       <link rel="stylesheet" href="css/header.css">
@@ -27,6 +88,7 @@
       <link rel="stylesheet" href="css/promo.css">
       <link rel="stylesheet" href="css/estados.css">
       <link rel="stylesheet" href="css/responsive.css">
+      <link rel="stylesheet" href="css/premium.css">
       <link rel="icon" type="image/png" href="./imagenes/img/favicon.png?v=2" />
 
   <!-- 1. IDIOMA Y ROBOTS (SEO básico) -->
@@ -44,7 +106,7 @@
     <meta property="og:image:height" content="630" />
    
   <!-- 6. COLOR DE LA BARRA DEL NAVEGADOR EN MÓVIL (se ve más profesional) -->
-    <meta name="theme-color" content="#1a1a2e" />  <!-- Cambia el color a tu branding -->
+    <meta name="theme-color" content="#111216" />  <!-- Cambia el color a tu branding -->
    
   <!-- 7. CANONICAL (evita contenido duplicado) -->
       <link rel="canonical" href="https://tecnoadvance.shop/" />
@@ -53,7 +115,7 @@
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
 </head>
-<body>
+<body data-page="home">
 <!-- ═══ MODAL DE BIENVENIDA ════════════════════════════════ -->
 <div id="welcomeModal" class="welcome-modal open">
   <div class="welcome-box">
@@ -110,6 +172,7 @@
       </svg>
     </button>
     <div class="nav-dropdown-menu" id="navCatalogoMenu" role="menu" aria-label="Categorías de catálogo">
+      <a href="catalogo.html" role="menuitem">Ver todo el catálogo</a>
       <a href="perfumes.html" role="menuitem">Perfumes</a>
       <a href="accesorios.html" role="menuitem">Accesorios</a>
       <a href="electronica.html" role="menuitem">Electrónica</a>
@@ -135,38 +198,7 @@
     </div>
       </div><!-- cierre header-inner -->
 
-  <!-- [INICIO_CAMBIOS_MOBILE_NAV] -->
-  <div class="mobile-nav-overlay" id="mobileNavOverlay">
-    <div class="mobile-nav-panel">
-      <div class="mobile-nav-panel-header">
-        <span class="mobile-nav-title">Menú</span>
-        <button type="button" class="mobile-nav-close" id="mobileNavClose" aria-label="Cerrar menú">✕</button>
-      </div>
-      <nav class="mobile-nav-list" aria-label="Navegación móvil">
-        <a href="index.html" class="mobile-nav-link">Inicio</a>
 
-        <div class="mobile-nav-accordion">
-          <button type="button" class="mobile-nav-accordion-btn" id="mobileCatalogoBtn"
-            aria-expanded="false" aria-controls="mobileCatalogoSub">
-            Catálogo
-            <svg class="mobile-nav-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M6 9l6 6 6-6"/>
-            </svg>
-          </button>
-          <div class="mobile-nav-sublist" id="mobileCatalogoSub">
-            <a href="perfumes.html" class="mobile-nav-sublink">Perfumes</a>
-            <a href="accesorios.html" class="mobile-nav-sublink">Accesorios</a>
-            <a href="electronica.html" class="mobile-nav-sublink">Electrónica</a>
-            <a href="juguetes.html" class="mobile-nav-sublink">Juguetes</a>
-          </div>
-        </div>
-
-        <a href="#contacto" class="mobile-nav-link">Contacto</a>
-        <a href="politicas.html" class="mobile-nav-link">Políticas</a>
-      </nav>
-    </div>
-  </div>
-  <!-- [FIN_CAMBIOS_MOBILE_NAV] -->
 <div class="promo-bar">
     <div class="top-promo__track">
 
@@ -210,98 +242,91 @@
 </div>
 </header>
 
+  <!-- [INICIO_CAMBIOS_MOBILE_NAV] -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay">
+    <div class="mobile-nav-panel">
+      <div class="mobile-nav-panel-header">
+        <span class="mobile-nav-title">Menú</span>
+        <button type="button" class="mobile-nav-close" id="mobileNavClose" aria-label="Cerrar menú">✕</button>
+      </div>
+      <nav class="mobile-nav-list" aria-label="Navegación móvil">
+        <a href="index.html" class="mobile-nav-link">Inicio</a>
+
+        <div class="mobile-nav-accordion">
+          <button type="button" class="mobile-nav-accordion-btn" id="mobileCatalogoBtn"
+            aria-expanded="false" aria-controls="mobileCatalogoSub">
+            Catálogo
+            <svg class="mobile-nav-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="mobile-nav-sublist" id="mobileCatalogoSub">
+            <a href="catalogo.html" class="mobile-nav-sublink">Ver todo el catálogo</a>
+            <a href="perfumes.html" class="mobile-nav-sublink">Perfumes</a>
+            <a href="accesorios.html" class="mobile-nav-sublink">Accesorios</a>
+            <a href="electronica.html" class="mobile-nav-sublink">Electrónica</a>
+            <a href="juguetes.html" class="mobile-nav-sublink">Juguetes</a>
+          </div>
+        </div>
+
+        <a href="#contacto" class="mobile-nav-link">Contacto</a>
+        <a href="politicas.html" class="mobile-nav-link">Políticas</a>
+      </nav>
+    </div>
+  </div>
+  <!-- [FIN_CAMBIOS_MOBILE_NAV] -->
+
 <!-- ═══ BREADCRUMB ════════════════════════════════════════ -->
 <div class="breadcrumb">
   <a href="index.html">Inicio</a> / <span id="breadcrumbCategory">Fragancias</span>
 </div>
 <div class="category-intro" id="categoryIntro" hidden><h1 id="categoryTitle"></h1><p id="categoryDescription"></p></div>
 
-<!-- ═══ BANNER CAROUSEL ════════════════════════════════════ -->
-<div class="banner-carousel">
-  <div class="carousel-container">
-    <img id="bannerImage" src="./imagenes/Banners.png" alt="Banner" />
+<section class="home-hero" aria-labelledby="homeTitle">
+  <div class="home-hero-panel">
+    <div class="home-hero-copy">
+      <span class="home-eyebrow">TecnoAdvance · Tienda online</span>
+      <h1 id="homeTitle">Productos elegidos para vos.</h1>
+      <p>Encontrá tu próximo favorito y descubrí todo lo nuevo de TecnoAdvance.</p>
+      <div class="home-hero-actions"><a class="home-cta" href="catalogo.html">Ver catálogo</a></div>
+    </div>
   </div>
-  
-  <button class="carousel-btn prev" onclick="prevBanner()">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <line x1="15" y1="19" x2="9" y2="12" /><line x1="15" y1="5" x2="9" y2="12" />
-    </svg>
-  </button>
-  
-  <button class="carousel-btn next" onclick="nextBanner()">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <line x1="9" y1="19" x2="15" y2="12" /><line x1="9" y1="5" x2="15" y2="12" />
-    </svg>
-  </button>
+</section>
+<section class="home-section" id="categorias" aria-labelledby="categoriesTitle">
+  <div class="home-section-head">
+    <div><h2 id="categoriesTitle">Explorá por categoría</h2></div>
+  </div>
+  <div class="home-category-grid">
+    <a class="home-category-card" href="perfumes.html"><div><span class="home-category-icon" aria-hidden="true">✦</span><h3>Perfumes</h3></div><span>Ver selección →</span></a>
+    <a class="home-category-card" href="accesorios.html"><div><span class="home-category-icon" aria-hidden="true">◇</span><h3>Accesorios</h3></div><span>Ver selección →</span></a>
+    <a class="home-category-card" href="electronica.html"><div><span class="home-category-icon" aria-hidden="true">⌁</span><h3>Electrónica</h3></div><span>Ver selección →</span></a>
+    <a class="home-category-card" href="juguetes.html"><div><span class="home-category-icon" aria-hidden="true">♡</span><h3>Juguetes</h3></div><span>Ver selección →</span></a>
+  </div>
+</section>
+<section class="home-product-section" aria-labelledby="newProductsTitle">
+  <div class="home-section-head">
+    <div><h2 id="newProductsTitle">Nuevos ingresos</h2><p>Las últimas incorporaciones al catálogo.</p></div>
+    <div class="home-carousel-controls"><button type="button" data-carousel-prev="newProductsGrid" aria-label="Productos anteriores">‹</button><button type="button" data-carousel-next="newProductsGrid" aria-label="Más productos nuevos">›</button></div>
+  </div>
+  <div class="home-product-carousel" id="newProductsGrid" aria-live="polite"><p class="home-empty">Cargando productos…</p></div>
+</section>
+<section class="home-product-section" aria-labelledby="bestSellersTitle">
+  <div class="home-section-head">
+    <div><h2 id="bestSellersTitle">Más vendidos</h2><p>Favoritos de nuestra comunidad.</p></div>
+    <div class="home-carousel-controls"><button type="button" data-carousel-prev="bestSellersGrid" aria-label="Productos anteriores">‹</button><button type="button" data-carousel-next="bestSellersGrid" aria-label="Más productos vendidos">›</button></div>
+  </div>
+  <div class="home-product-carousel" id="bestSellersGrid" aria-live="polite"><p class="home-empty">Cargando productos…</p></div>
+</section>
+<section class="google-reviews" aria-labelledby="googleReviewsTitle">
+  <div class="home-section-head">
+    <div><h2 id="googleReviewsTitle">Reseñas en <span translate="no">Google Maps</span></h2><p>Opiniones reales de quienes ya compraron.</p></div>
+    <a class="home-text-link" href="https://www.google.com/maps/place/TecnoAdvance/@-34.6426538,-58.6914887,15.75z/data=!4m6!3m5!1s0x95bcbff947df5189:0x113e0a57a5f3ef2e!8m2!3d-34.6434834!4d-58.6913043!16s%2Fg%2F11ynxx_0k_?entry=ttu" target="_blank" rel="noopener">Ver perfil de Google →</a>
+  </div>
+  <!-- Widget oficial de reseñas de Elfsight proporcionado por el usuario -->
+  <script src="https://elfsightcdn.com/platform.js" async></script>
+  <div class="elfsight-app-a796fc92-bd37-4657-b647-ffc82188e38b" data-elfsight-app-lazy></div>
+</section>
 
-  <div class="carousel-dots" id="carouselDots"></div>
-</div>
-<!-- Banner -->
-    <div class="category-banner">
-      <div class="banner-details">
-        <div class="banner-eyebrow">Catálogo Premium</div>
-        <div class="banner-text">
-          <h2>Perfumes Árabes Originales</h2>
-          <p>Importados con garantía de autenticidad y envío rápido a todo el país.</p>
-        </div>
-        <div class="banner-tags">
-          <span>✈️ Envío seguro a todo el pais</span>
-          <span>💎 Marcas top</span>
-          <span>⚡ Stock inmediato</span>
-        </div>
-      </div>
-      <div class="banner-card">
-        <div class="banner-card-title">Stock disponible</div>
-        <p>Comprá directo por WhatsApp y recibí tu pedido en menos de 48hs.</p>
-        <a href="https://wa.me/541134843360?text=Hola%20quiero%20comprar%20perfumes" target="_blank" class="banner-cta">Contactar por WhatsApp</a>
-      </div>
-    </div>
-    <div class="trust-strip">
-      <div class="trust-item">
-        <div class="trust-icon">✔️</div>
-        <div>
-          <strong>Original garantizado</strong>
-          <p>100% perfumes auténticos.</p>
-        </div>
-      </div>
-      <div class="trust-item">
-        <div class="trust-icon">🚚</div>
-        <div>
-          <strong>Envío rápido</strong>
-          <p>24-48hs a CABA, todo el país.</p>
-        </div>
-      </div>
-      <div class="trust-item">
-        <div class="trust-icon">💳</div>
-        <div>
-          <strong>Pago seguro</strong>
-          <p>Transferencia, tarjeta o efectivo.</p>
-        </div>
-      </div>
-    </div>
-
-        <!-- Active filters -->
-    <div class="active-filters" id="activeFilters"></div>
-
-    <!-- Controls -->
-    <div class="catalog-header">
-      <p class="catalog-meta" id="productCount"><strong>25</strong> productos encontrados</p>
-      <div class="catalog-controls">
-        <input type="text" id="searchInput" class="search-input" placeholder="Buscar perfume por nombre..." oninput="applyFilters()">
-        <select class="sort-select" onchange="sortProducts(this.value)">
-          <option value="default">Ordenar por</option>
-          <option value="price-asc">Precio: Menor a Mayor</option>
-          <option value="price-desc">Precio: Mayor a Menor</option>
-          <option value="popular">Más Vendidos</option>
-          <option value="name">Nombre A-Z</option>
-        </select>
-      </div>
-    </div>
-        <!-- GRID — renderizado por JS -->
-    <div class="product-grid" id="productGrid"></div>
-
-    <!-- Pagination -->
-    <div class="pagination" id="pagination"></div>
 <!-- ═══ MAIN LAYOUT ═══════════════════════════════════════ -->
 <main class="main-layout">
 
@@ -426,7 +451,7 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="logo-text footer-logo">TecnoAdvance</div>
-      <p class="footer-description">Tu tienda de perfumes árabes originales en Argentina. Lattafa, Afnan, Armaf y muchas marcas más con garantía de autenticidad.</p>
+      <p class="footer-description">Productos importados seleccionados, atención cercana y compras simples. Encontrá perfumes, tecnología, accesorios y mucho más.</p>
       <div class="footer-badges">
         <span class="footer-badge">Original garantizado</span>
         <span class="footer-badge">Envío rápido</span>
@@ -454,28 +479,27 @@
       <div class="footer-column">
         <h5>Catálogo</h5>
         <ul>
-          <li><a href="#">Perfumes Masculinos</a></li>
-          <li><a href="#">Perfumes Femeninos</a></li>
-          <li><a href="#">Unisex</a></li>
-          <li><a href="#">Lattafa</a></li>
-          <li><a href="#">Afnan</a></li>
-          <li><a href="#">Armaf</a></li>
+          <li><a href="catalogo.html">Catálogo completo</a></li>
+          <li><a href="perfumes.html">Perfumes</a></li>
+          <li><a href="accesorios.html">Accesorios</a></li>
+          <li><a href="electronica.html">Electrónica</a></li>
+          <li><a href="juguetes.html">Juguetes</a></li>
         </ul>
       </div>
       <div class="footer-column">
         <h5>Contacto</h5>
         <ul>
           <li><a href="https://wa.me/541134843360" target="_blank">📱 +54 11 3484-3360</a></li>
-          <li><a href="#">📍 Argentina, Ituzaingó</a></li>
-          <li><a href="#">📧 advancetecno39@gmail.com</a></li>
+          <li><span>📍 Ituzaingó, Argentina</span></li>
+          <li><a href="mailto:advancetecno39@gmail.com">📧 advancetecno39@gmail.com</a></li>
         </ul>
       </div>
       <div class="footer-column">
         <h5>Envíos</h5>
         <ul>
-          <li><a href="#">📦 Envios a todo el país</a></li>
-          <li><a href="#">⚡ CABA 24hs</a></li>
-          <li><a href="#">🆓 Gratis +$300.000</a></li>
+          <li><span>📦 Envíos a todo el país</span></li>
+          <li><span>⚡ Consultá tiempos de entrega</span></li>
+          <li><span>💳 Transferencia, tarjeta y efectivo</span></li>
         </ul>
       </div>
     </div>
@@ -483,13 +507,13 @@
 
   <div class="footer-bottom">
     <div class="footer-bottom-left">
-      <span>&copy; 2025 TecnoAdvance. Todos los derechos reservados.</span>
+      <span>&copy; 2026 TecnoAdvance. Todos los derechos reservados.</span>
     </div>
     <div class="footer-bottom-center">
-      <a href="#">Inicio</a>
-      <a href="#">Acerca de</a>
-      <a href="politicas.html">Contacto</a>
-      <a href="#">Redes Sociales</a>
+      <a href="index.html">Inicio</a>
+      <a href="politicas.html">Políticas</a>
+      <a href="#contacto">Contacto</a>
+      <a href="https://www.instagram.com/tecnoadvance_oficial/" target="_blank" rel="noopener">Instagram</a>
     </div>
     <div class="footer-bottom-right">
       <span>Métodos de pago: Transferencia • Tarjeta • Efectivo</span>
@@ -519,6 +543,7 @@
         <div class="modal-brand" id="modalBrand"></div>
         <h2 class="modal-name" id="modalName"></h2>
         <div class="modal-desc" id="modalDesc"></div>
+        <div class="modal-variants" id="modalVariants" hidden></div>
         
         <div class="modal-pricing">
           <div class="modal-price" id="modalPrice"></div>
@@ -537,7 +562,7 @@
           </div>
         </div>
         
-        <a id="modalBuyBtn" target="_blank" class="modal-buy-btn">Comprar por WhatsApp</a>
+        <button type="button" id="modalBuyBtn" class="modal-buy-btn" onclick="addCurrentProductToCart()">Agregar al carrito</button>
         <button onclick="closeProductModal()" class="modal-close-btn">Cerrar</button>
       </div>
     </div>
@@ -545,3 +570,5 @@
 </div>
 </body>
 </html>
+
+

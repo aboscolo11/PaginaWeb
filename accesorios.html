@@ -27,6 +27,7 @@
       <link rel="stylesheet" href="css/promo.css">
       <link rel="stylesheet" href="css/estados.css">
       <link rel="stylesheet" href="css/responsive.css">
+      <link rel="stylesheet" href="css/premium.css">
       <link rel="icon" type="image/png" href="./imagenes/img/favicon.png?v=2" />
 
   <!-- 1. IDIOMA Y ROBOTS (SEO básico) -->
@@ -44,7 +45,7 @@
     <meta property="og:image:height" content="630" />
    
   <!-- 6. COLOR DE LA BARRA DEL NAVEGADOR EN MÓVIL (se ve más profesional) -->
-    <meta name="theme-color" content="#1a1a2e" />  <!-- Cambia el color a tu branding -->
+    <meta name="theme-color" content="#f5f5f7" />  <!-- Cambia el color a tu branding -->
    
   <!-- 7. CANONICAL (evita contenido duplicado) -->
       <link rel="canonical" href="https://tecnoadvance.shop/" />
@@ -135,38 +136,7 @@
     </div>
       </div><!-- cierre header-inner -->
 
-  <!-- [INICIO_CAMBIOS_MOBILE_NAV] -->
-  <div class="mobile-nav-overlay" id="mobileNavOverlay">
-    <div class="mobile-nav-panel">
-      <div class="mobile-nav-panel-header">
-        <span class="mobile-nav-title">Menú</span>
-        <button type="button" class="mobile-nav-close" id="mobileNavClose" aria-label="Cerrar menú">✕</button>
-      </div>
-      <nav class="mobile-nav-list" aria-label="Navegación móvil">
-        <a href="index.html" class="mobile-nav-link">Inicio</a>
 
-        <div class="mobile-nav-accordion">
-          <button type="button" class="mobile-nav-accordion-btn" id="mobileCatalogoBtn"
-            aria-expanded="false" aria-controls="mobileCatalogoSub">
-            Catálogo
-            <svg class="mobile-nav-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M6 9l6 6 6-6"/>
-            </svg>
-          </button>
-          <div class="mobile-nav-sublist" id="mobileCatalogoSub">
-            <a href="perfumes.html" class="mobile-nav-sublink">Perfumes</a>
-            <a href="accesorios.html" class="mobile-nav-sublink">Accesorios</a>
-            <a href="electronica.html" class="mobile-nav-sublink">Electrónica</a>
-            <a href="juguetes.html" class="mobile-nav-sublink">Juguetes</a>
-          </div>
-        </div>
-
-        <a href="#contacto" class="mobile-nav-link">Contacto</a>
-        <a href="politicas.html" class="mobile-nav-link">Políticas</a>
-      </nav>
-    </div>
-  </div>
-  <!-- [FIN_CAMBIOS_MOBILE_NAV] -->
 <div class="promo-bar">
     <div class="top-promo__track">
 
@@ -209,6 +179,39 @@
     </div>
 </div>
 </header>
+
+  <!-- [INICIO_CAMBIOS_MOBILE_NAV] -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay">
+    <div class="mobile-nav-panel">
+      <div class="mobile-nav-panel-header">
+        <span class="mobile-nav-title">Menú</span>
+        <button type="button" class="mobile-nav-close" id="mobileNavClose" aria-label="Cerrar menú">✕</button>
+      </div>
+      <nav class="mobile-nav-list" aria-label="Navegación móvil">
+        <a href="index.html" class="mobile-nav-link">Inicio</a>
+
+        <div class="mobile-nav-accordion">
+          <button type="button" class="mobile-nav-accordion-btn" id="mobileCatalogoBtn"
+            aria-expanded="false" aria-controls="mobileCatalogoSub">
+            Catálogo
+            <svg class="mobile-nav-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="mobile-nav-sublist" id="mobileCatalogoSub">
+            <a href="perfumes.html" class="mobile-nav-sublink">Perfumes</a>
+            <a href="accesorios.html" class="mobile-nav-sublink">Accesorios</a>
+            <a href="electronica.html" class="mobile-nav-sublink">Electrónica</a>
+            <a href="juguetes.html" class="mobile-nav-sublink">Juguetes</a>
+          </div>
+        </div>
+
+        <a href="#contacto" class="mobile-nav-link">Contacto</a>
+        <a href="politicas.html" class="mobile-nav-link">Políticas</a>
+      </nav>
+    </div>
+  </div>
+  <!-- [FIN_CAMBIOS_MOBILE_NAV] -->
 
 <!-- ═══ BREADCRUMB ════════════════════════════════════════ -->
 <div class="breadcrumb">
@@ -480,6 +483,7 @@
         <div class="modal-brand" id="modalBrand"></div>
         <h2 class="modal-name" id="modalName"></h2>
         <div class="modal-desc" id="modalDesc"></div>
+        <div class="modal-variants" id="modalVariants" hidden></div>
         
         <div class="modal-pricing">
           <div class="modal-price" id="modalPrice"></div>
@@ -498,7 +502,7 @@
           </div>
         </div>
         
-        <a id="modalBuyBtn" target="_blank" class="modal-buy-btn">Comprar por WhatsApp</a>
+        <button type="button" id="modalBuyBtn" class="modal-buy-btn" onclick="addCurrentProductToCart()">Agregar al carrito</button>
         <button onclick="closeProductModal()" class="modal-close-btn">Cerrar</button>
       </div>
     </div>
@@ -506,3 +510,5 @@
 </div>
 </body>
 </html>
+
+
