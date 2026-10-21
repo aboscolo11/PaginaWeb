@@ -8,7 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://tecnoadvance.shop/styles.css" />
+    <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/premium.css" />
   <style>
     :root {
       --paper: #fffdf8;
@@ -395,6 +398,61 @@
         justify-content: center;
       }
     }
+  
+    /* Tema grafito y champagne compartido con el resto del sitio. */
+    :root {
+      --paper: #111216;
+      --paper-2: #1b1c21;
+      --ink: #f5f2eb;
+      --muted: #c5c1b9;
+      --line: rgba(255, 255, 255, 0.1);
+      --gold-soft: rgba(216, 189, 130, 0.12);
+      --gold-strong: #d8bd82;
+      --gold-bright: #ead7aa;
+    }
+    body {
+      background: #111216;
+      color: #eeeae2;
+    }
+    .policy-section {
+      background: #17181d;
+      border-color: #34353b;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+    }
+    .policy-summary, .policy-grid, .policy-footer { color: #eeeae2; }
+    .policy-card, .policy-section-block {
+      background: #1b1c21;
+      border-color: #34353b;
+    }
+    .policy-card h3, .policy-section-block summary, .policy-contact strong {
+      color: #f5f2eb;
+    }
+    .policy-card p, .policy-content, .policy-content p, .policy-contact span {
+      color: #c5c1b9;
+    }
+    .policy-section-block summary {
+      background: #202126;
+    }
+    .policy-content .lead { color: #eeeae2; }
+    .policy-point {
+      background: #202126;
+      border-color: #34353b;
+    }
+    .policy-point span { color: #c5c1b9; }
+    .policy-note {
+      background: #29251d;
+      border-left-color: #d8bd82;
+      color: #eeeae2;
+    }
+    .policy-contact {
+      background: #1b1c21;
+      border-color: #34353b;
+    }
+    .policy-link, .policy-link:hover {
+      background: #d8bd82;
+      color: #151517;
+    }
+
   </style>
 </head>
 <body>
