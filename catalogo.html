@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>TecnoAdvance – Productos Importados | Perfumes, Accesorios,Electronica y Juguetes</title>
+  <meta name="description" content="Catálogo de Productos importados originales. Comprá por WhatsApp." />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+      <style>
+    .category-intro{max-width:1380px;margin:20px auto 0;padding:22px 24px;border-left:3px solid var(--gold);background:linear-gradient(90deg,rgba(212,175,84,.1),transparent)}
+    .category-intro h1{font-family:var(--font-disp);color:var(--gold-lt);font-size:clamp(1.6rem,3vw,2.3rem);margin:0 0 6px}
+    .category-intro p{color:var(--mid-text);margin:0}
+    [data-category] .banner-carousel,[data-category] .category-banner{display:none!important}
+    @media(max-width:600px){.category-intro{margin-top:12px;padding:18px 16px}}
+  </style>
+  <link rel="stylesheet" href="css/base.css">
+      <link rel="stylesheet" href="css/header.css">
+      <link rel="stylesheet" href="css/banner.css">
+      <link rel="stylesheet" href="css/layout.css">
+      <link rel="stylesheet" href="css/productos.css">
+      <link rel="stylesheet" href="css/category-banner.css">
+      <link rel="stylesheet" href="css/modales.css">
+      <link rel="stylesheet" href="css/chatbot.css">
+      <link rel="stylesheet" href="css/footer.css">
+      <link rel="stylesheet" href="css/promo.css">
+      <link rel="stylesheet" href="css/estados.css">
+      <link rel="stylesheet" href="css/responsive.css">
+      <link rel="stylesheet" href="css/premium.css">
+      <link rel="icon" type="image/png" href="./imagenes/img/favicon.png?v=2" />
+
+  <!-- 1. IDIOMA Y ROBOTS (SEO básico) -->
+    <meta http-equiv="Content-Language" content="es" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="TecnoAdvance" />
+   
+  <!-- 2. OPEN GRAPH (ESTO ES LO QUE USA WHATSAPP, FACEBOOK E INSTAGRAM) -->
+    <meta property="og:title" content="TecnoAdvance – Productos Importados Originales" />
+    <meta property="og:description" content="Perfumes, Gadgets, Accesorios y Electrodomésticos. Comprá por WhatsApp." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tecnoadvance.shop/" />
+    <meta property="og:image" content="https://tecnoadvance.shop/imagenes/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+   
+  <!-- 6. COLOR DE LA BARRA DEL NAVEGADOR EN MÓVIL (se ve más profesional) -->
+    <meta name="theme-color" content="#f5f5f7" />  <!-- Cambia el color a tu branding -->
+   
+  <!-- 7. CANONICAL (evita contenido duplicado) -->
+      <link rel="canonical" href="https://tecnoadvance.shop/" />
+
+   <!-- 10. PRECONEXIÓN A GOOGLE FONTS (mejora velocidad) -->
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+</head>
+<body data-page="catalogo">
+<!-- ═══ MODAL DE BIENVENIDA ════════════════════════════════ -->
+<div id="welcomeModal" class="welcome-modal open">
+  <div class="welcome-box">
+      <button class="welcome-close" onclick="closeWelcomeModal()">✕</button>
+    
+  <div class="welcome-content">
+  <div class="welcome-logo">TECNOADVANCE OFICIAL</div>
+  <div class="welcome-title">Bienvenido a nuestra Tienda Online</div>
+  <div class="welcome-subtitle">Catálogo Mayorista</div>
+      
+  <div class="welcome-body">
+        <div class="welcome-item">★ TODOS LOS PRODUCTOS SON ORIGINALES </div>
+        <div class="welcome-item">★ Envios a todo el país</div>
+        <div class="welcome-item">★ Compra Mínima: a partir de 10 productos surtidos</div>
+        <div class="welcome-item">★ También podés comprar 1 unidad</div>
+  </div>
+      
+       <button class="welcome-btn" onclick="closeWelcomeModal()">Entrar al catálogo →</button>
+  </div>
+  </div>
+</div>
+<!-- ═══ HEADER ═══════════════════════════════════════════ -->
+<header class="header">
+  <div class="header-inner">
+     <!-- [INICIO_CAMBIOS_MOBILE_NAV] -->
+  <button type="button" class="mobile-nav-toggle" id="mobileNavToggle"
+    aria-haspopup="true" aria-expanded="false" aria-controls="mobileNavOverlay" aria-label="Abrir menú">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <!-- [FIN_CAMBIOS_MOBILE_NAV] -->
+
+    <a href="index.html" class="logo">
+      <div class="logo-shape">
+        <img src="./imagenes/logo.png" alt="TecnoAdvance" class="logo-img" />
+      </div>
+      <div class="logo-copy">
+        <div class="logo-name">TecnoAdvance</div>
+      </div>
+    </a>
+
+<nav class="nav">
+  <a href="index.html">Inicio</a>
+  <!-- [INICIO_CAMBIOS_NAV_DROPDOWN] -->
+  <div class="nav-dropdown" id="navCatalogoDropdown">
+    <button type="button" class="nav-dropdown-toggle active" id="navCatalogoBtn"
+      aria-haspopup="true" aria-expanded="false" aria-controls="navCatalogoMenu">
+      Catálogo
+      <svg class="nav-dropdown-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </button>
+    <div class="nav-dropdown-menu" id="navCatalogoMenu" role="menu" aria-label="Categorías de catálogo">
+      <a href="perfumes.html" role="menuitem">Perfumes</a>
+      <a href="accesorios.html" role="menuitem">Accesorios</a>
+      <a href="electronica.html" role="menuitem">Electrónica</a>
+      <a href="juguetes.html" role="menuitem">Juguetes</a>
+    </div>
+  </div>
+  <!-- [FIN_CAMBIOS_NAV_DROPDOWN] -->
+  <a href="#contacto">Contacto</a>
+  <a href="politicas.html">Políticas</a>
+</nav>
+
+    <div class="header-actions">
+      <a href="pedido.html" class="cart-toggle">
+        <span>Pedido</span>
+        <strong id="cartCount">0</strong>
+      </a>
+      <a href="https://wa.me/541134843360?text=Hola%20quiero%20consultar%20por%20perfumes" target="_blank" class="wa-btn-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span>WhatsApp</span>
+      </a>
+    </div>
+      </div><!-- cierre header-inner -->
+
+
+<div class="promo-bar">
+    <div class="top-promo__track">
+
+        <span>💵 10% DE DESCUENTO PAGANDO EN TRANSFERENCIA</span>
+        <span class="separator">★</span>
+
+        <span>🚚 ENVÍOS A TODO EL PAÍS</span>
+        <span class="separator">★</span>
+
+        <span>⭐ PRODUCTOS 100% ORIGINALES</span>
+        <span class="separator">★</span>
+
+        <span>🛡️ GARANTÍA OFICIAL</span>
+        <span class="separator">★</span>
+
+        <span>📦 IMPORTADOS DIRECTAMENTE</span>
+        <span class="separator">★</span>
+
+        <span>💳 DEBITO - TRANSFERENCIA - EFECTIVO</span>
+
+        <!-- Duplicado -->
+
+        <span>💵 10% DE DESCUENTO PAGANDO EN TRANSFERENCIA</span>
+        <span class="separator">★</span>
+
+        <span>🚚 ENVÍOS A TODO EL PAÍS</span>
+        <span class="separator">★</span>
+
+        <span>⭐ PRODUCTOS 100% ORIGINALES</span>
+        <span class="separator">★</span>
+
+        <span>🛡️ GARANTÍA OFICIAL</span>
+        <span class="separator">★</span>
+
+        <span>📦 IMPORTADOS DIRECTAMENTE</span>
+        <span class="separator">★</span>
+
+        <span>💳 DEBITO - TRANSFERENCIA - EFECTIVO</span>
+
+    </div>
+</div>
+</header>
+
+  <!-- [INICIO_CAMBIOS_MOBILE_NAV] -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay">
+    <div class="mobile-nav-panel">
+      <div class="mobile-nav-panel-header">
+        <span class="mobile-nav-title">Menú</span>
+        <button type="button" class="mobile-nav-close" id="mobileNavClose" aria-label="Cerrar menú">✕</button>
+      </div>
+      <nav class="mobile-nav-list" aria-label="Navegación móvil">
+        <a href="index.html" class="mobile-nav-link">Inicio</a>
+
+        <div class="mobile-nav-accordion">
+          <button type="button" class="mobile-nav-accordion-btn" id="mobileCatalogoBtn"
+            aria-expanded="false" aria-controls="mobileCatalogoSub">
+            Catálogo
+            <svg class="mobile-nav-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="mobile-nav-sublist" id="mobileCatalogoSub">
+            <a href="perfumes.html" class="mobile-nav-sublink">Perfumes</a>
+            <a href="accesorios.html" class="mobile-nav-sublink">Accesorios</a>
+            <a href="electronica.html" class="mobile-nav-sublink">Electrónica</a>
+            <a href="juguetes.html" class="mobile-nav-sublink">Juguetes</a>
+          </div>
+        </div>
+
+        <a href="#contacto" class="mobile-nav-link">Contacto</a>
+        <a href="politicas.html" class="mobile-nav-link">Políticas</a>
+      </nav>
+    </div>
+  </div>
+  <!-- [FIN_CAMBIOS_MOBILE_NAV] -->
+
+<!-- ═══ BREADCRUMB ════════════════════════════════════════ -->
+<div class="breadcrumb">
+  <a href="index.html">Inicio</a> / <span id="breadcrumbCategory">Fragancias</span>
+</div>
+<div class="category-intro" id="categoryIntro" hidden><h1 id="categoryTitle"></h1><p id="categoryDescription"></p></div>
+
+<div class="trust-strip">
+      <div class="trust-item">
+        <div class="trust-icon">✔️</div>
+        <div>
+          <strong>Original garantizado</strong>
+          <p>100% perfumes auténticos.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🚚</div>
+        <div>
+          <strong>Envío rápido</strong>
+          <p>24-48hs a CABA, todo el país.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">💳</div>
+        <div>
+          <strong>Pago seguro</strong>
+          <p>Transferencia, tarjeta o efectivo.</p>
+        </div>
+      </div>
+    </div>
+
+        
+    <!-- Active filters -->
+    <div class="active-filters" id="activeFilters"></div>
+
+    <!-- Controls -->
+    <div class="catalog-header">
+      <p class="catalog-meta" id="productCount"><strong>25</strong> productos encontrados</p>
+      <div class="catalog-controls">
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar perfume por nombre..." oninput="applyFilters()">
+        <select class="sort-select" onchange="sortProducts(this.value)">
+          <option value="default">Ordenar por</option>
+          <option value="price-asc">Precio: Menor a Mayor</option>
+          <option value="price-desc">Precio: Mayor a Menor</option>
+          <option value="popular">Más Vendidos</option>
+          <option value="name">Nombre A-Z</option>
+        </select>
+      </div>
+    </div>
+        <!-- GRID — renderizado por JS -->
+    <div class="product-grid" id="productGrid"></div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination"></div>
+<!-- ═══ MAIN LAYOUT ═══════════════════════════════════════ -->
+<main class="main-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-mobile-header">
+      <span>Filtrar productos</span>
+      <button class="sidebar-close" onclick="document.getElementById('sidebar').classList.remove('open')">Cerrar</button>
+    </div>
+    <div class="sidebar-title">Filtrar productos</div>
+
+    <!-- Categorías -->
+    <div class="filter-section">
+      <h4>Público</h4>
+      <label class="filter-option">
+        <input type="checkbox" data-filter="genero" value="masculino" onchange="applyFilters()">
+        <span>Masculinos</span>
+      </label>
+      <label class="filter-option">
+        <input type="checkbox" data-filter="genero" value="femenino" onchange="applyFilters()">
+        <span>Femeninos</span>
+      </label>
+      <label class="filter-option">
+        <input type="checkbox" data-filter="genero" value="unisex" onchange="applyFilters()">
+        <span>Unisex</span>
+      </label>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Marcas disponibles en el catálogo -->
+    <div class="filter-section">
+      <h4>Marca</h4>
+      <div id="brandFilters"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Precio -->
+    <div class="filter-section">
+      <h4>Precio (ARS)</h4>
+      <div class="price-range">
+        <div class="price-inputs">
+          <input type="number" id="priceMin" placeholder="Mín" value="0" oninput="applyFilters()">
+          <input type="number" id="priceMax" placeholder="Máx" value="80000" oninput="applyFilters()">
+        </div>
+        <input type="range" class="price-slider" id="priceSlider" min="0" max="150000" value="80000" oninput="updatePrice(this.value)">
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="filter-section">
+      <h4>Disponibilidad</h4>
+      <label class="filter-option">
+        <input type="checkbox" data-filter="stock" value="disponible" onchange="applyFilters()">
+        <span>Solo disponibles</span>
+      </label>
+    </div>
+
+    <button class="clear-filters" onclick="clearFilters()">✕ Limpiar filtros</button>
+  </aside>
+  <div class="sidebar-backdrop" onclick="document.getElementById('sidebar').classList.remove('open')"></div>
+
+  <!-- CATALOG -->
+  <section class="catalog">
+
+    <!-- Mobile toggle -->
+    <button class="mobile-filter-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/>
+      </svg>
+      Filtrar productos
+    </button>
+
+  </section>
+</main>
+
+<!-- ═══ CHATBOT WIDGET ════════════════════════════════════ -->
+<div class="chatbot-container">
+  <div class="chatbot-header">
+    <h3>TecnoAdvance Chat</h3>
+    <button class="chatbot-close" onclick="toggleChatbot()">✕</button>
+  </div>
+  
+  <div class="chatbot-messages" id="chatbotMessages"></div>
+  
+  <div class="chatbot-input-area">
+    <input 
+      type="text" 
+      id="chatbotInput" 
+      class="chatbot-input" 
+      placeholder="Escribe tu pregunta..."
+      onkeypress="if(event.key==='Enter') sendChatMessage()"
+    />
+    <button class="chatbot-send" onclick="sendChatMessage()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16.6915026,12.4744748 L3.50612381,13.2599618 C3.19218622,13.2599618 3.03521743,13.4170592 3.03521743,13.5741566 L1.15159189,20.0151496 C0.8376543,20.8006365 0.99,21.89 1.77946707,22.52 C2.41,22.99 3.50612381,23.1 4.13399899,22.8429026 L21.714504,14.0454487 C22.6563168,13.5741566 23.1272231,12.6315722 22.9702544,11.6889879 L4.13399899,1.16346272 C3.34915502,0.9 2.40734225,0.9 1.77946707,1.4718701 C0.994623095,2.0437402 0.837654326,3.1331289 1.15159189,3.91861574 L3.03521743,10.3595872 C3.03521743,10.5166847 3.19218622,10.673782 3.50612381,10.673782 L16.6915026,11.4592689 C16.6915026,11.4592689 17.1624089,11.4592689 17.1624089,12.0311392 C17.1624089,12.4744748 16.6915026,12.4744748 16.6915026,12.4744748 Z"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- Botón flotante para abrir chatbot -->
+<button class="chatbot-toggle" onclick="toggleChatbot()">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+  </svg>
+</button>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════ -->
+<footer class="footer" id="contacto">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-text footer-logo">TecnoAdvance</div>
+      <p class="footer-description">Tu tienda de perfumes árabes originales en Argentina. Lattafa, Afnan, Armaf y muchas marcas más con garantía de autenticidad.</p>
+      <div class="footer-badges">
+        <span class="footer-badge">Original garantizado</span>
+        <span class="footer-badge">Envío rápido</span>
+      </div>
+      <div class="socials">
+        <a href="https://www.instagram.com/tecnoadvance_oficial/" target="_blank" class="social-icon" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+        <a href="https://wa.me/541134843360" target="_blank" class="social-icon" aria-label="WhatsApp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+        </a>
+        <a href="https://facebook.com/Tecn0advance" target="_blank" class="social-icon" aria-label="Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-links">
+      <div class="footer-column">
+        <h5>Catálogo</h5>
+        <ul>
+          <li><a href="#">Perfumes Masculinos</a></li>
+          <li><a href="#">Perfumes Femeninos</a></li>
+          <li><a href="#">Unisex</a></li>
+          <li><a href="#">Lattafa</a></li>
+          <li><a href="#">Afnan</a></li>
+          <li><a href="#">Armaf</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h5>Contacto</h5>
+        <ul>
+          <li><a href="https://wa.me/541134843360" target="_blank">📱 +54 11 3484-3360</a></li>
+          <li><a href="#">📍 Argentina, Ituzaingó</a></li>
+          <li><a href="#">📧 advancetecno39@gmail.com</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h5>Envíos</h5>
+        <ul>
+          <li><a href="#">📦 Envios a todo el país</a></li>
+          <li><a href="#">⚡ CABA 24hs</a></li>
+          <li><a href="#">🆓 Gratis +$300.000</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-bottom-left">
+      <span>&copy; 2025 TecnoAdvance. Todos los derechos reservados.</span>
+    </div>
+    <div class="footer-bottom-center">
+      <a href="#">Inicio</a>
+      <a href="#">Acerca de</a>
+      <a href="politicas.html">Contacto</a>
+      <a href="#">Redes Sociales</a>
+    </div>
+    <div class="footer-bottom-right">
+      <span>Métodos de pago: Transferencia • Tarjeta • Efectivo</span>
+    </div>
+  </div>
+  
+</footer>
+
+<script>window.API_ENDPOINT = 'https://www.tecnoadvance.shop/api/products';</script>
+<script src="script.js"></script>
+<!-- ═══ MODAL DE PRODUCTO ════════════════════════════════ -->
+<div id="productModal" class="product-modal">
+  <div class="product-modal-content">
+    <button class="modal-close" onclick="closeProductModal()">✕</button>
+    
+    <div class="modal-grid">
+      <div class="modal-images">
+        <img id="modalMainImg" src="" alt="Producto" />
+        <div class="modal-img-nav">
+          <button onclick="changeModalImage(-1)" class="img-nav prev">◀</button>
+          <button onclick="changeModalImage(1)" class="img-nav next">▶</button>
+        </div>
+        <div class="modal-img-counter" id="modalCounter">1/1</div>
+      </div>
+      
+      <div class="modal-info">
+        <div class="modal-brand" id="modalBrand"></div>
+        <h2 class="modal-name" id="modalName"></h2>
+        <div class="modal-desc" id="modalDesc"></div>
+        <div class="modal-variants" id="modalVariants" hidden></div>
+        
+        <div class="modal-pricing">
+          <div class="modal-price" id="modalPrice"></div>
+          <div class="modal-installment" id="modalInstallment"></div>
+          <div class="modal-payment" id="modalPayment"></div>
+        </div>
+        
+        <div class="modal-stock" id="modalStock"></div>
+        
+        <div class="modal-quantity">
+          <label>Cantidad</label>
+          <div class="qty-selector">
+            <button onclick="decreaseQty()" class="qty-btn">−</button>
+            <span id="qtyValue">1</span>
+            <button onclick="increaseQty()" class="qty-btn">+</button>
+          </div>
+        </div>
+        
+        <button type="button" id="modalBuyBtn" class="modal-buy-btn" onclick="addCurrentProductToCart()">Agregar al carrito</button>
+        <button onclick="closeProductModal()" class="modal-close-btn">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+

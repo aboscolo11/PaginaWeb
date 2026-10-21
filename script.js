@@ -85,16 +85,22 @@ const CATEGORY_CONFIG = {
   juguetes: { title: "Juguetes", description: "Conocé opciones para jugar, regalar y compartir." }
 };
 const PAGE_CATEGORY = document.body.dataset.category || "";
+const PAGE_MODE = document.body.dataset.page || "";
 
 function normalizeCategory(value) {
   return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 }
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[character]);
+}
 function getProductCategory(product) {
-  const raw = product.categoria || product.category || product.rubro || product.tipo_producto || product.tipo || "";
+  const raw = product.categoria || product.Categoria || product.category || product.rubro || product.tipo_producto || product.tipo || "";
   const value = normalizeCategory(raw);
   if (/perfume|fragancia/.test(value)) return "perfumes";
-  if (/accesor|accessor|reloj|joya/.test(value)) return "accesorios";
-  if (/electron|tecnolog|gadget|celular/.test(value)) return "electronica";
+  if (/accesor|accessor|reloj|joya|gadget/.test(value)) return "accesorios";
+  if (/electron|tecnolog|celular/.test(value)) return "electronica";
   if (/juguete|toy|infantil/.test(value)) return "juguetes";
   return "";
 }
@@ -102,11 +108,29 @@ function getCategoryProducts() {
   if (!PAGE_CATEGORY) return [...PRODUCTS];
   return PRODUCTS.filter((product) => {
     const category = getProductCategory(product);
-    return category ? category === PAGE_CATEGORY : PAGE_CATEGORY === "perfumes";
+    return category === PAGE_CATEGORY;
   });
 }
+function parseProductVariants(value) {
+  if (Array.isArray(value)) return value;
+  if (typeof value !== "string" || !value.trim()) return [];
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (_) {
+    return [];
+  }
+}
+function normalizeProductVariant(variant) {
+  return {
+    modelo: String(variant.modelo || variant.model || "").trim(),
+    color: String(variant.color || variant.colour || "").trim(),
+    stock: Math.max(0, Number(variant.stock) || 0),
+    precio: Number(variant.precio ?? variant.price) || 0
+  };
+}
 function applyCategoryPageContext() {
-  const config = CATEGORY_CONFIG[PAGE_CATEGORY];
+  const config = CATEGORY_CONFIG[PAGE_CATEGORY] || (PAGE_MODE === "catalogo" ? { title: "Catálogo completo", description: "Explorá todos los productos disponibles en TecnoAdvance." } : null);
   if (!config) return;
   document.title = config.title + " | TecnoAdvance";
   const title = document.getElementById("categoryTitle");
@@ -170,6 +194,10 @@ async function cargarProductosDesdeSupabase() {
         imagenesArray = p.imagenes.split('|').map(img => img.trim()).filter(img => img.length > 0);
       }
 
+      const variantes = parseProductVariants(p.variantes).map(normalizeProductVariant);
+      const stockTotal = variantes.length
+        ? variantes.reduce((sum, variant) => sum + variant.stock, 0)
+        : Number(p.stock || 0);
       return {
         id: p.id || index + 1,
         marca: p.marca || '',
@@ -180,11 +208,13 @@ async function cargarProductosDesdeSupabase() {
         descuentoEfectivo: Number(p.descuento_efectivo || 0),
         genero: p.genero || 'unisex',
         badge: p.badge || '',
+        salesCount: Number(p.ventas ?? p.vendidos ?? p.sales_count ?? p.unidades_vendidas ?? 0),
         notas: p.notas || '',
         imagenes: imagenesArray,
         imagen: imagenesArray[0],
-        categoria: p.categoria || p.category || p.rubro || p.tipo_producto || p.tipo || "",
-        stock: Number(p.stock || 0)
+        categoria: p.categoria || p.Categoria || p.category || p.rubro || p.tipo_producto || p.tipo || "",
+        stock: stockTotal,
+        variantes
       };
     });
 
@@ -192,7 +222,11 @@ async function cargarProductosDesdeSupabase() {
 
       filteredProducts = getCategoryProducts();
 
+    renderDynamicBrandFilters();
+    syncPriceFilterBounds();
+
     if (grid) renderProducts(filteredProducts);
+    if (PAGE_MODE === "home") renderHomeCarousels();
     updateCartCount();
     renderCart();
     renderOrderPage();
@@ -249,26 +283,50 @@ function buildWaLink(producto) {
   return `https://wa.me/${WA_NUMBER}?text=${msg}`;
 }
 
-function addToCart(productId) {
-  cartItems[productId] = (cartItems[productId] || 0) + 1;
+function addToCart(productId, quantity = 1, selectedVariantIndex = null) {
+  const product = PRODUCTS.find((item) => item.id === Number(productId));
+  if (!product) return;
+  const amount = Math.max(1, Number(quantity) || 1);
+  const key = selectedVariantIndex !== null && selectedVariantIndex !== undefined
+    ? `${product.id}__v${Number(selectedVariantIndex)}`
+    : String(product.id);
+  const variantIndex = key.includes("__v") ? Number(key.split("__v")[1]) : null;
+  const variant = variantIndex === null ? null : product.variantes[variantIndex];
+  const available = variant ? variant.stock : product.stock;
+  if (available <= 0) return;
+  cartItems[key] = Math.min(available, (Number(cartItems[key]) || 0) + amount);
   saveCartState();
   renderCart();
   renderOrderPage();
 }
 
+function getCartLine(key, quantity) {
+  const match = String(key).match(/^(\d+)(?:__v(\d+))?$/);
+  if (!match) return null;
+  const product = PRODUCTS.find((item) => item.id === Number(match[1]));
+  if (!product) return null;
+  const variantIndex = match[2] === undefined ? null : Number(match[2]);
+  const variant = variantIndex === null ? null : product.variantes[variantIndex];
+  if (variantIndex !== null && !variant) return null;
+  const price = variant?.precio > 0 ? variant.precio : getSalePrice(product);
+  const options = variant ? [variant.modelo, variant.color].filter(Boolean).join(" · ") : "";
+  return { key: String(key), product, variant, variantIndex, quantity: Number(quantity) || 0, price, options };
+}
+
 function getCartTotal() {
-  return Object.entries(cartItems).reduce((total, [id, qty]) => {
-    const product = PRODUCTS.find((p) => p.id === Number(id));
-    return total + (product ? getSalePrice(product) * qty : 0);
+  return Object.entries(cartItems).reduce((total, [key, qty]) => {
+    const line = getCartLine(key, qty);
+    return total + (line ? line.price * line.quantity : 0);
   }, 0);
 }
 
 function buildCartWaLink() {
   const entries = Object.entries(cartItems);
-  const lines = entries.map(([id, qty]) => {
-    const product = PRODUCTS.find((p) => p.id === Number(id));
-    if (!product) return "";
-    return `${qty} x ${product.marca} ${product.nombre} - ${formatPrice(getSalePrice(product))}`;
+  const lines = entries.map(([key, qty]) => {
+    const line = getCartLine(key, qty);
+    if (!line) return "";
+    const { product, options, price, quantity } = line;
+    return `${quantity} x ${product.marca} ${product.nombre}${options ? ` (${options})` : ""} - ${formatPrice(price)}`;
   }).filter(Boolean);
   const total = formatPrice(getCartTotal());
   const msg = encodeURIComponent(`Hola, quiero hacer un pedido:\n${lines.join("\n")}\nTotal: ${total}`);
@@ -290,18 +348,20 @@ function renderCart() {
 
   panel.classList.add("active");
   updateCartCount();
-  const itemsHtml = entries.map(([id, qty]) => {
-    const product = PRODUCTS.find((p) => p.id === Number(id));
-    if (!product) return "";
+  const itemsHtml = entries.map(([key, qty]) => {
+    const line = getCartLine(key, qty);
+    if (!line) return "";
+    const { product, options, price, quantity } = line;
     return `
       <div class="cart-item">
         <div class="cart-item-details">
-          <span>${qty}x ${product.marca} ${product.nombre}</span>
-          <small>${formatPrice(getSalePrice(product))} c/u</small>
+          <span>${quantity}x ${product.marca} ${product.nombre}</span>
+          ${options ? `<small>${options}</small>` : ""}
+          <small>${formatPrice(price)} c/u</small>
         </div>
         <div class="cart-item-actions">
-          <span>${formatPrice(getSalePrice(product) * qty)}</span>
-          <button type="button" class="cart-item-remove" onclick="removeCartItem(${id})">Quitar</button>
+          <span>${formatPrice(price * quantity)}</span>
+          <button type="button" class="cart-item-remove" onclick="removeCartItem('${key}')">Quitar</button>
         </div>
       </div>`;
   }).join("");
@@ -336,18 +396,20 @@ if (PRODUCTS.length === 0) {
     orderContent.innerHTML = `<div class="order-empty"><p>Cargando pedido…</p></div>`;
     return;
   }
-  const itemsHtml = entries.map(([id, qty]) => {
-    const product = PRODUCTS.find((p) => p.id === Number(id));
-    if (!product) return "";
+  const itemsHtml = entries.map(([key, qty]) => {
+    const line = getCartLine(key, qty);
+    if (!line) return "";
+    const { product, options, price, quantity } = line;
     return `
       <div class="order-row">
         <div class="order-item-info">
-          <div>${qty}x ${product.marca} ${product.nombre}</div>
-          <small>${formatPrice(getSalePrice(product))} c/u</small>
+          <div>${quantity}x ${product.marca} ${product.nombre}</div>
+          ${options ? `<small>${options}</small>` : ""}
+          <small>${formatPrice(price)} c/u</small>
         </div>
         <div class="order-item-actions">
-          <span>${formatPrice(getSalePrice(product) * qty)}</span>
-          <button type="button" class="cart-item-remove" onclick="removeCartItem(${id})">Quitar</button>
+          <span>${formatPrice(price * quantity)}</span>
+          <button type="button" class="cart-item-remove" onclick="removeCartItem('${key}')">Quitar</button>
         </div>
       </div>`;
   }).join("");
@@ -366,9 +428,9 @@ if (PRODUCTS.length === 0) {
     </div>`;
 }
 
-function removeCartItem(productId) {
-  if (!cartItems[productId]) return;
-  delete cartItems[productId];
+function removeCartItem(cartKey) {
+  if (!cartItems[cartKey]) return;
+  delete cartItems[cartKey];
   saveCartState();
   renderCart();
   renderOrderPage();
@@ -428,29 +490,86 @@ function cardHTML(p) {
       <div class="product-actions">
         ${sinStock
           ? '<button type="button" class="btn-cart btn-disabled" disabled>Sin stock</button>'
-          : `<button type="button" class="btn-cart" onclick="addToCart(${p.id})">Agregar al carrito</button>`}
+          : `<button type="button" class="btn-cart" onclick="${p.variantes.length ? `openProductModal(${p.id})` : `addToCart(${p.id})`}">${p.variantes.length ? "Elegir opciones" : "Agregar al carrito"}</button>`}
       </div>
     </div>`;
+}
+
+function hasHomeCatalogFilters() {
+  if (document.body.dataset.page !== "home") return true;
+  const search = (document.getElementById("searchInput")?.value || "").trim();
+  const checked = document.querySelectorAll("[data-filter]:checked").length > 0;
+  const minPrice = Number(document.getElementById("priceMin")?.value || 0);
+  const maxPrice = Number(document.getElementById("priceMax")?.value || 80000);
+  return Boolean(search) || checked || minPrice > 0 || maxPrice < 80000;
+}
+
+function getHomeFeaturedProducts(list) {
+  const available = list.filter((product) => Number(product.stock) > 0);
+  const promoted = available.filter((product) => ["hot", "new"].includes(String(product.badge).toLowerCase()));
+  const promotedIds = new Set(promoted.map((product) => product.id));
+  const remaining = available.filter((product) => !promotedIds.has(product.id));
+  return [...promoted, ...remaining].slice(0, 8);
 }
 
 function renderProducts(list) {
   const grid = document.getElementById("productGrid");
   const count = document.getElementById("productCount");
+  const isHomeFeatured = document.body.dataset.page === "home" && !hasHomeCatalogFilters();
+  const displayList = isHomeFeatured ? getHomeFeaturedProducts(list) : list;
+  const pagination = document.getElementById("pagination");
+  if (isHomeFeatured && pagination) { pagination.innerHTML = ""; pagination.style.display = "none"; }
 
-  if (list.length === 0) {
+  if (displayList.length === 0) {
     grid.innerHTML = `<div class="no-results"><h3>No se encontraron productos</h3></div>`;
   } else {
     const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
     const endIndex = startIndex + PRODUCTS_PER_PAGE;
-    const pageProducts = list.slice(startIndex, endIndex);
+    const pageProducts = displayList.slice(startIndex, endIndex);
     grid.innerHTML = pageProducts.map(cardHTML).join("");
-    const totalPages = Math.ceil(list.length / PRODUCTS_PER_PAGE);
+    const totalPages = Math.ceil(displayList.length / PRODUCTS_PER_PAGE);
     updatePagination(totalPages);
   }
 
-  const n = list.length;
-  count.innerHTML = `<strong>${n}</strong> producto${n !== 1 ? "s" : ""} encontrado${n !== 1 ? "s" : ""}`;
+  const n = displayList.length;
+  count.innerHTML = isHomeFeatured
+    ? `<strong>${n}</strong> productos destacados`
+    : `<strong>${n}</strong> producto${n !== 1 ? "s" : ""} encontrado${n !== 1 ? "s" : ""}`;
 }
+
+function renderHomeCarousels() {
+  if (PAGE_MODE !== "home") return;
+  const available = PRODUCTS.filter((product) => Number(product.stock) > 0);
+  const newest = [...available].sort((a, b) => {
+    const aNew = String(a.badge).toLowerCase() === "new" ? 1 : 0;
+    const bNew = String(b.badge).toLowerCase() === "new" ? 1 : 0;
+    return bNew - aNew || Number(b.id) - Number(a.id);
+  }).slice(0, 8);
+  const hasSalesData = available.some((product) => product.salesCount > 0);
+  const bestSellers = [...available].filter((product) => hasSalesData
+    ? product.salesCount > 0
+    : String(product.badge).toLowerCase() === "hot")
+    .sort((a, b) => b.salesCount - a.salesCount || (String(b.badge).toLowerCase() === "hot" ? 1 : 0) - (String(a.badge).toLowerCase() === "hot" ? 1 : 0))
+    .slice(0, 8);
+
+  const renderInto = (id, list, emptyMessage) => {
+    const container = document.getElementById(id);
+    if (!container) return;
+    container.innerHTML = list.length ? list.map(cardHTML).join("") : `<p class="home-empty">${emptyMessage}</p>`;
+  };
+  renderInto("newProductsGrid", newest, "Pronto vas a encontrar acá las últimas novedades.");
+  renderInto("bestSellersGrid", bestSellers, "Todavía no hay productos marcados como más vendidos en el catálogo.");
+}
+
+document.querySelectorAll("[data-carousel-prev], [data-carousel-next]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const id = button.dataset.carouselPrev || button.dataset.carouselNext;
+    const carousel = document.getElementById(id);
+    if (!carousel) return;
+    const direction = button.hasAttribute("data-carousel-next") ? 1 : -1;
+    carousel.scrollBy({ left: direction * Math.max(240, carousel.clientWidth * 0.8), behavior: "smooth" });
+  });
+});
 
 function updatePagination(totalPages) {
   const paginationDiv = document.getElementById("pagination");
@@ -530,19 +649,44 @@ function goToPage(page) {
 }
 
 
+function renderDynamicBrandFilters() {
+  const container = document.getElementById("brandFilters");
+  if (!container) return;
+  const selected = new Set([...container.querySelectorAll('[data-filter="marca"]:checked')].map((input) => input.value));
+  const brands = [...new Set(getCategoryProducts().map((product) => product.marca).filter(Boolean))]
+    .sort((a, b) => a.localeCompare(b, "es"));
+  container.innerHTML = brands.length ? brands.map((brand, index) => {
+    const id = `filter-brand-${index}`;
+    return `<label class="filter-option" for="${id}"><input id="${id}" type="checkbox" data-filter="marca" value="${escapeHtml(brand)}" ${selected.has(brand) ? "checked" : ""} onchange="applyFilters()"><span>${escapeHtml(brand)}</span></label>`;
+  }).join("") : '<span class="filter-hint">No hay marcas para mostrar.</span>';
+}
+
+function syncPriceFilterBounds() {
+  const maxInput = document.getElementById("priceMax");
+  const slider = document.getElementById("priceSlider");
+  if (!maxInput || !slider) return;
+  const maxProductPrice = Math.max(0, ...getCategoryProducts().map((product) => getSalePrice(product)));
+  const maxBound = Math.max(1000, Math.ceil(maxProductPrice / 1000) * 1000);
+  slider.max = String(maxBound);
+  if (Number(maxInput.value) === 80000 || Number(maxInput.value) > maxBound) maxInput.value = String(maxBound);
+  slider.value = String(Math.min(Number(maxInput.value) || maxBound, maxBound));
+}
+
 function applyFilters() {
   const checkedGeneros = [...document.querySelectorAll('[data-filter="genero"]:checked')].map((el) => el.value);
   const checkedMarcas = [...document.querySelectorAll('[data-filter="marca"]:checked')].map((el) => el.value);
   const minPrice = parseInt(document.getElementById("priceMin").value) || 0;
   const maxPrice = parseInt(document.getElementById("priceMax").value) || 999999;
   const searchTerm = (document.getElementById("searchInput")?.value || "").trim().toLowerCase();
+  const onlyAvailable = Boolean(document.querySelector('[data-filter="stock"]:checked'));
 
   filteredProducts = getCategoryProducts().filter((p) => {
     const generoOk = checkedGeneros.length === 0 || checkedGeneros.includes(p.genero);
     const marcaOk = checkedMarcas.length === 0 || checkedMarcas.includes(p.marca);
     const precioOk = p.precio <= maxPrice && p.precio >= minPrice;
-    const searchOk = searchTerm === "" || p.nombre.toLowerCase().includes(searchTerm);
-    return generoOk && marcaOk && precioOk && searchOk;
+    const searchOk = searchTerm === "" || [p.nombre, p.marca, p.notas, p.descripcion, p.categoria].join(" ").toLowerCase().includes(searchTerm);
+    const stockOk = !onlyAvailable || p.stock > 0;
+    return generoOk && marcaOk && precioOk && searchOk && stockOk;
   });
 
   currentPage = 1;
@@ -567,7 +711,7 @@ function clearFilters() {
   document.getElementById("searchInput").value = "";
   document.getElementById("priceMin").value = 0;
   document.getElementById("priceMax").value = 80000;
-  document.getElementById("priceSlider").value = 80000;
+  syncPriceFilterBounds();
   filteredProducts = getCategoryProducts();
   currentPage = 1;
   renderProducts(filteredProducts);
@@ -696,10 +840,11 @@ cargarProductosDesdeSupabase();
 let currentProductModal = null;
 let currentModalImageIndex = 0;
 let modalQuantity = 1;
+let currentVariantIndex = null;
 
-function getPriceByType(product) {
+function getPriceByType(product, variant = null) {
   if (!product) return 0;
-  return getSalePrice(product);
+  return variant?.precio > 0 ? variant.precio : getSalePrice(product);
 }
 
 function openProductModal(productId) {
@@ -709,9 +854,10 @@ function openProductModal(productId) {
   currentProductModal = product;
   currentModalImageIndex = 0;
   modalQuantity = 1;
+  currentVariantIndex = product.variantes.length ? product.variantes.findIndex((variant) => variant.stock > 0) : null;
 
   const modal = document.getElementById("productModal");
-  const precio = getPriceByType(product);
+  const precio = getPriceByType(product, selectedModalVariant());
 
   document.getElementById("modalBrand").textContent = product.marca;
   document.getElementById("modalName").textContent = product.nombre;
@@ -723,13 +869,11 @@ function openProductModal(productId) {
     ? `<span class="price-original">${formatPrice(getListPrice(product))}</span><span>-${getDiscountPct(product)}% · Exclusivo TecnoAdvance</span>`
     : `<span>Exclusivo TecnoAdvance</span>`;
   document.getElementById("modalPayment").innerHTML = paymentHTML;
-  document.getElementById("modalStock").textContent = "● Disponible — Stock en inventario";
+  renderModalVariants();
+  updateModalStock();
 
   updateModalImage();
   updateModalPrice();
-
-  const waLink = buildWaLink(product);
-  document.getElementById("modalBuyBtn").href = waLink;
 
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
@@ -740,6 +884,7 @@ function closeProductModal() {
   modal.classList.remove("open");
   document.body.style.overflow = "auto";
   currentProductModal = null;
+  currentVariantIndex = null;
 }
 
 function changeModalImage(direction) {
@@ -769,11 +914,59 @@ function decreaseQty() {
 }
 
 function updateModalPrice() {
-  const precio = getPriceByType(currentProductModal);
-  const totalPrice = precio * modalQuantity;
+  const precio = getPriceByType(currentProductModal, selectedModalVariant());
   document.getElementById("qtyValue").textContent = modalQuantity;
-  document.getElementById("modalPrice").textContent = formatPrice(totalPrice);
-  document.getElementById("modalBuyBtn").textContent = `Comprar por WhatsApp — ${formatPrice(totalPrice)}`;
+  document.getElementById("modalPrice").textContent = formatPrice(precio);
+  document.getElementById("modalBuyBtn").textContent = "Agregar al carrito";
+  const variant = selectedModalVariant();
+  const maxQty = variant ? variant.stock : (currentProductModal?.stock || 1);
+  document.querySelectorAll(".qty-btn").forEach((button) => {
+    const decrement = button.textContent.trim() === "−";
+    button.disabled = decrement ? modalQuantity <= 1 : modalQuantity >= maxQty;
+  });
+}
+
+function addCurrentProductToCart() {
+  if (!currentProductModal) return;
+  if (currentProductModal.variantes.length && currentVariantIndex === null) return;
+  addToCart(currentProductModal.id, modalQuantity, currentVariantIndex);
+  closeProductModal();
+}
+
+function selectedModalVariant() {
+  return currentVariantIndex === null ? null : currentProductModal?.variantes[currentVariantIndex] || null;
+}
+
+function renderModalVariants() {
+  const container = document.getElementById("modalVariants");
+  if (!container || !currentProductModal) return;
+  const variants = currentProductModal.variantes;
+  container.hidden = variants.length === 0;
+  if (!variants.length) return;
+  const options = variants.map((variant, index) => {
+    const label = [variant.modelo, variant.color].filter(Boolean).join(" · ") || `Opción ${index + 1}`;
+    const availability = variant.stock > 0 ? ` · ${variant.stock} disponibles` : " · Sin stock";
+    return `<option value="${index}" ${index === currentVariantIndex ? "selected" : ""} ${variant.stock <= 0 ? "disabled" : ""}>${label}${availability}</option>`;
+  }).join("");
+  container.innerHTML = `<label for="modalVariantSelect">Elegí modelo y color</label><select id="modalVariantSelect" onchange="selectProductVariant(this.value)">${options}</select>`;
+}
+
+function selectProductVariant(index) {
+  currentVariantIndex = Number(index);
+  modalQuantity = 1;
+  updateModalStock();
+  updateModalPrice();
+}
+
+function updateModalStock() {
+  const stock = document.getElementById("modalStock");
+  if (!stock || !currentProductModal) return;
+  const variant = selectedModalVariant();
+  const available = variant ? variant.stock : currentProductModal.stock;
+  stock.textContent = available > 0 ? `● Disponible — ${available} en stock` : "● Sin stock disponible";
+  stock.classList.toggle("is-out-of-stock", available <= 0);
+  const buyButton = document.getElementById("modalBuyBtn");
+  if (buyButton) buyButton.disabled = available <= 0;
 }
 // [INICIO_CAMBIOS_NAV_DROPDOWN]
 (function () {
@@ -869,3 +1062,5 @@ function updateModalPrice() {
   });
 })();
 // [FIN_CAMBIOS_MOBILE_NAV]
+
+

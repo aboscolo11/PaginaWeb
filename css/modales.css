@@ -383,3 +383,47 @@
 .modal-close-btn:hover {
   background: var(--border);
 }
+
+/* Ajustes de revisión para el modal de producto en móvil y botón de carrito */
+.modal-desc { color: #454545; }
+.modal-brand, .modal-installment { color: #666; }
+.modal-payment span { color: #555; }
+.modal-price { color: #8a6718; font-size: 1.75rem; font-weight: 800; }
+.modal-buy-btn,
+.modal-buy-btn:hover {
+  width: 100%;
+  border: 0;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  background: var(--gold);
+  color: #17130a;
+}
+.modal-buy-btn:hover { background: var(--gold-lt); }
+
+@media (max-width: 700px) {
+  .product-modal { padding: 10px; align-items: flex-start; }
+  .product-modal-content {
+    width: min(100%, 520px);
+    max-height: calc(100vh - 20px);
+    max-height: calc(100dvh - 20px);
+    margin: auto;
+    overflow-y: auto;
+  }
+  .modal-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    padding: 18px;
+  }
+  .modal-images {
+    width: 100%;
+    height: min(38vh, 340px);
+    min-height: 220px;
+    aspect-ratio: auto;
+  }
+  .modal-images img { padding: 12px; }
+  .modal-info { min-width: 0; padding: 0 0 4px; }
+  .modal-name { font-size: 1.45rem; }
+  .modal-desc { color: #454545; font-size: .95rem; overflow-wrap: anywhere; }
+}
+
