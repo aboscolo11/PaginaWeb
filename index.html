@@ -8,7 +8,14 @@
   <meta name="description" content="Catálogo de Productos importados originales. Comprá por WhatsApp." />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-      <link rel="stylesheet" href="css/base.css">
+      <style>
+    .category-intro{max-width:1380px;margin:20px auto 0;padding:22px 24px;border-left:3px solid var(--gold);background:linear-gradient(90deg,rgba(212,175,84,.1),transparent)}
+    .category-intro h1{font-family:var(--font-disp);color:var(--gold-lt);font-size:clamp(1.6rem,3vw,2.3rem);margin:0 0 6px}
+    .category-intro p{color:var(--mid-text);margin:0}
+    [data-category] .banner-carousel,[data-category] .category-banner{display:none!important}
+    @media(max-width:600px){.category-intro{margin-top:12px;padding:18px 16px}}
+  </style>
+  <link rel="stylesheet" href="css/base.css">
       <link rel="stylesheet" href="css/header.css">
       <link rel="stylesheet" href="css/banner.css">
       <link rel="stylesheet" href="css/layout.css">
@@ -82,7 +89,7 @@
   </button>
   <!-- [FIN_CAMBIOS_MOBILE_NAV] -->
 
-    <a href="#" class="logo">
+    <a href="index.html" class="logo">
       <div class="logo-shape">
         <img src="./imagenes/logo.png" alt="TecnoAdvance" class="logo-img" />
       </div>
@@ -92,7 +99,7 @@
     </a>
 
 <nav class="nav">
-  <a href="#">Inicio</a>
+  <a href="index.html">Inicio</a>
   <!-- [INICIO_CAMBIOS_NAV_DROPDOWN] -->
   <div class="nav-dropdown" id="navCatalogoDropdown">
     <button type="button" class="nav-dropdown-toggle active" id="navCatalogoBtn"
@@ -103,10 +110,10 @@
       </svg>
     </button>
     <div class="nav-dropdown-menu" id="navCatalogoMenu" role="menu" aria-label="Categorías de catálogo">
-      <a href="#" role="menuitem">Perfumes</a>
-      <a href="#" role="menuitem">Accesorios</a>
-      <a href="#" role="menuitem">Electrónica</a>
-      <a href="#" role="menuitem">Juguetes</a>
+      <a href="perfumes.html" role="menuitem">Perfumes</a>
+      <a href="accesorios.html" role="menuitem">Accesorios</a>
+      <a href="electronica.html" role="menuitem">Electrónica</a>
+      <a href="juguetes.html" role="menuitem">Juguetes</a>
     </div>
   </div>
   <!-- [FIN_CAMBIOS_NAV_DROPDOWN] -->
@@ -136,7 +143,7 @@
         <button type="button" class="mobile-nav-close" id="mobileNavClose" aria-label="Cerrar menú">✕</button>
       </div>
       <nav class="mobile-nav-list" aria-label="Navegación móvil">
-        <a href="#" class="mobile-nav-link">Inicio</a>
+        <a href="index.html" class="mobile-nav-link">Inicio</a>
 
         <div class="mobile-nav-accordion">
           <button type="button" class="mobile-nav-accordion-btn" id="mobileCatalogoBtn"
@@ -147,10 +154,10 @@
             </svg>
           </button>
           <div class="mobile-nav-sublist" id="mobileCatalogoSub">
-            <a href="#" class="mobile-nav-sublink">Perfumes</a>
-            <a href="#" class="mobile-nav-sublink">Accesorios</a>
-            <a href="#" class="mobile-nav-sublink">Electrónica</a>
-            <a href="#" class="mobile-nav-sublink">Juguetes</a>
+            <a href="perfumes.html" class="mobile-nav-sublink">Perfumes</a>
+            <a href="accesorios.html" class="mobile-nav-sublink">Accesorios</a>
+            <a href="electronica.html" class="mobile-nav-sublink">Electrónica</a>
+            <a href="juguetes.html" class="mobile-nav-sublink">Juguetes</a>
           </div>
         </div>
 
@@ -205,8 +212,9 @@
 
 <!-- ═══ BREADCRUMB ════════════════════════════════════════ -->
 <div class="breadcrumb">
-  Inicio / <span>Fragancias</span>
+  <a href="index.html">Inicio</a> / <span id="breadcrumbCategory">Fragancias</span>
 </div>
+<div class="category-intro" id="categoryIntro" hidden><h1 id="categoryTitle"></h1><p id="categoryDescription"></p></div>
 
 <!-- ═══ BANNER CAROUSEL ════════════════════════════════════ -->
 <div class="banner-carousel">
