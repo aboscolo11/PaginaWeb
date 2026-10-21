@@ -36,7 +36,9 @@ let currentBannerIndex = 0;
 function showBanner(index) {
   if (BANNER_IMAGES.length === 0) return;
   currentBannerIndex = (index + BANNER_IMAGES.length) % BANNER_IMAGES.length;
-  document.getElementById("bannerImage").src = BANNER_IMAGES[currentBannerIndex];
+  const image = document.getElementById("bannerImage");
+  if (!image) return;
+  image.src = BANNER_IMAGES[currentBannerIndex];
   updateBannerDots();
 }
 function nextBanner() { showBanner(currentBannerIndex + 1); }
@@ -44,6 +46,7 @@ function prevBanner() { showBanner(currentBannerIndex - 1); }
 
 function updateBannerDots() {
   const dotsDiv = document.getElementById("carouselDots");
+  if (!dotsDiv) return;
   dotsDiv.innerHTML = BANNER_IMAGES.map(
     (_, i) => `<div class="dot ${i === currentBannerIndex ? "active" : ""}" onclick="showBanner(${i})"></div>`
   ).join("");
@@ -74,6 +77,48 @@ const SUPABASE_KEY = 'sb_publishable_qKePI3pCPxCJcGsJWSAfOg_zTm39iOP';
 
 let PRODUCTS = [];
 let isLoadingProducts = false;
+
+const CATEGORY_CONFIG = {
+  perfumes: { title: "Perfumes", description: "Descubrí fragancias originales con la calidad y el estilo de TecnoAdvance." },
+  accesorios: { title: "Accesorios", description: "Encontrá accesorios seleccionados para acompañar tu día a día." },
+  electronica: { title: "Electrónica", description: "Explorá productos electrónicos y tecnología importada." },
+  juguetes: { title: "Juguetes", description: "Conocé opciones para jugar, regalar y compartir." }
+};
+const PAGE_CATEGORY = document.body.dataset.category || "";
+
+function normalizeCategory(value) {
+  return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+}
+function getProductCategory(product) {
+  const raw = product.categoria || product.category || product.rubro || product.tipo_producto || product.tipo || "";
+  const value = normalizeCategory(raw);
+  if (/perfume|fragancia/.test(value)) return "perfumes";
+  if (/accesor|accessor|reloj|joya/.test(value)) return "accesorios";
+  if (/electron|tecnolog|gadget|celular/.test(value)) return "electronica";
+  if (/juguete|toy|infantil/.test(value)) return "juguetes";
+  return "";
+}
+function getCategoryProducts() {
+  if (!PAGE_CATEGORY) return [...PRODUCTS];
+  return PRODUCTS.filter((product) => {
+    const category = getProductCategory(product);
+    return category ? category === PAGE_CATEGORY : PAGE_CATEGORY === "perfumes";
+  });
+}
+function applyCategoryPageContext() {
+  const config = CATEGORY_CONFIG[PAGE_CATEGORY];
+  if (!config) return;
+  document.title = config.title + " | TecnoAdvance";
+  const title = document.getElementById("categoryTitle");
+  const description = document.getElementById("categoryDescription");
+  const breadcrumb = document.getElementById("breadcrumbCategory");
+  const intro = document.getElementById("categoryIntro");
+  if (title) title.textContent = config.title;
+  if (description) description.textContent = config.description;
+  if (breadcrumb) breadcrumb.textContent = config.title;
+  if (intro) intro.hidden = false;
+}
+
 
 // ════════════════════════════════════════════════════════
 // FUNCIÓN CORREGIDA PARA CARGAR PRODUCTOS
@@ -138,15 +183,16 @@ async function cargarProductosDesdeSupabase() {
         notas: p.notas || '',
         imagenes: imagenesArray,
         imagen: imagenesArray[0],
+        categoria: p.categoria || p.category || p.rubro || p.tipo_producto || p.tipo || "",
         stock: Number(p.stock || 0)
       };
     });
 
     console.log('✨ Productos procesados correctamente:', PRODUCTS);
 
-      filteredProducts = [...PRODUCTS];
+      filteredProducts = getCategoryProducts();
 
-    if (grid) renderProducts(PRODUCTS);
+    if (grid) renderProducts(filteredProducts);
     updateCartCount();
     renderCart();
     renderOrderPage();
@@ -491,7 +537,7 @@ function applyFilters() {
   const maxPrice = parseInt(document.getElementById("priceMax").value) || 999999;
   const searchTerm = (document.getElementById("searchInput")?.value || "").trim().toLowerCase();
 
-  filteredProducts = PRODUCTS.filter((p) => {
+  filteredProducts = getCategoryProducts().filter((p) => {
     const generoOk = checkedGeneros.length === 0 || checkedGeneros.includes(p.genero);
     const marcaOk = checkedMarcas.length === 0 || checkedMarcas.includes(p.marca);
     const precioOk = p.precio <= maxPrice && p.precio >= minPrice;
@@ -522,7 +568,7 @@ function clearFilters() {
   document.getElementById("priceMin").value = 0;
   document.getElementById("priceMax").value = 80000;
   document.getElementById("priceSlider").value = 80000;
-  filteredProducts = [...PRODUCTS];
+  filteredProducts = getCategoryProducts();
   currentPage = 1;
   renderProducts(filteredProducts);
   document.getElementById("activeFilters").innerHTML = "";
@@ -632,6 +678,7 @@ function getBotResponse(userMessage) {
   return CHATBOT_RESPONSES.default;
 }
 
+applyCategoryPageContext();
 loadCartState();
 renderCart();
 renderOrderPage();
