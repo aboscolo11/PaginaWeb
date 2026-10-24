@@ -116,3 +116,31 @@
   .order-actions { flex-direction: column; }
   .btn-cart-send, .btn-clear-cart { width: 100%; flex: none; }
 }
+
+
+/* Cotización de Correo Argentino */
+.shipping-quote {
+  margin: 22px 0;
+  padding: 18px;
+  border: 1px solid #e3e6ea;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+.shipping-quote h3 { margin: 0 0 6px; }
+.shipping-quote p { margin: 0 0 12px; color: #596273; }
+.shipping-quote-form { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; align-items: end; }
+.shipping-quote-form label { grid-column: 1 / -1; font-weight: 600; }
+.shipping-quote-form input { min-width: 0; padding: 12px; border: 1px solid #cbd2da; border-radius: 8px; }
+.btn-shipping-quote { padding: 12px 16px; border: 0; border-radius: 8px; background: #172554; color: #fff; cursor: pointer; }
+.shipping-rate { display: flex; width: 100%; justify-content: space-between; align-items: center; gap: 12px; margin-top: 9px; padding: 12px; border: 1px solid #d7dce2; border-radius: 8px; background: #fff; text-align: left; cursor: pointer; }
+.shipping-rate.selected { border-color: #172554; box-shadow: 0 0 0 1px #172554; }
+.shipping-rate span { display: grid; gap: 4px; }
+.shipping-rate small, .shipping-note { color: #687386; }
+.shipping-message { margin: 10px 0 0 !important; }
+.shipping-message.error { color: #b42318; }
+.shipping-total { margin: 12px 0; text-align: right; line-height: 1.8; }
+@media (max-width: 520px) {
+  .shipping-quote-form { grid-template-columns: 1fr; }
+  .shipping-quote-form label { grid-column: auto; }
+  .btn-shipping-quote { width: 100%; }
+}
