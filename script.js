@@ -320,19 +320,28 @@ function getCartTotal() {
   }, 0);
 }
 
+function getCartFingerprint() {
+  return Object.entries(cartItems).map(function (entry) { return entry[0] + ":" + entry[1]; }).sort().join("|");
+}
+let micorreoQuote = null;
+try { micorreoQuote = JSON.parse(localStorage.getItem("micorreoQuote") || "null"); } catch (_) {}
+
 function buildCartWaLink() {
   const entries = Object.entries(cartItems);
-  const lines = entries.map(([key, qty]) => {
-    const line = getCartLine(key, qty);
+  const lines = entries.map(function (entry) {
+    const line = getCartLine(entry[0], entry[1]);
     if (!line) return "";
-    const { product, options, price, quantity } = line;
-    return `${quantity} x ${product.marca} ${product.nombre}${options ? ` (${options})` : ""} - ${formatPrice(price)}`;
+    const product = line.product, options = line.options, price = line.price, quantity = line.quantity;
+    return quantity + " x " + product.marca + " " + product.nombre + (options ? " (" + options + ")" : "") + " - " + formatPrice(price);
   }).filter(Boolean);
-  const total = formatPrice(getCartTotal());
-  const msg = encodeURIComponent(`Hola, quiero hacer un pedido:\n${lines.join("\n")}\nTotal: ${total}`);
-  return `https://wa.me/${WA_NUMBER}?text=${msg}`;
+  const quote = micorreoQuote && micorreoQuote.fingerprint === getCartFingerprint() ? micorreoQuote : null;
+  const rate = quote && quote.selectedIndex !== null ? quote.rates[quote.selectedIndex] : null;
+  const ship = rate ? Number(rate.price) : 0;
+  const extra = rate ? "\nEnvío Correo Argentino (" + rate.productName + ") a CP " + quote.postalCode + ": " + formatPrice(ship) + " (estimado)" : "";
+  const totalExtra = rate ? "\nTotal estimado con envío: " + formatPrice(getCartTotal() + ship) : "";
+  const msg = encodeURIComponent("Hola, quiero hacer un pedido:\n" + lines.join("\n") + extra + "\nTotal productos: " + formatPrice(getCartTotal()) + totalExtra);
+  return "https://wa.me/" + WA_NUMBER + "?text=" + msg;
 }
-
 function renderCart() {
   updateCartCount();
   const panel = document.getElementById("cartPanel");
@@ -382,52 +391,73 @@ function renderCart() {
 function renderOrderPage() {
   const orderContent = document.getElementById("orderContent");
   if (!orderContent) return;
-
   const entries = Object.entries(cartItems);
-  if (entries.length === 0) {
-    orderContent.innerHTML = `
-      <div class="order-empty">
-        <p>No hay productos en el pedido.</p>
-        <a href="index.html" class="btn-secondary">Volver al catálogo</a>
-      </div>`;
+  if (!entries.length) {
+    orderContent.innerHTML = '<div class="order-empty"><p>No hay productos en el pedido.</p><a href="index.html" class="btn-secondary">Volver al catálogo</a></div>';
     return;
   }
-if (PRODUCTS.length === 0) {
-    orderContent.innerHTML = `<div class="order-empty"><p>Cargando pedido…</p></div>`;
+  if (!PRODUCTS.length) {
+    orderContent.innerHTML = '<div class="order-empty"><p>Cargando pedido…</p></div>';
     return;
   }
-  const itemsHtml = entries.map(([key, qty]) => {
-    const line = getCartLine(key, qty);
+  const itemsHtml = entries.map(function (entry) {
+    const line = getCartLine(entry[0], entry[1]);
     if (!line) return "";
-    const { product, options, price, quantity } = line;
-    return `
-      <div class="order-row">
-        <div class="order-item-info">
-          <div>${quantity}x ${product.marca} ${product.nombre}</div>
-          ${options ? `<small>${options}</small>` : ""}
-          <small>${formatPrice(price)} c/u</small>
-        </div>
-        <div class="order-item-actions">
-          <span>${formatPrice(price * quantity)}</span>
-          <button type="button" class="cart-item-remove" onclick="removeCartItem('${key}')">Quitar</button>
-        </div>
-      </div>`;
+    return '<div class="order-row"><div class="order-item-info"><div>' + line.quantity + 'x ' + escapeHtml(line.product.marca) + ' ' + escapeHtml(line.product.nombre) + '</div>' +
+      (line.options ? '<small>' + escapeHtml(line.options) + '</small>' : '') + '<small>' + formatPrice(line.price) + ' c/u</small></div>' +
+      '<div class="order-item-actions"><span>' + formatPrice(line.price * line.quantity) + '</span><button type="button" class="cart-item-remove" onclick="removeCartItem(\'' + entry[0] + '\')">Quitar</button></div></div>';
   }).join("");
-
-  orderContent.innerHTML = `
-    <div class="order-summary-box">
-      <div class="order-meta">
-        <div><strong>${entries.length}</strong> artículo${entries.length !== 1 ? "s" : ""}</div>
-        <div>Total: <strong>${formatPrice(getCartTotal())}</strong></div>
-      </div>
-      <div class="order-items">${itemsHtml}</div>
-      <div class="order-actions">
-        <a href="${buildCartWaLink()}" target="_blank" class="btn-cart-send">Enviar pedido por WhatsApp</a>
-        <button type="button" class="btn-clear-cart" onclick="clearCartItems()">Vaciar pedido</button>
-      </div>
-    </div>`;
+  const matches = micorreoQuote && micorreoQuote.fingerprint === getCartFingerprint();
+  const quote = matches ? micorreoQuote : null;
+  const rates = quote && Array.isArray(quote.rates) ? quote.rates : [];
+  const ratesHtml = rates.map(function (rate, index) {
+    return '<button type="button" class="shipping-rate ' + (quote.selectedIndex === index ? 'selected' : '') + '" onclick="selectShippingRate(' + index + ')">' +
+      '<span><strong>' + escapeHtml(rate.productName || 'Correo Argentino') + '</strong><small>Entrega a domicilio · CP ' + escapeHtml(quote.postalCode) + '</small></span><strong>' + formatPrice(rate.price) + '</strong></button>';
+  }).join("");
+  const selected = quote && quote.selectedIndex !== null ? rates[quote.selectedIndex] : null;
+  const postalCode = quote ? quote.postalCode : (localStorage.getItem("micorreoPostalCode") || "");
+  const message = quote && quote.error ? '<p class="shipping-message error">' + escapeHtml(quote.error) + '</p>' :
+    quote && !rates.length ? '<p class="shipping-message">No hay opciones de envío para ese código postal.</p>' : "";
+  orderContent.innerHTML = '<div class="order-summary-box"><div class="order-meta"><div><strong>' + entries.length + '</strong> artículo' + (entries.length !== 1 ? 's' : '') +
+    '</div><div>Total productos: <strong>' + formatPrice(getCartTotal()) + '</strong></div></div><div class="order-items">' + itemsHtml + '</div>' +
+    '<section class="shipping-quote"><h3>Envío por Correo Argentino</h3><p>Ingresá el código postal de destino para consultar el costo estimado.</p>' +
+    '<div class="shipping-quote-form"><label for="shippingPostalCode">Código postal</label><input id="shippingPostalCode" inputmode="text" maxlength="8" autocomplete="postal-code" placeholder="Ej.: 1714" value="' + escapeHtml(postalCode) + '">' +
+    '<button type="button" class="btn-shipping-quote" onclick="quoteMicorreoShipping()">Cotizar envío</button></div><div id="shippingQuoteResults">' + ratesHtml + message +
+    '</div><small class="shipping-note">El valor es estimado; se confirma al preparar el paquete.</small></section>' +
+    (selected ? '<div class="shipping-total">Envío estimado: <strong>' + formatPrice(selected.price) + '</strong><br>Total estimado: <strong>' + formatPrice(getCartTotal() + Number(selected.price)) + '</strong></div>' : '') +
+    '<div class="order-actions"><a href="' + buildCartWaLink() + '" target="_blank" rel="noopener" class="btn-cart-send">Enviar pedido por WhatsApp</a><button type="button" class="btn-clear-cart" onclick="clearCartItems()">Vaciar pedido</button></div></div>';
 }
-
+function selectShippingRate(index) {
+  if (!micorreoQuote || micorreoQuote.fingerprint !== getCartFingerprint() || !micorreoQuote.rates[index]) return;
+  micorreoQuote.selectedIndex = index;
+  localStorage.setItem("micorreoQuote", JSON.stringify(micorreoQuote));
+  renderOrderPage();
+}
+async function quoteMicorreoShipping() {
+  const input = document.getElementById("shippingPostalCode");
+  const result = document.getElementById("shippingQuoteResults");
+  if (!input || !result) return;
+  const postalCode = input.value.trim().toUpperCase();
+  localStorage.setItem("micorreoPostalCode", postalCode);
+  result.innerHTML = '<p class="shipping-message">Consultando Correo Argentino…</p>';
+  const items = Object.entries(cartItems).map(function (entry) {
+    return { id: Number(entry[0].split("__v")[0]), quantity: Number(entry[1]) };
+  });
+  try {
+    const response = await fetch(SUPABASE_URL + "/functions/v1/micorreo-rates", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", apikey: SUPABASE_KEY },
+      body: JSON.stringify({ postalCodeDestination: postalCode, items: items })
+    });
+    const data = await response.json().catch(function () { return {}; });
+    if (!response.ok) throw new Error(data.error || "No se pudo cotizar el envío.");
+    micorreoQuote = { postalCode: postalCode, rates: Array.isArray(data.rates) ? data.rates : [], selectedIndex: null, fingerprint: getCartFingerprint() };
+  } catch (error) {
+    micorreoQuote = { postalCode: postalCode, rates: [], selectedIndex: null, fingerprint: getCartFingerprint(), error: error.message };
+  }
+  localStorage.setItem("micorreoQuote", JSON.stringify(micorreoQuote));
+  renderOrderPage();
+}
 function removeCartItem(cartKey) {
   if (!cartItems[cartKey]) return;
   delete cartItems[cartKey];
