@@ -237,7 +237,7 @@ async function cargarProductosDesdeSupabase() {
       grid.innerHTML = `
         <div class="no-results">
           <h3>Error al cargar productos</h3>
-          <p>${err.message}</p>
+          <p>${escapeHtml(err.message)}</p>
           <small>Verifica la consola para más detalles</small>
         </div>
       `;
@@ -364,8 +364,8 @@ function renderCart() {
     return `
       <div class="cart-item">
         <div class="cart-item-details">
-          <span>${quantity}x ${product.marca} ${product.nombre}</span>
-          ${options ? `<small>${options}</small>` : ""}
+          <span>${quantity}x ${escapeHtml(product.marca)} ${escapeHtml(product.nombre)}</span>
+          ${options ? `<small>${escapeHtml(options)}</small>` : ""}
           <small>${formatPrice(price)} c/u</small>
         </div>
         <div class="cart-item-actions">
@@ -474,41 +474,54 @@ function clearCartItems() {
 }
 
 function badgeHTML(badge) {
-  if (!badge) return "";
   const labels = { new: "Nuevo", hot: "🔥 Popular", oferta: "Oferta" };
-  return `<div class="product-badge badge-${badge}">${labels[badge]}</div>`;
+  const key = String(badge || "").toLowerCase();
+  if (!Object.prototype.hasOwnProperty.call(labels, key)) return "";
+  return `<div class="product-badge badge-${key}">${labels[key]}</div>`;
 }
 
 function productImgSrc(p) {
-  return p.imagen || "./imagenes/sin-imagen.png";
+  const fallback = "./imagenes/sin-imagen.png";
+  const raw = String(p.imagen || fallback).trim();
+  try {
+    const url = new URL(raw, window.location.href);
+    return url.protocol === "https:" ? url.href : fallback;
+  } catch (_) {
+    return fallback;
+  }
 }
 
 function cardHTML(p) {
-  const waLink = buildWaLink(p);
-  const hasMultipleImages = p.imagenes && p.imagenes.length > 1;
-  const imageCount = p.imagenes ? p.imagenes.length : 1;
-  const volumen = (p.descripcion.match(/\d+\s?ML/i) || [""])[0];
-  const sinStock = p.stock === 0; // ← Nuevo
+  const productId = Number(p.id);
+  if (!Number.isSafeInteger(productId) || productId < 1) return "";
+  const marca = escapeHtml(p.marca);
+  const nombre = escapeHtml(p.nombre);
+  const genero = escapeHtml(p.genero);
+  const waLink = escapeHtml(buildWaLink(p));
+  const imageSrc = escapeHtml(productImgSrc(p));
+  const imageAlt = escapeHtml(`${p.marca} ${p.nombre}`);
+  const volumen = (String(p.descripcion || "").match(/\d+\s?ML/i) || [""])[0];
+  const sinStock = p.stock === 0;
   return `
     <div class="product-card ${sinStock ? 'sin-stock' : ''}"
-         data-genero="${p.genero}" data-marca="${p.marca}" data-precio="${p.precio}">
+         data-genero="${genero}" data-marca="${marca}" data-precio="${getListPrice(p)}">
       <div class="card-badges">
         ${getDiscountPct(p) > 0 ? `<span class="card-badge card-badge-discount">-${getDiscountPct(p)}%</span>` : ''}
         <span class="card-badge card-badge-exclusive">Exclusivo TecnoAdvance</span>
       </div>
       ${badgeHTML(p.badge)}
-      ${sinStock ? '<div class="out-of-stock-badge">Sin stock</div>' : ''}  <!-- Badge nuevo -->
-         <div class="product-img-wrap">
-        <img src="${productImgSrc(p)}" alt="${p.marca} ${p.nombre}" loading="lazy"
-             class="product-main-img" data-product-id="${p.id}"
-        ${sinStock ? '' : `onclick="openProductModal(${p.id})"`} />  <!-- Deshabilitar clic si sin stock -->
-        <a href="${waLink}" target="_blank" class="quick-wa">Comprar por WhatsApp</a>
+      ${sinStock ? '<div class="out-of-stock-badge">Sin stock</div>' : ''}
+      <div class="product-img-wrap">
+        <img src="${imageSrc}" alt="${imageAlt}" loading="lazy"
+             class="product-main-img" data-product-id="${productId}"
+        ${sinStock ? '' : `onclick="openProductModal(${productId})"`} />
+        <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="quick-wa">Comprar por WhatsApp</a>
       </div>
       <div class="product-info">
-        ${volumen ? `<div class="product-volume">${volumen}</div>` : ''}
-        <div class="product-brand">${p.marca}</div>
-        <div class="product-name">${p.nombre}</div>
-        <p class="product-notes">${p.notas}</p>
+        ${volumen ? `<div class="product-volume">${escapeHtml(volumen)}</div>` : ''}
+        <div class="product-brand">${marca}</div>
+        <div class="product-name">${nombre}</div>
+        <p class="product-notes">${escapeHtml(p.notas)}</p>
         <div class="product-pricing">
           <div class="price-row">
             <span class="price-final">${formatPrice(getSalePrice(p))}</span>
@@ -520,11 +533,10 @@ function cardHTML(p) {
       <div class="product-actions">
         ${sinStock
           ? '<button type="button" class="btn-cart btn-disabled" disabled>Sin stock</button>'
-          : `<button type="button" class="btn-cart" onclick="${p.variantes.length ? `openProductModal(${p.id})` : `addToCart(${p.id})`}">${p.variantes.length ? "Elegir opciones" : "Agregar al carrito"}</button>`}
+          : `<button type="button" class="btn-cart" onclick="${p.variantes.length ? `openProductModal(${productId})` : `addToCart(${productId})`}">${p.variantes.length ? "Elegir opciones" : "Agregar al carrito"}</button>`}
       </div>
     </div>`;
 }
-
 function hasHomeCatalogFilters() {
   if (document.body.dataset.page !== "home") return true;
   const search = (document.getElementById("searchInput")?.value || "").trim();
@@ -727,11 +739,14 @@ function applyFilters() {
 function renderActiveTags(generos, marcas) {
   const container = document.getElementById("activeFilters");
   const tags = [...generos.map((g) => ({ label: g, type: "genero" })), ...marcas.map((m) => ({ label: m, type: "marca" }))];
-  container.innerHTML = tags.map((t) => `<div class="filter-tag">${t.label} <button onclick="removeFilter('${t.type}','${t.label}')">×</button></div>`).join("");
+  container.innerHTML = tags.map((t) => `<div class="filter-tag">${escapeHtml(t.label)} <button type="button" data-remove-filter-type="${t.type}" data-remove-filter-value="${escapeHtml(t.label)}">×</button></div>`).join("");
+  container.querySelectorAll("[data-remove-filter-type]").forEach((button) => {
+    button.addEventListener("click", () => removeFilter(button.dataset.removeFilterType, button.dataset.removeFilterValue));
+  });
 }
 
 function removeFilter(type, val) {
-  const input = document.querySelector(`[data-filter="${type}"][value="${val}"]`);
+  const input = [...document.querySelectorAll("[data-filter]")].find((item) => item.dataset.filter === type && item.value === val);
   if (input) input.checked = false;
   applyFilters();
 }
@@ -833,8 +848,11 @@ function sendChatMessage() {
 function addChatMessage(text, sender) {
   const messagesDiv = document.getElementById("chatbotMessages");
   const messageEl = document.createElement("div");
-  messageEl.className = `chatbot-message ${sender}`;
-  messageEl.innerHTML = `<div class="chatbot-bubble">${text}</div>`;
+  messageEl.className = sender === "user" ? "chatbot-message user" : "chatbot-message bot";
+  const bubble = document.createElement("div");
+  bubble.className = "chatbot-bubble";
+  bubble.textContent = String(text ?? "");
+  messageEl.appendChild(bubble);
   messagesDiv.appendChild(messageEl);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
@@ -976,7 +994,7 @@ function renderModalVariants() {
   const options = variants.map((variant, index) => {
     const label = [variant.modelo, variant.color].filter(Boolean).join(" · ") || `Opción ${index + 1}`;
     const availability = variant.stock > 0 ? ` · ${variant.stock} disponibles` : " · Sin stock";
-    return `<option value="${index}" ${index === currentVariantIndex ? "selected" : ""} ${variant.stock <= 0 ? "disabled" : ""}>${label}${availability}</option>`;
+    return `<option value="${index}" ${index === currentVariantIndex ? "selected" : ""} ${variant.stock <= 0 ? "disabled" : ""}>${escapeHtml(label)}${escapeHtml(availability)}</option>`;
   }).join("");
   container.innerHTML = `<label for="modalVariantSelect">Elegí modelo y color</label><select id="modalVariantSelect" onchange="selectProductVariant(this.value)">${options}</select>`;
 }
