@@ -512,7 +512,7 @@ function cardHTML(p) {
       ${badgeHTML(p.badge)}
       ${sinStock ? '<div class="out-of-stock-badge">Sin stock</div>' : ''}
       <div class="product-img-wrap">
-        <img src="${imageSrc}" alt="${imageAlt}" loading="lazy"
+        <img src="${imageSrc}" alt="${imageAlt}" loading="lazy" decoding="async"
              class="product-main-img" data-product-id="${productId}"
         ${sinStock ? '' : `onclick="openProductModal(${productId})"`} />
         <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="quick-wa">Comprar por WhatsApp</a>
@@ -619,12 +619,12 @@ function updatePagination(totalPages) {
   paginationDiv.style.display = "flex";
 
   let html = "";
-  if (currentPage > 1) html += `<button class="page-btn" onclick="goToPage(${currentPage - 1})">‹</button>`;
+  if (currentPage > 1) html += `<button type="button" class="page-btn" aria-label="Página anterior" onclick="goToPage(${currentPage - 1})">‹</button>`;
   for (let i = 1; i <= totalPages; i++) {
     const activeClass = i === currentPage ? "active" : "";
-    html += `<button class="page-btn ${activeClass}" onclick="goToPage(${i})">${i}</button>`;
+    html += `<button type="button" class="page-btn ${activeClass}" aria-label="Página ${i}" ${i === currentPage ? `aria-current="page"` : ""} onclick="goToPage(${i})">${i}</button>`;
   }
-  if (currentPage < totalPages) html += `<button class="page-btn" onclick="goToPage(${currentPage + 1})">›</button>`;
+  if (currentPage < totalPages) html += `<button type="button" class="page-btn" aria-label="Página siguiente" onclick="goToPage(${currentPage + 1})">›</button>`;
   paginationDiv.innerHTML = html;
 }
 // FUNCION PARA PASAR DE PAGINA //
@@ -793,23 +793,7 @@ function changeProductImage(event, productId, direction) {
   const counter = document.querySelector(`.img-counter[data-product-id="${productId}"]`);
   if (counter) counter.textContent = `${productImageIndex[productId] + 1}/${images.length}`;
 }
-// ─── ROTACIÓN AUTOMÁTICA DE FOTOS (cada 4s, en bucle) ───
-const AUTO_SLIDE_MS = 4000;
-
-function autoRotateProductImages() {
-  if (document.hidden) return;
-  document.querySelectorAll(".product-main-img").forEach((img) => {
-    const id = Number(img.dataset.productId);
-    const product = PRODUCTS.find((p) => p.id === id);
-    if (!product || !product.imagenes || product.imagenes.length < 2) return;
-    const current = Number(img.dataset.idx || 0);
-    const next = (current + 1) % product.imagenes.length; // última → vuelve a la 1
-    img.dataset.idx = next;
-    img.src = product.imagenes[next];
-  });
-}
-
-setInterval(autoRotateProductImages, AUTO_SLIDE_MS);
+// Las imágenes del producto permanecen estables; la galería permite recorrerlas manualmente.
 
 const CHATBOT_RESPONSES = {
   default: "¿Buscás algún perfume en particular? 👀",
@@ -828,6 +812,7 @@ function toggleChatbot() {
   const toggle = document.querySelector(".chatbot-toggle");
   container.classList.toggle("open");
   toggle.classList.toggle("hidden");
+  toggle.setAttribute("aria-expanded", String(container.classList.contains("open")));
   if (container.classList.contains("open")) {
     document.getElementById("chatbotInput").focus();
   }
@@ -1112,3 +1097,30 @@ function updateModalStock() {
 // [FIN_CAMBIOS_MOBILE_NAV]
 
 
+
+
+// Cargar el widget de reseñas cuando se acerque a la pantalla para no frenar la carga inicial.
+(function loadReviewsWidgetWhenVisible() {
+  const widget = document.querySelector(".elfsight-app-a796fc92-bd37-4657-b647-ffc82188e38b");
+  if (!widget) return;
+  let loaded = false;
+  const load = () => {
+    if (loaded) return;
+    loaded = true;
+    const script = document.createElement("script");
+    script.src = "https://elfsightcdn.com/platform.js";
+    script.async = true;
+    document.head.appendChild(script);
+  };
+  if (!("IntersectionObserver" in window)) {
+    load();
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    if (entries.some((entry) => entry.isIntersecting)) {
+      observer.disconnect();
+      load();
+    }
+  }, { rootMargin: "500px 0px" });
+  observer.observe(widget);
+})();
