@@ -64,13 +64,19 @@
 }
 
 .welcome-logo {
-  font-family: var(--font-disp);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--gold);
-  margin-bottom: 12px;
-  text-transform: uppercase;
+  width: 100%;
+  height: clamp(86px, 18vw, 112px);
+  margin: 0 auto 18px;
+  overflow: hidden;
+  border: 1px solid rgba(216, 189, 130, 0.24);
+  border-radius: 12px;
+  background-color: #111216;
+  background-image: url('../imagenes/logo.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: min(82%, 340px) auto;
+  color: transparent;
+  font-size: 0;
 }
 
 .welcome-title {
@@ -82,12 +88,17 @@
 }
 
 .welcome-subtitle {
-  font-size: 14px;
-  color: var(--mid);
+  display: inline-block;
   margin-bottom: 24px;
-  font-weight: 600;
-  text-transform: uppercase;
+  padding: 7px 14px;
+  border: 1px solid rgba(106, 75, 19, 0.2);
+  border-radius: 999px;
+  background: #f2e7cb;
+  color: #5e4310;
+  font-size: 14px;
+  font-weight: 800;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .welcome-body {
